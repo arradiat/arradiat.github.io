@@ -64,7 +64,7 @@
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
             <tr>
             <td style="padding:20px;width:100%;vertical-align:middle">
-              <h2 style="border-bottom: 1px solid #eee; padding-bottom: 10px;">Research & Projects</h2>
+              <h2 style="border-bottom: 1px solid #eee; padding-bottom: 10px;">Research & Publications</h2>
               <p>
                 My primary research focuses on developing scalable <strong>low-rank variational inference</strong> methods (<em>W &approx; AB<sup>T</sup></em>) for Bayesian neural networks. I also investigate whether these structures allow networks to automatically adapt their complexity to the data (Occam's Razor).
               </p>
@@ -75,6 +75,25 @@
         <!-- Projects Section -->
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
           
+          <!-- Preprint -->
+          <tr>
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div style="color:gray; font-size:0.9em;">Preprint, 2025</div>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <a href="https://arxiv.org/pdf/2602.00387">
+                <span class="papertitle">Singular Bayesian Neural Networks</span>
+              </a>
+              <br>
+              <strong>Mame Diarra Toure</strong>, David A. Stephens
+              <br>
+              <em>arXiv:2602.00387</em>, 2025
+              <br>
+              <a href="https://arxiv.org/pdf/2602.00387">PDF</a> / <a href="https://arxiv.org/abs/2602.00387">arXiv</a>
+              <p>We introduce a low-rank variational inference framework for Bayesian neural networks that parameterizes weights as <strong>W = AB<sup>T</sup></strong>, reducing parameter complexity from <strong>O(mn)</strong> to <strong>O((m+n)r)</strong>. This induces a posterior singular with respect to the Lebesgue measure, capturing structured weight correlations through shared latent factors. We derive PAC-Bayes generalization bounds and prove loss bounds using the Eckart-Young-Mirsky theorem. Empirically, our method achieves competitive predictive performance with 5-member Deep Ensembles while using up to <strong>15× fewer parameters</strong> and substantially improves out-of-distribution detection across MLPs, LSTMs, and Transformers.</p>
+            </td>
+          </tr>
+
           <!-- PhD Research -->
           <tr>
             <td style="padding:20px;width:25%;vertical-align:middle">
