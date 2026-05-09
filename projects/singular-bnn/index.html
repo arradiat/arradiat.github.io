@@ -131,8 +131,9 @@
       We parameterize Bayesian neural network weights through low-rank
       factors $W = AB^\top$, inducing a singular posterior geometry
       concentrated on the rank-$r$ manifold. This reduces variational
-      complexity from $O(mn)$ to $O(r(m+n))$ while maintaining strong
-      uncertainty-aware performance across MLPs, LSTMs, and Transformers.
+      complexity from $O(mn)$ to $O(r(m+n))$ while maintaining competitive uncertainty-aware performance across MLPs, 
+      LSTMs, and Transformers.
+
     </p>
 
   </section>
@@ -319,9 +320,9 @@
         <h3>MIMIC-III ICU mortality</h3>
 
         <ul>
-          <li>Strong OOD detection</li>
-          <li>Competitive calibration</li>
-          <li>Substantially fewer parameters</li>
+     <li>Best reported OOD detection metrics in the paper’s clinical-shift setting</li>
+<li>Competitive in-domain performance with explicit uncertainty tradeoffs</li>
+<li>70% fewer parameters than Full-Rank BBB; 88% fewer than Deep Ensemble</li>
         </ul>
 
       </div>
@@ -330,10 +331,9 @@
 
         <h3>Beijing PM$_{2.5}$ forecasting</h3>
 
-        <ul>
-          <li>Selective prediction improvements</li>
-          <li>Reliable uncertainty intervals</li>
-          <li>Parameter-efficient Bayesian LSTM</li>
+        <ul>+ <li>Best coverage among compared LSTM uncertainty methods</li>
+<li>17.4% MAE reduction at 80% retention in selective prediction</li>
+<li>64% fewer parameters than Full-Rank BBB</li>
         </ul>
 
       </div>
@@ -343,9 +343,9 @@
         <h3>SST-2 Transformer</h3>
 
         <ul>
-          <li>Competitive OOD performance</li>
-          <li>Scalable Bayesian Transformer</li>
-          <li>Reduced storage requirements</li>
+     <li>Best AUPR-In and second-best AUROC-OOD among compared Transformer methods</li>
+ <li>1.5M Low-Rank BBB parameters</li>
+ <li>13× fewer parameters than Full-Rank BBB; 33× fewer than Deep Ensemble</li>
         </ul>
 
       </div>
