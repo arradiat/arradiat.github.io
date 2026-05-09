@@ -332,12 +332,14 @@ article span,
 .factor-mini {
   align-items: center;
   display: grid;
-  gap: 12px;
-  grid-template-columns: 58px 22px 58px 16px 66px;
+  gap: 16px;
+  grid-template-columns: 78px 28px 78px 22px 88px;
   justify-content: center;
-  margin: 12px auto 0;
-  max-width: 360px;
+  margin: 16px auto 0;
+  max-width: 560px;
+  width: 100%;
 }
+
 
 
 
@@ -346,9 +348,9 @@ article span,
   border-radius: 8px;
   display: flex;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 34px;
+  font-size: 38px;
   font-weight: 800;
-  height: 150px;
+  height: 165px;
   justify-content: center;
   overflow: hidden;
   position: relative;
