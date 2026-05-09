@@ -654,3 +654,170 @@ footer {
   }
 
 }
+/* Slide-deck color harmonization */
+:root {
+  --bg-dark: #160b22;
+  --bg-dark-2: #241033;
+  --text-light: #fff8ef;
+  --muted: #b9a7c9;
+  --line: #432052;
+
+  --accent: #60e6f2;
+  --accent-2: #b93a5b;
+  --gold: #e9b96b;
+  --blush: #f6d7df;
+  --burgundy: #7a1e3a;
+  --paper-bg: #fff8ef;
+  --card-bg: #ffffff;
+
+  --shadow: 0 24px 70px rgba(42, 16, 42, 0.10);
+}
+
+body {
+  background:
+    radial-gradient(circle at 88% 8%, rgba(246, 215, 223, 0.55), transparent 20%),
+    var(--paper-bg);
+  color: #2a102a;
+}
+
+.navbar {
+  background: rgba(255, 248, 239, 0.92);
+  border-bottom: 1px solid #e6ccd7;
+}
+
+.brand {
+  color: #2a102a;
+}
+
+.nav-right a {
+  color: #7e6e82;
+}
+
+.nav-right a:hover,
+.section-tag,
+.section-number {
+  color: var(--burgundy);
+}
+
+.hero {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(96, 230, 242, 0.12), transparent 26%),
+    radial-gradient(circle at 0% 100%, rgba(122, 30, 58, 0.68), transparent 24%),
+    linear-gradient(135deg, #160b22, #100719 72%, #160b22);
+}
+
+.conference-badge,
+.primary-btn {
+  background: linear-gradient(135deg, var(--cyan, #60e6f2), var(--gold));
+  color: #160b22;
+}
+
+.secondary-btn {
+  border-color: rgba(246, 215, 223, 0.38);
+  color: var(--text-light);
+}
+
+.secondary-btn:hover {
+  background: rgba(246, 215, 223, 0.08);
+}
+
+.subtitle,
+.authors,
+.hero-caption {
+  color: #e8ddf0;
+}
+
+.hero-visual {
+  background: linear-gradient(180deg, rgba(246, 215, 223, 0.10), rgba(96, 230, 242, 0.04));
+  border: 1px solid rgba(246, 215, 223, 0.18);
+  border-radius: 18px;
+}
+
+.orbital-container {
+  background:
+    radial-gradient(circle at 68% 32%, rgba(96, 230, 242, 0.22), transparent 34%),
+    radial-gradient(circle, #241033, #160b22);
+}
+
+.volume-cloud {
+  background: radial-gradient(circle, rgba(246, 215, 223, 0.52), rgba(246, 215, 223, 0));
+}
+
+.manifold-surface {
+  background: linear-gradient(135deg, rgba(96, 230, 242, 0.9), rgba(185, 58, 91, 0.42));
+}
+
+.tldr-section,
+.metric-card,
+.result-card,
+.resource-card,
+.figure-section figure,
+.figure-grid figure {
+  border: 1px solid #e6ccd7;
+  box-shadow: var(--shadow);
+}
+
+.equation-box {
+  background: #fbeaf0;
+  border-color: #e6ccd7;
+}
+
+.metric-card span,
+.metric-card small,
+.resource-card span,
+figure figcaption,
+footer {
+  color: #7e6e82;
+}
+
+.metric-card strong,
+.result-card h3,
+.resource-card strong {
+  color: #2a102a;
+}
+
+.dark-section,
+.slider-panel,
+.citation-section pre {
+  background:
+    radial-gradient(circle at 82% 12%, rgba(96, 230, 242, 0.10), transparent 26%),
+    linear-gradient(135deg, #160b22, #100719);
+}
+
+.theorem-card {
+  background: rgba(36, 16, 51, 0.92);
+  border-color: #432052;
+}
+
+.theorem-card h3 {
+  color: #60e6f2;
+}
+
+.theorem-card p {
+  color: #e8ddf0;
+}
+
+.dark-eq {
+  background: rgba(22, 11, 34, 0.72);
+  border-color: rgba(96, 230, 242, 0.34);
+}
+
+.bar-background {
+  background: #432052;
+}
+
+.full-bar {
+  background: linear-gradient(90deg, #b9a7c9, #f6d7df);
+}
+
+.low-bar {
+  background: linear-gradient(90deg, #60e6f2, #b93a5b);
+}
+
+#copy-bibtex {
+  background: var(--burgundy);
+}
+
+#copy-bibtex:hover {
+  background: #b93a5b;
+}
