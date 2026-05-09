@@ -990,3 +990,54 @@ footer {
     padding: 34px 54px;
   }
 }
+.geometry-panel {
+  height: 430px;
+  margin-top: 30px;
+}
+
+.evidence-pair {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 0.9fr 1.1fr;
+  margin-top: 28px;
+}
+
+.evidence-pair figure {
+  align-items: center;
+  background: rgba(255,255,255,.045);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 410px;
+  justify-content: center;
+  margin: 0;
+  padding: 14px;
+}
+
+.evidence-pair img {
+  display: block;
+  max-height: 340px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.evidence-pair figcaption {
+  color: var(--muted);
+  font-size: 16px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+@media print {
+  @page {
+    size: 1280px 720px;
+    margin: 0;
+  }
+
+  .reveal section {
+    height: 720px !important;
+    overflow: hidden !important;
+    width: 1280px !important;
+  }
+}
