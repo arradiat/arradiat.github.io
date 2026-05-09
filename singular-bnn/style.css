@@ -1,0 +1,656 @@
+:root {
+  --bg-dark: #0b1020;
+  --bg-dark-2: #121936;
+  --text-light: #eef3ff;
+  --muted: #aeb8d4;
+  --line: #2b3558;
+
+  --accent: #7bc8ff;
+  --accent-2: #bb9cff;
+
+  --paper-bg: #f5f7fc;
+  --card-bg: #ffffff;
+
+  --shadow:
+    0 20px 60px rgba(20, 30, 60, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper-bg);
+  color: #172033;
+  font-family: Lato, Arial, sans-serif;
+  line-height: 1.65;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+
+  z-index: 100;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 6vw;
+
+  background: rgba(255,255,255,0.9);
+
+  backdrop-filter: blur(12px);
+
+  border-bottom: 1px solid #e5eaf3;
+}
+
+.brand {
+  font-weight: 800;
+  color: #13203c;
+}
+
+.nav-right {
+  display: flex;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.nav-right a {
+  color: #34415f;
+}
+
+.nav-right a:hover {
+  color: #1772d0;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+
+  gap: 50px;
+
+  align-items: center;
+
+  padding:
+    90px 6vw
+    60px;
+
+  background:
+    radial-gradient(
+      circle at 80% 10%,
+      #213667 0%,
+      var(--bg-dark) 45%,
+      #070b16 100%
+    );
+
+  color: var(--text-light);
+}
+
+.conference-badge {
+  display: inline-block;
+
+  padding:
+    8px 14px;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      var(--accent-2)
+    );
+
+  color: #07111f;
+
+  font-weight: 800;
+}
+
+.hero h1 {
+  margin:
+    22px 0 18px;
+
+  font-size:
+    clamp(42px, 7vw, 82px);
+
+  line-height: 0.95;
+
+  letter-spacing: -0.05em;
+}
+
+.subtitle {
+  max-width: 760px;
+
+  color: #d5e2ff;
+
+  font-size:
+    clamp(18px, 2vw, 23px);
+}
+
+.authors {
+  margin-top: 28px;
+  color: #c7d2ec;
+}
+
+.hero-buttons {
+  margin-top: 28px;
+
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primary-btn,
+.secondary-btn {
+  border-radius: 999px;
+
+  padding:
+    12px 18px;
+
+  transition: 0.2s ease;
+}
+
+.primary-btn {
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      var(--accent-2)
+    );
+
+  color: #08111e;
+
+  font-weight: 800;
+}
+
+.secondary-btn {
+  border: 1px solid #44517a;
+  color: white;
+}
+
+.secondary-btn:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.hero-visual {
+  border-radius: 28px;
+
+  padding: 28px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.10),
+      rgba(255,255,255,0.03)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
+  min-height: 420px;
+}
+
+.orbital-container {
+  position: relative;
+
+  overflow: hidden;
+
+  height: 280px;
+
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      circle,
+      #1e2c57,
+      #0c1226
+    );
+}
+
+.volume-cloud {
+  position: absolute;
+
+  width: 190px;
+  height: 190px;
+
+  left: 42px;
+  top: 42px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.55),
+      rgba(255,255,255,0)
+    );
+
+  filter: blur(2px);
+}
+
+.manifold-surface {
+  position: absolute;
+
+  inset:
+    72px 40px;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(123,200,255,0.9),
+      rgba(187,156,255,0.35)
+    );
+
+  transform:
+    rotateX(64deg)
+    rotateZ(-18deg);
+
+  animation:
+    float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  50% {
+    transform:
+      rotateX(62deg)
+      rotateZ(-10deg)
+      translateY(-8px);
+  }
+}
+
+.hero-formula {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 24px;
+  font-weight: 800;
+}
+
+.hero-caption {
+  margin-top: 10px;
+  text-align: center;
+  color: #c6d2ec;
+}
+
+.tldr-section {
+  max-width: 1180px;
+
+  margin:
+    40px auto;
+
+  padding:
+    28px 32px;
+
+  background: white;
+
+  border-radius: 24px;
+
+  box-shadow: var(--shadow);
+
+  border: 1px solid #e4e9f3;
+}
+
+.section-tag {
+  display: inline-block;
+
+  font-size: 12px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.12em;
+
+  color: #1772d0;
+
+  font-weight: 800;
+}
+
+.tldr-section p {
+  margin-top: 14px;
+  font-size: 19px;
+}
+
+.content-section {
+  max-width: 1200px;
+
+  margin:
+    0 auto;
+
+  padding:
+    50px 6vw;
+}
+
+.section-header {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+
+  margin-bottom: 26px;
+}
+
+.section-number {
+  font-weight: 900;
+  color: #1772d0;
+}
+
+.section-header h2 {
+  margin: 0;
+
+  font-size: 40px;
+
+  letter-spacing: -0.04em;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 36px;
+}
+
+.equation-box {
+  margin:
+    20px 0;
+
+  padding:
+    14px 18px;
+
+  border-radius: 18px;
+
+  background: #eef4ff;
+
+  border: 1px solid #d9e5fc;
+}
+
+.metric-column {
+  display: grid;
+  gap: 16px;
+}
+
+.metric-card,
+.result-card,
+.theorem-card,
+.resource-card {
+  background: white;
+
+  border-radius: 22px;
+
+  padding: 22px;
+
+  border: 1px solid #e4e9f3;
+
+  box-shadow: var(--shadow);
+}
+
+.metric-card span {
+  display: block;
+  color: #697590;
+  font-size: 13px;
+}
+
+.metric-card strong {
+  display: block;
+  font-size: 24px;
+}
+
+.metric-card small {
+  color: #697590;
+}
+
+.figure-section,
+.figure-grid {
+  max-width: 1200px;
+
+  margin:
+    24px auto;
+
+  padding:
+    0 6vw;
+}
+
+.figure-section figure,
+.figure-grid figure {
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 16px;
+
+  border: 1px solid #e4e9f3;
+
+  box-shadow: var(--shadow);
+}
+
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+figure figcaption {
+  margin-top: 12px;
+  color: #5c6781;
+  font-size: 14px;
+}
+
+.dark-section {
+  background: var(--bg-dark);
+
+  color: var(--text-light);
+
+  padding:
+    60px 6vw;
+}
+
+.dark-header {
+  max-width: 1200px;
+  margin: 0 auto 28px auto;
+}
+
+.theorem-grid {
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 18px;
+}
+
+.theorem-card {
+  background: var(--bg-dark-2);
+  border: 1px solid var(--line);
+  color: var(--text-light);
+}
+
+.theorem-card p {
+  color: #c6d0eb;
+}
+
+.dark-eq {
+  background: #182246;
+  border: 1px solid #30406d;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+
+.interactive-section {
+  max-width: 1200px;
+
+  margin:
+    0 auto;
+
+  padding:
+    60px 6vw;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+
+  align-items: center;
+}
+
+.slider-panel {
+  background: var(--bg-dark);
+
+  color: var(--text-light);
+
+  border-radius: 26px;
+
+  padding: 26px;
+}
+
+.slider-panel input {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.bar-group {
+  margin-top: 24px;
+  display: grid;
+  gap: 18px;
+}
+
+.bar-background {
+  height: 18px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #2b3558;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.full-bar {
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    #9ec7ff,
+    #6f7fff
+  );
+}
+
+.low-bar {
+  width: 12%;
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent-2)
+  );
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.resource-card {
+  color: #172033;
+}
+
+.resource-card strong {
+  display: block;
+}
+
+.resource-card span {
+  color: #697590;
+}
+
+.citation-section {
+  max-width: 1200px;
+
+  margin:
+    0 auto;
+
+  padding:
+    40px 6vw
+    80px;
+}
+
+.citation-section pre {
+  overflow: auto;
+
+  border-radius: 20px;
+
+  padding: 22px;
+
+  background: #0b1020;
+
+  color: white;
+}
+
+#copy-bibtex {
+  margin-top: 14px;
+
+  border: none;
+
+  background: #1772d0;
+
+  color: white;
+
+  padding:
+    12px 18px;
+
+  border-radius: 999px;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+footer {
+  text-align: center;
+  padding:
+    40px 20px;
+
+  color: #697590;
+}
+
+@media (max-width: 900px) {
+
+  .hero,
+  .two-column,
+  .interactive-section {
+    grid-template-columns: 1fr;
+  }
+
+  .figure-grid,
+  .theorem-grid,
+  .results-grid,
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .hero {
+    padding-top: 50px;
+  }
+
+}
