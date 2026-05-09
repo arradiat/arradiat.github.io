@@ -333,10 +333,11 @@ article span,
   align-items: center;
   display: grid;
   gap: 10px;
-  grid-template-columns: .65fr auto .65fr;
+  grid-template-columns: .7fr auto .55fr .65fr;
   margin: 4px auto 0;
-  max-width: 260px;
+  max-width: 340px;
 }
+
 
 .factor-block {
   align-items: center;
@@ -375,6 +376,12 @@ article span,
   font-size: 26px;
   font-weight: 900;
 }
+.w-mini {
+  background: var(--ivory);
+  border: 1px solid #e6ccd7;
+  color: var(--aub);
+}
+
 
 .rank-surface {
   animation: surfaceGlow 3s ease-in-out infinite;
