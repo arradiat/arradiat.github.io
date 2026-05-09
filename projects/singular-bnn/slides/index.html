@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singular Bayesian Neural Networks | ICML 2026</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23160B22'/%3E%3Cpath d='M10 42c11-23 33-23 44 0' fill='none' stroke='%2360E6F2' stroke-width='5'/%3E%3Ccircle cx='23' cy='35' r='3' fill='%23E9B96B'/%3E%3Ccircle cx='42' cy='35' r='3' fill='%23F6D7DF'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="vendor/reveal/reveal.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section class="title-slide dark">
+          <canvas class="manifold-canvas" data-variant="title" aria-hidden="true"></canvas>
+          <div class="kicker">ICML 2026 Accepted Paper</div>
+          <h1>Singular<br>Bayesian Neural<br>Networks</h1>
+          <p class="authors">Mame Diarra Touré · David A. Stephens</p>
+          <div class="pill-row">
+            <span>W = AB<sup>T</sup> → singular posterior geometry</span>
+            <span>theory-backed scalable uncertainty</span>
+          </div>
+          <p class="title-thesis">A low-rank variational BNN whose induced posterior has singular geometric support.</p>
+          <footer>arradiat.github.io/projects/singular-bnn · github.com/arradiat/SBNN · arXiv:2602.00387</footer>
+        </section>
+
+        <section class="light">
+          <div class="kicker">Contribution Map</div>
+          <h2>This paper shows that low-rank variational BNNs induce singular posterior geometry.</h2>
+          <div class="contribution-grid">
+            <article><b>Method</b><span>End-to-end variational learning over low-rank factors W = AB<sup>T</sup>.</span></article>
+            <article><b>Geometry</b><span>The induced q<sub>W</sub> is a pushforward posterior supported on the rank-r manifold.</span></article>
+            <article><b>Singularity</b><span>q<sub>W</sub> is singular with respect to Lebesgue measure when r &lt; min(m,n).</span></article>
+            <article><b>Correlation</b><span>Mean-field factors still induce structured weight correlations in W.</span></article>
+            <article><b>Theory</b><span>Approximation, PAC-Bayes, and Gaussian-complexity guarantees.</span></article>
+            <article><b>Evidence</b><span>MLPs, LSTMs, Transformers; MIMIC, Beijing PM2.5, SST-2.</span></article>
+          </div>
+          <p class="bottom-thesis">Core thesis: low-rank is not merely parameter economy; it changes posterior support, covariance, and capacity.</p>
+        </section>
+
+        <section class="dark">
+          <div class="kicker">Problem</div>
+          <h2>Bayesian neural networks provide uncertainty, but full weight-space inference is expensive.</h2>
+          <div class="split">
+            <div>
+              <p class="lead">Full-rank BBB and Deep Ensembles scale with the full weight matrix. Mean-field VI assigns independent uncertainty to each weight entry, so weight correlations are not represented.</p>
+              <div class="metrics">
+                <div><b>O(mn)</b><span>coordinates for a single matrix</span></div>
+                <div><b>2×</b><span>mean + scale per weight in BBB</span></div>
+                <div><b>5×</b><span>model copies in Deep Ensembles</span></div>
+              </div>
+            </div>
+            <div class="posterior-compare" aria-label="Animated comparison of mean-field VI and low-rank SBNN posterior parameterizations">
+              <div class="compare-panel mfvi">
+                <b>MFVI over W</b>
+                <div class="mini-grid" aria-hidden="true">
+                  <span>w<sub>11</sub></span><span>w<sub>12</sub></span><span>w<sub>13</sub></span><span>w<sub>14</sub></span><span>w<sub>15</sub></span>
+                  <span>w<sub>21</sub></span><span>w<sub>22</sub></span><span>w<sub>23</sub></span><span>w<sub>24</sub></span><span>w<sub>25</sub></span>
+                  <span>w<sub>31</sub></span><span>w<sub>32</sub></span><span>w<sub>33</sub></span><span>w<sub>34</sub></span><span>w<sub>35</sub></span>
+                  <span>w<sub>41</sub></span><span>w<sub>42</sub></span><span>w<sub>43</sub></span><span>w<sub>44</sub></span><span>w<sub>45</sub></span>
+                  <span>w<sub>51</sub></span><span>w<sub>52</sub></span><span>w<sub>53</sub></span><span>w<sub>54</sub></span><span>w<sub>55</sub></span>
+                </div>
+                <em>Every cell gets its own posterior.</em>
+              </div>
+              <div class="compare-arrow">→</div>
+              <div class="compare-panel sbnn">
+                <b>SBNN factor space</b>
+                <div class="factor-mini" aria-hidden="true">
+                  <div class="factor-block a-mini">A</div>
+                  <span>=</span>
+                  <div class="factor-block b-mini">B<sup>T</sup></div>
+                  <div class="rank-surface">rank-r W</div>
+                </div>
+                <em>Shared factors induce correlations in W.</em>
+              </div>
+            </div>
+          </div>
+          <p class="bottom-thesis blush">But modern weight matrices often have fast spectral decay.</p>
+        </section>
+
+        <section class="light">
+          <div class="kicker">What Existing Low-Rank Methods Miss</div>
+          <h2>The paper is not LoRA with uncertainty pasted on top.</h2>
+          <div class="comparison-table">
+            <div class="head">Approach</div><div class="head">Backbone</div><div class="head">Posterior object</div><div class="head">Missing piece</div>
+            <div>Post-hoc perturbations</div><div>pretrained</div><div>noise around fixed weights</div><div>not end-to-end uncertainty</div>
+            <div>Low-rank covariance</div><div>full W means</div><div>covariance approximation</div><div>still O(mn) weight means</div>
+            <div>Bayesian LoRA</div><div>pretrained/fine-tuning</div><div>adapter uncertainty</div><div>not from-scratch BNN training</div>
+            <div class="ours">SBNN</div><div class="ours">from scratch</div><div class="ours">singular q<sub>W</sub> on rank-r support</div><div class="ours">pushforward posterior</div>
+          </div>
+          <p class="bottom-thesis">The novelty is the induced posterior measure over W: its support, geometry, covariance, and complexity all change.</p>
+        </section>
+
+        <section class="dark">
+          <div class="kicker">The Move</div>
+          <h2>Learn uncertainty in factor space, then map it into weight space.</h2>
+          <div class="factor-row">
+            <div class="matrix w">W</div>
+            <div class="eq">=</div>
+            <div class="matrix a">A</div>
+            <div class="matrix b">B<sup>T</sup></div>
+          </div>
+          <div class="card-row">
+            <article><b>Variational posterior</b><span>q(A,B)=q<sub>A</sub>(A)q<sub>B</sub>(B), mean-field Gaussians over factor entries.</span></article>
+            <article><b>Parameter count</b><span>O(mn) becomes O(r(m+n)); rank controls expressiveness.</span></article>
+            <article><b>Drop-in layers</b><span>Implemented for dense layers, LSTM gates, and Transformer components.</span></article>
+          </div>
+        </section>
+
+        <section class="light">
+          <div class="kicker">Pushforward Posterior</div>
+          <h2>The posterior over W is induced, not independently assigned.</h2>
+          <div class="pushforward">
+            <div class="circle"><b>q(A,B)</b><span>factor posterior</span></div>
+            <div class="arrow">T(A,B)=AB<sup>T</sup> →</div>
+            <div class="circle accent"><b>q<sub>W</sub></b><span>induced weight posterior</span></div>
+          </div>
+          <p class="bottom-thesis">This is the formal turn: the Bayesian object is a pushforward measure on weight space.</p>
+        </section>
+
+        <section class="dark theorem-slide">
+          <div class="kicker">Central Theorem</div>
+          <h2>q<sub>W</sub> is singular with respect to Lebesgue measure.</h2>
+          <div class="theorem-box">
+            <p>If r &lt; min(m,n), and W = AB<sup>T</sup> with A ∈ R<sup>m×r</sup>, B ∈ R<sup>n×r</sup>:</p>
+            <strong>q<sub>W</sub>(R<sub>r</sub>) = 1 &nbsp;&nbsp; and &nbsp;&nbsp; λ(R<sub>r</sub>) = 0</strong>
+            <em>therefore</em>
+            <strong class="singular">q<sub>W</sub> ⟂ λ</strong>
+          </div>
+          <p class="bottom-thesis blush">The posterior cannot be represented as a full-dimensional density over R<sup>m×n</sup>. It lives on zero-volume rank-r support.</p>
+        </section>
+
+        <section class="light">
+          <div class="kicker">Geometric Distinction</div>
+          <h2>Mean-field fills volume. Low-rank mass lives on a manifold.</h2>
+          <figure class="figure wide"><img src="assets/figures/figure_geometric_distinction.png" alt="Geometric distinction between mean-field and low-rank posteriors"></figure>
+          <p class="caption">This is why “singular BNN” is the right phrase: the posterior support itself has changed.</p>
+        </section>
+
+        <section class="dark">
+          <div class="kicker">Structured Latent-Factor Uncertainty</div>
+          <h2>Mean-field factors do not imply mean-field weights.</h2>
+          <div class="split evidence">
+            <figure class="figure"><img src="assets/figures/weight_correlation_heatmap.png" alt="Weight correlation heatmap"></figure>
+            <div>
+              <article class="card"><b>Covariance lemma</b><span>Even when A and B have independent entries, W<sub>ij</sub> and W<sub>i′j′</sub> can be correlated through shared latent dimensions.</span></article>
+              <article class="card"><b>Inductive bias</b><span>The model trades independence bias for correlation bias: row/column-level uncertainty propagates coherently.</span></article>
+              <p class="mini-thesis">Rank r controls how expressive these correlations can be.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="light">
+          <div class="kicker">Theory Stack</div>
+          <h2>The paper gives three theory certificates, not one.</h2>
+          <div class="card-row">
+            <article><b>Approximation</b><span>Eckart–Young–Mirsky controls rank-r approximation by the tail singular values of W*.</span></article>
+            <article><b>Learned factors</b><span>Error decomposes into learning error ||W−W<sub>r</sub>*||<sub>F</sub> plus unavoidable rank bias σ<sub>&gt;r</sub>.</span></article>
+            <article><b>Generalization</b><span>PAC-Bayes complexity scales as √r(m+n), and Gaussian complexity transfers to Bayesian predictive means.</span></article>
+          </div>
+          <figure class="figure short"><img src="assets/figures/combined_bound.png" alt="PAC-Bayes and Gaussian complexity bounds"></figure>
+          <p class="caption">Figure result: PAC-Bayes shows a critical rank transition; Gaussian complexity decreases with rank reduction.</p>
+        </section>
+
+        <section class="dark">
+          <div class="kicker">Implementation</div>
+          <h2>The framework is not architecture-specific.</h2>
+          <div class="architecture-row">
+            <article><b>MLP</b><span>standard dense layers<br>W<sub>ℓ</sub> = A<sub>ℓ</sub>B<sub>ℓ</sub><sup>T</sup></span></article>
+            <article><b>LSTM</b><span>input-to-hidden + hidden-to-hidden<br>factors sampled once per batch</span></article>
+            <article><b>Transformer</b><span>position-wise factorization<br>rank r=16 in SST-2 experiments</span></article>
+          </div>
+          <p class="bottom-thesis blush">Drop-in variational layers make the geometry portable across model families.</p>
+        </section>
+
+        <section class="light">
+          <div class="kicker">Experimental Design</div>
+          <h2>Three architectures. Three data regimes. Six uncertainty baselines.</h2>
+          <div class="comparison-table compact">
+            <div class="head">Dataset</div><div class="head">Architecture</div><div class="head">Shift</div><div class="head">Rank</div>
+            <div>MIMIC-III ICU mortality</div><div>2-layer MLP</div><div>adult ICU → newborn ICU</div><div>r=15</div>
+            <div>Beijing PM2.5 forecasting</div><div>2-layer LSTM</div><div>Beijing → Guangzhou</div><div>r=14/20</div>
+            <div>SST-2 sentiment</div><div>4-layer Transformer</div><div>movie reviews → AGNews</div><div>r=16</div>
+          </div>
+          <p class="bottom-thesis">Baselines: deterministic, Deep Ensemble, Full-Rank BBB, Low-Rank random init, Low-Rank SVD init, Rank-1 multiplicative; SWAG added as supplementary comparator.</p>
+        </section>
+
+        <section class="dark result-slide">
+          <div class="kicker">Result: MIMIC-III</div>
+          <h2>On clinical shift, low-rank gives the strongest OOD uncertainty.</h2>
+          <div class="split evidence">
+            <figure class="figure"><img src="assets/figures/radar_plot_multiseed_avg.png" alt="MIMIC radar plot"></figure>
+            <div>
+              <div class="metrics">
+                <div><b>0.802</b><span>AUC-OOD, best overall</span></div>
+                <div><b>0.788</b><span>AUPR-OOD, best overall</span></div>
+                <div><b>0.824</b><span>AUPR-In, best overall</span></div>
+              </div>
+              <article class="card"><b>Nuance</b><span>Deep Ensemble keeps stronger in-domain AUROC and NLL. Low-rank prioritizes epistemic separation under shift.</span></article>
+              <p class="mini-thesis">Parameter reduction: 70% fewer than Full-Rank BBB; 88% fewer than Deep Ensemble.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="light result-slide">
+          <div class="kicker">Result: Beijing PM2.5</div>
+          <h2>For time-series forecasting, uncertainty quality shows up in coverage and abstention.</h2>
+          <div class="two-figures">
+            <figure class="figure"><img src="assets/figures/metrics_radar_lstm.png" alt="Beijing LSTM radar plot"></figure>
+            <figure class="figure"><img src="assets/figures/selective_pred.png" alt="Selective prediction"></figure>
+          </div>
+          <div class="metrics light-metrics">
+            <div><b>0.790</b><span>PICP, best coverage</span></div>
+            <div><b>17.4%</b><span>MAE reduction at 80% retention</span></div>
+            <div><b>64%</b><span>fewer params than Full-Rank BBB</span></div>
+          </div>
+        </section>
+
+        <section class="dark result-slide">
+          <div class="kicker">Result: SST-2 Transformer</div>
+          <h2>At Transformer scale, the parameter story becomes decisive.</h2>
+          <div class="split evidence">
+            <figure class="figure"><img src="assets/figures/aggregated_radar_4seeds.png" alt="SST-2 Transformer radar plot"></figure>
+            <div>
+              <div class="metrics">
+                <div><b>1.5M</b><span>Low-Rank BBB parameters</span></div>
+                <div><b>13×</b><span>fewer than Full-Rank BBB</span></div>
+                <div><b>33×</b><span>fewer than Deep Ensemble</span></div>
+              </div>
+              <article class="card"><b>Performance profile</b><span>Low-Rank BBB: 0.806 accuracy, best AUPR-In, second-best AUROC-OOD. Deep Ensemble remains strongest overall but costs 49.6M parameters.</span></article>
+              <article class="card"><b>Training time</b><span>Low-Rank trains in 8.2 min vs 23.1 for Full-Rank BBB and 64.7 for Deep Ensemble.</span></article>
+            </div>
+          </div>
+        </section>
+
+        <section class="light">
+          <div class="kicker">Efficiency Evidence</div>
+          <h2>The quality-efficiency frontier changes.</h2>
+          <div class="two-figures">
+            <figure class="figure"><img src="assets/figures/model_params.png" alt="Model parameter comparison"></figure>
+            <figure class="figure"><img src="assets/figures/radar_plot_efficiency_adjusted_trans.png" alt="Efficiency adjusted Transformer radar"></figure>
+          </div>
+          <p class="bottom-thesis">The result is not “low-rank always wins every metric”; it is that useful Bayesian uncertainty becomes plausible at modern parameter scales.</p>
+        </section>
+
+        <section class="dark">
+          <div class="kicker">Why Rank Is Plausible</div>
+          <h2>Observed singular value decay supports the rank-r constraint.</h2>
+          <div class="split evidence">
+            <div>
+              <p class="lead">When layer spectra decay quickly, the manifold is not an arbitrary bottleneck. It is a structured approximation class.</p>
+              <article class="card"><b>Theory connection</b><span>EYM tail singular values determine rank approximation error; rank ablations and spectra guide practical rank selection.</span></article>
+            </div>
+            <figure class="figure"><img src="assets/figures/singular_value_analysis_selected.png" alt="Singular value analysis"></figure>
+          </div>
+        </section>
+
+        <section class="light">
+          <div class="kicker">Comparator: SWAG</div>
+          <h2>A strong posterior baseline does not overturn the central tradeoff.</h2>
+          <div class="comparison-table compact">
+            <div class="head">Setting</div><div class="head">SWAG strength</div><div class="head span2">Low-rank advantage</div>
+            <div>SST-2</div><div>Accuracy tied at 0.808 vs 0.806</div><div class="span2">Better NLL/OOD; 1.47M params vs 208.37M</div>
+            <div>MIMIC</div><div>Higher in-domain AUROC/NLL</div><div class="span2">OOD MI metrics: 0.802 / 0.788 vs 0.634 / 0.680</div>
+            <div>Beijing</div><div>Higher coverage</div><div class="span2">Much narrower/costlier tradeoff; stronger OOD for low-rank</div>
+          </div>
+          <p class="bottom-thesis">SWAG is a credible baseline. However, SBNN’s geometry gives a better quality-efficiency path in the paper’s target regimes.</p>
+        </section>
+
+        <section class="dark">
+          <div class="kicker">Honest Takeaway</div>
+          <h2>The empirical message is not compression alone.</h2>
+          <div class="card-row wide-cards">
+            <article><b>Where low-rank shines</b><span>OOD separation on MIMIC; coverage/selective prediction on Beijing; efficiency-adjusted uncertainty on SST-2.</span></article>
+            <article><b>Where ensembles remain strong</b><span>In-distribution likelihood and sharpness can favor Deep Ensembles; calibration gaps remain in some settings.</span></article>
+          </div>
+          <article class="card center-card"><b>Why that matters</b><span>Trustworthy AI often needs useful uncertainty under shift, abstention, and deployment constraints, not only marginal NLL.</span></article>
+          <p class="bottom-thesis blush">SBNNs make that goal more practical: structured uncertainty, lower cost, and scalable to modern architectures.</p>
+        </section>
+
+        <section class="light">
+          <div class="kicker">Research Agenda</div>
+          <h2>A platform for scalable Bayesian posteriors in modern architectures.</h2>
+          <div class="contribution-grid agenda">
+            <article><b>Adaptive rank selection</b><span>Ranks chosen by spectra, validation tradeoffs, or sparse priors rather than fixed grids.</span></article>
+            <article><b>Bayesian Transformers</b><span>Structured uncertainty for large sequence models without ensemble-scale cost.</span></article>
+            <article><b>Beyond Gaussian factors</b><span>Laplace, spike-and-slab, and richer factor distributions while keeping singular support.</span></article>
+            <article><b>Trustworthy AI</b><span>Uncertainty that supports abstention, coverage, OOD awareness, and constrained deployment.</span></article>
+          </div>
+        </section>
+
+        <section class="closing-slide dark">
+          <canvas class="manifold-canvas" data-variant="closing" aria-hidden="true"></canvas>
+          <div class="kicker">Closing</div>
+          <h2>Singular posterior geometry for scalable Bayesian deep learning.</h2>
+          <p class="closing-title">Singular Bayesian Neural Networks</p>
+          <div class="closing-links">
+            <a href="https://arradiat.github.io/projects/singular-bnn/">arradiat.github.io/projects/singular-bnn</a>
+            <a href="https://arxiv.org/abs/2602.00387">arxiv.org/abs/2602.00387</a>
+            <a href="https://github.com/arradiat/SBNN">github.com/arradiat/SBNN</a>
+            <span>mame.toure@mail.mcgill.ca</span>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script src="vendor/reveal/reveal.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
