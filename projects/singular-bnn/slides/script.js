@@ -91,3 +91,16 @@ window.addEventListener("resize", resizeAll);
 Reveal.on("slidechanged", resizeAll);
 resizeAll();
 window.requestAnimationFrame(render);
+window.addEventListener("load", () => {
+  if (window.Reveal) {
+    Reveal.layout();
+  }
+});
+
+document.querySelectorAll("img").forEach((img) => {
+  img.addEventListener("load", () => {
+    if (window.Reveal) {
+      Reveal.layout();
+    }
+  });
+});
