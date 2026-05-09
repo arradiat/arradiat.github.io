@@ -332,25 +332,29 @@ article span,
 .factor-mini {
   align-items: center;
   display: grid;
-  gap: 10px;
-  grid-template-columns: .7fr auto .55fr .65fr;
-  margin: 4px auto 0;
-  max-width: 340px;
+  gap: 12px;
+  grid-template-columns: 58px 22px 58px 16px 66px;
+  justify-content: center;
+  margin: 12px auto 0;
+  max-width: 360px;
 }
+
 
 
 .factor-block {
   align-items: center;
-  border-radius: 7px;
+  border-radius: 8px;
   display: flex;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 34px;
   font-weight: 800;
-  height: 170px;
+  height: 150px;
   justify-content: center;
-  position: relative;
   overflow: hidden;
+  position: relative;
+  width: 100%;
 }
+
 
 .factor-block::after {
   animation: factorSweep 2.8s ease-in-out infinite;
@@ -371,11 +375,21 @@ article span,
   color: var(--aub);
 }
 
-.factor-mini > span {
+.factor-mini .eq,
+.factor-mini .times {
   color: var(--burgundy);
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 900;
+  line-height: 1;
+  text-align: center;
 }
+.factor-block sup {
+  font-size: 0.48em;
+  line-height: 0;
+  position: relative;
+  top: -0.45em;
+}
+
 .w-mini {
   background: var(--ivory);
   border: 1px solid #e6ccd7;
