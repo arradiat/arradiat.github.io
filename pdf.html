@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Singular Bayesian Neural Networks | PDF Export</title>
+    <style>
+      :root {
+        --bg: #08090d;
+        --panel: rgba(255,255,255,.06);
+        --line: rgba(255,255,255,.16);
+        --ink: #f7f3ea;
+        --muted: #aaa79f;
+        --cyan: #75e6ff;
+        --gold: #f5c66b;
+        --mint: #a7f3d0;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      @page {
+        size: 16in 9in;
+        margin: 0;
+      }
+
+      .slide {
+        page-break-after: always;
+        break-after: page;
+        width: 16in;
+        height: 9in;
+        overflow: hidden;
+        padding: .58in .78in;
+        position: relative;
+        background:
+          radial-gradient(circle at 78% 28%, rgba(117,230,255,.12), transparent 25%),
+          linear-gradient(135deg, #08090d, #10131a 58%, #08090d);
+      }
+
+      .slide:last-child { page-break-after: auto; break-after: auto; }
+
+      .kicker {
+        color: var(--gold);
+        font-size: 15px;
+        font-weight: 760;
+        letter-spacing: .12em;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+      }
+
+      h1, h2, h3, p { margin: 0; letter-spacing: 0; }
+
+      h1 {
+        max-width: 10.5in;
+        font-size: 78px;
+        line-height: .94;
+        font-weight: 780;
+      }
+
+      h2 {
+        max-width: 12.2in;
+        font-size: 50px;
+        line-height: 1.05;
+        font-weight: 740;
+      }
+
+      h3 {
+        font-size: 24px;
+        font-weight: 720;
+      }
+
+      .lead {
+        color: rgba(247,243,234,.82);
+        font-size: 25px;
+        line-height: 1.24;
+        margin-top: 26px;
+        max-width: 8.8in;
+      }
+
+      .muted {
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.35;
+      }
+
+      .footer {
+        bottom: .36in;
+        color: var(--muted);
+        font-size: 15px;
+        left: .78in;
+        position: absolute;
+      }
+
+      .title .authors {
+        color: rgba(247,243,234,.78);
+        font-size: 24px;
+        margin-top: 26px;
+      }
+
+      .equation {
+        border: 1px solid rgba(117,230,255,.36);
+        border-radius: 8px;
+        color: var(--cyan);
+        display: inline-block;
+        font-size: 25px;
+        margin-top: 34px;
+        padding: 14px 20px;
+      }
+
+      .links {
+        display: flex;
+        gap: 28px;
+        margin-top: 28px;
+        color: var(--cyan);
+        font-size: 18px;
+      }
+
+      .grid-2 {
+        align-items: center;
+        display: grid;
+        gap: .55in;
+        grid-template-columns: 1fr 1fr;
+        margin-top: .55in;
+      }
+
+      .grid-3 {
+        display: grid;
+        gap: .25in;
+        grid-template-columns: repeat(3, 1fr);
+        margin-top: .48in;
+      }
+
+      .card, .metric, .figure, .arch, .theory {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .metric { padding: 22px; }
+      .metric b { color: var(--cyan); display: block; font-size: 38px; }
+      .metric span { color: var(--muted); display: block; font-size: 15px; margin-top: 6px; }
+
+      .bar-stack { display: grid; gap: 18px; }
+      .bar {
+        align-items: center;
+        border-radius: 8px;
+        color: #071016;
+        display: flex;
+        font-size: 20px;
+        font-weight: 780;
+        height: 54px;
+        padding-left: 22px;
+      }
+      .bar.full { width: 72%; background: linear-gradient(90deg, #cfd5df, #778191); }
+      .bar.ensemble { width: 98%; background: linear-gradient(90deg, #f8cf7a, #c57646); }
+      .bar.low { width: 34%; min-width: 250px; background: linear-gradient(90deg, #86e8ff, #9cf0c7); }
+
+      .card { padding: 26px; }
+      .card p { color: rgba(247,243,234,.75); font-size: 20px; line-height: 1.28; margin-top: 12px; }
+      .card code { color: var(--mint); display: block; font-size: 17px; margin-top: 16px; }
+
+      .matrix-row {
+        align-items: center;
+        display: grid;
+        gap: .28in;
+        grid-template-columns: 1.05fr auto .68fr .68fr;
+        margin: .72in auto .3in;
+        max-width: 11.7in;
+      }
+
+      .matrix {
+        align-items: center;
+        border: 1px solid rgba(255,255,255,.18);
+        border-radius: 8px;
+        display: flex;
+        font-family: Georgia, serif;
+        font-size: 58px;
+        height: 2.25in;
+        justify-content: center;
+      }
+
+      .matrix.w {
+        background:
+          linear-gradient(90deg, rgba(255,255,255,.11) 1px, transparent 1px),
+          linear-gradient(rgba(255,255,255,.11) 1px, transparent 1px);
+        background-size: 31px 31px;
+      }
+      .matrix.a { background: linear-gradient(180deg, rgba(117,230,255,.28), rgba(117,230,255,.04)); }
+      .matrix.b { background: linear-gradient(180deg, rgba(167,243,208,.28), rgba(167,243,208,.04)); }
+      .equals { color: var(--muted); font-size: 54px; }
+
+      .formula-strip {
+        color: rgba(247,243,234,.78);
+        display: flex;
+        font-size: 21px;
+        gap: 42px;
+        justify-content: center;
+      }
+
+      .push {
+        align-items: center;
+        display: grid;
+        gap: .35in;
+        grid-template-columns: 1fr 1.35fr 1fr;
+        margin-top: .65in;
+      }
+      .circle {
+        align-items: center;
+        aspect-ratio: 1 / 1;
+        border: 1px solid var(--line);
+        border-radius: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+      .circle b { font-size: 42px; }
+      .circle span { color: var(--muted); font-size: 16px; margin-top: 8px; max-width: 180px; }
+      .arrow { color: var(--cyan); font-size: 42px; text-align: center; }
+
+      .theorem-box {
+        background: linear-gradient(135deg, rgba(255,255,255,.075), rgba(117,230,255,.045));
+        border: 1px solid rgba(117,230,255,.28);
+        border-radius: 8px;
+        margin-top: .5in;
+        max-width: 11.8in;
+        padding: 30px 36px;
+      }
+      .theorem-box p { color: rgba(247,243,234,.84); font-size: 24px; line-height: 1.28; margin-bottom: 18px; }
+      .therefore { color: var(--cyan); font-size: 54px; font-weight: 780; }
+
+      .manifold {
+        background:
+          radial-gradient(circle at 70% 36%, rgba(117,230,255,.18), transparent 22%),
+          radial-gradient(circle at 38% 62%, rgba(245,198,107,.10), transparent 20%),
+          linear-gradient(135deg, #08090d, #111820);
+      }
+      .wire {
+        bottom: .75in;
+        left: .8in;
+        opacity: .45;
+        position: absolute;
+        right: .8in;
+        top: .75in;
+      }
+
+      .callout {
+        background: rgba(8,9,13,.58);
+        border-left: 3px solid var(--cyan);
+        color: rgba(247,243,234,.86);
+        font-size: 23px;
+        line-height: 1.25;
+        margin-top: .45in;
+        max-width: 6.7in;
+        padding: 20px 24px;
+      }
+
+      .figure {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        padding: 14px;
+      }
+      .figure img { max-height: 100%; max-width: 100%; object-fit: contain; }
+      .figure.wide { height: 5.45in; margin-top: .36in; }
+      .figure.medium { height: 4.75in; margin-top: .36in; }
+      .figure.tall { height: 5.05in; }
+      .caption { color: var(--muted); font-size: 16px; margin-top: 12px; text-align: center; }
+
+      .theory { min-height: 1.55in; padding: 20px; }
+      .theory b { color: var(--gold); display: block; font-size: 22px; margin-bottom: 10px; }
+      .theory span { color: rgba(247,243,234,.74); display: block; font-size: 17px; line-height: 1.25; }
+
+      .arch {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        height: 2.1in;
+        justify-content: center;
+        text-align: center;
+      }
+      .arch b { color: var(--cyan); font-size: 42px; }
+      .arch span { color: var(--muted); font-size: 17px; margin-top: 12px; }
+
+      figure { margin: 0; }
+      .radar figure, .evidence figure {
+        align-items: center;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        height: 3.85in;
+        justify-content: center;
+        padding: 14px;
+      }
+      .radar img, .evidence img { max-height: 3.25in; max-width: 100%; object-fit: contain; }
+      figcaption { color: var(--muted); font-size: 15px; margin-top: 8px; text-align: center; }
+
+      .scale {
+        align-items: center;
+        display: grid;
+        gap: .3in;
+        grid-template-columns: 1fr auto 1fr;
+        margin-top: .55in;
+      }
+      .scale .card { min-height: 1.55in; text-align: center; }
+      .big-o { color: var(--ink); display: block; font-size: 46px; font-weight: 780; }
+      .scale small { color: var(--muted); display: block; font-size: 17px; margin-top: 10px; }
+      .scale-arrow { color: var(--gold); font-size: 48px; }
+      .punch { color: var(--ink); font-size: 30px; margin-top: .38in; text-align: center; }
+      .punch b { color: var(--cyan); font-size: 56px; }
+
+      .agenda { display: grid; gap: 18px; margin-top: .55in; max-width: 11in; }
+      .agenda .card { padding: 22px 26px; }
+      .agenda b { color: var(--cyan); display: block; font-size: 27px; margin-bottom: 8px; }
+      .agenda span { color: rgba(247,243,234,.76); font-size: 19px; }
+
+      .closing-links { display: grid; gap: 14px; margin-top: .5in; max-width: 9in; }
+      .closing-links div {
+        background: rgba(8,9,13,.56);
+        border: 1px solid rgba(255,255,255,.14);
+        border-radius: 8px;
+        color: rgba(247,243,234,.86);
+        font-size: 19px;
+        padding: 14px 18px;
+      }
+
+      @media screen {
+        body { display: grid; gap: 24px; justify-content: center; padding: 24px; }
+        .slide { box-shadow: 0 16px 60px rgba(0,0,0,.4); }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="slide title">
+      <div class="kicker">ICML 2026 Accepted Paper</div>
+      <h1>Singular<br>Bayesian Neural Networks</h1>
+      <p class="authors">Mame Diarra Touré · David A. Stephens</p>
+      <div class="equation">W = AB<sup>T</sup> ⇒ q<sub>W</sub> lives on a rank-r manifold</div>
+      <div class="links"><span>arradiat.github.io/projects/singular-bnn</span><span>arXiv: 2602.00387</span><span>github.com/arradiat/SBNN</span></div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">The Bottleneck</div>
+      <h2>Bayesian uncertainty is powerful. Full weight-space posteriors are expensive.</h2>
+      <div class="grid-2">
+        <div>
+          <p class="lead">Modern networks scale by widening matrices. Standard BNNs put distributional parameters on every entry.</p>
+          <div class="grid-3">
+            <div class="metric"><b>O(mn)</b><span>weight coordinates</span></div>
+            <div class="metric"><b>2×</b><span>mean + scale</span></div>
+            <div class="metric"><b>5×</b><span>ensemble cost</span></div>
+          </div>
+        </div>
+        <div class="bar-stack">
+          <div class="bar full">Full-rank VI</div>
+          <div class="bar ensemble">Deep ensemble</div>
+          <div class="bar low">Low-rank factors</div>
+        </div>
+      </div>
+      <div class="footer">https://arradiat.github.io/projects/singular-bnn/</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Mean-Field VI</div>
+      <h2>The hidden cost is not only parameters. It is independence bias.</h2>
+      <div class="grid-2">
+        <div class="card"><h3>Mean-field over W</h3><p>Each weight fluctuates alone.</p><code>Cov(Wij, Wi'j') = 0</code></div>
+        <div class="card"><h3>Low-rank factors</h3><p>Shared latent factors couple weights.</p><code>Cov(Wij, Wi'j') ≠ 0</code></div>
+      </div>
+      <p class="lead" style="color:var(--cyan)">This trades a bias of independence for a bias of correlation.</p>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">The Move</div>
+      <h2>Parameterize matrices through latent factors.</h2>
+      <div class="matrix-row">
+        <div class="matrix w">W</div><div class="equals">=</div><div class="matrix a">A</div><div class="matrix b">B<sup>T</sup></div>
+      </div>
+      <div class="formula-strip"><span>A ∈ R<sup>m×r</sup></span><span>B ∈ R<sup>n×r</sup></span><span>r ≪ min(m,n)</span></div>
+      <p class="lead" style="text-align:center;margin-inline:auto">Uncertainty is learned in factor space, then pushed into weight space.</p>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Pushforward Posterior</div>
+      <h2>q(A,B) induces q<sub>W</sub> through multiplication.</h2>
+      <div class="push">
+        <div class="circle"><b>q(A,B)</b><span>mean-field over factors</span></div>
+        <div class="arrow">T(A,B)=AB<sup>T</sup> →</div>
+        <div class="circle"><b>q<sub>W</sub></b><span>posterior over weights</span></div>
+      </div>
+      <p class="lead" style="color:var(--cyan)">The posterior is the image of a factor distribution.</p>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Central Theorem</div>
+      <h2>q<sub>W</sub> is singular with respect to Lebesgue measure.</h2>
+      <div class="theorem-box">
+        <p>If W = AB<sup>T</sup>, then q<sub>W</sub>(R<sub>r</sub>) = 1.</p>
+        <p>For r &lt; min(m,n), R<sub>r</sub> has Lebesgue measure zero in R<sup>m×n</sup>.</p>
+        <div class="therefore">q<sub>W</sub> ⟂ λ</div>
+      </div>
+      <p class="muted" style="margin-top:18px">“Singular” here means measure-theoretic singularity: posterior support is constrained to the rank-r set.</p>
+    </section>
+
+    <section class="slide manifold">
+      <svg class="wire" viewBox="0 0 1200 620" preserveAspectRatio="none" aria-hidden="true">
+        <g fill="none" stroke="rgba(117,230,255,.28)" stroke-width="1">
+          <path d="M0 390 C190 160 300 600 500 330 S850 90 1200 320"/>
+          <path d="M0 430 C220 200 350 650 560 360 S890 130 1200 360"/>
+          <path d="M0 350 C160 110 280 540 470 290 S830 40 1200 280"/>
+          <path d="M80 0 C180 180 140 410 270 620"/>
+          <path d="M320 0 C410 170 390 420 480 620"/>
+          <path d="M620 0 C690 170 720 420 780 620"/>
+          <path d="M920 0 C970 190 1030 430 1060 620"/>
+        </g>
+      </svg>
+      <div class="kicker">Geometric Intuition</div>
+      <h2>Posterior mass lives on the rank-r manifold.</h2>
+      <div class="callout">Full-dimensional noise becomes structured uncertainty on a lower-dimensional surface.</div>
+      <div class="footer">Rank-r support changes geometry, inductive bias, and complexity.</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Mean-Field vs Low-Rank</div>
+      <h2>The distinction is geometric, not cosmetic.</h2>
+      <div class="figure wide"><img src="assets/figures/figure_geometric_distinction.png" alt=""></div>
+      <div class="caption">Mean-field fills volume; the induced low-rank posterior concentrates on the rank-r manifold.</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Structured Uncertainty</div>
+      <h2>Shared factors create correlation patterns mean-field cannot express.</h2>
+      <div class="figure wide"><img src="assets/figures/weight_correlation_heatmap.png" alt=""></div>
+      <div class="caption">Empirical weight correlations: diagonal independence versus block-structured factor uncertainty.</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Theory Stack</div>
+      <h2>The geometry buys more than compression.</h2>
+      <div class="grid-3">
+        <div class="theory"><b>Approximation</b><span>Eckart-Young-Mirsky: rank bias controlled by tail singular values.</span></div>
+        <div class="theory"><b>PAC-Bayes</b><span>Complexity scales as √r(m+n), not √mn.</span></div>
+        <div class="theory"><b>Gaussian complexity</b><span>Low-rank deterministic bounds transfer to Bayesian predictive means.</span></div>
+      </div>
+      <div class="figure medium"><img src="assets/figures/combined_bound.png" alt=""></div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Architecture Coverage</div>
+      <h2>Same posterior idea, three model families.</h2>
+      <div class="grid-3">
+        <div class="arch"><b>MLP</b><span>standard dense layers</span></div>
+        <div class="arch"><b>LSTM</b><span>input-to-hidden + recurrent gates</span></div>
+        <div class="arch"><b>Transformer</b><span>position-wise low-rank factors</span></div>
+      </div>
+      <p class="lead" style="text-align:center;margin-inline:auto">Variational layers act as drop-in replacements for standard Keras layers.</p>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Empirical Story</div>
+      <h2>Competitive uncertainty across tabular, time-series, and text benchmarks.</h2>
+      <div class="grid-3 radar">
+        <figure><img src="assets/figures/radar_plot_multiseed_avg.png" alt=""><figcaption>MIMIC-III</figcaption></figure>
+        <figure><img src="assets/figures/metrics_radar_lstm.png" alt=""><figcaption>Beijing PM2.5</figcaption></figure>
+        <figure><img src="assets/figures/aggregated_radar_4seeds.png" alt=""><figcaption>SST-2 / AGNews</figcaption></figure>
+      </div>
+      <p class="muted" style="margin-top:14px">Deep Ensembles remain strong on some in-distribution likelihood metrics; the low-rank posterior changes the quality-efficiency frontier.</p>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Selective Prediction</div>
+      <h2>Uncertainty should decide when the model abstains.</h2>
+      <div class="grid-2">
+        <div class="figure tall"><img src="assets/figures/selective_pred.png" alt=""></div>
+        <div><p class="lead">The practical target is not only calibrated confidence. It is useful confidence under distribution shift.</p><p class="lead" style="color:var(--cyan)">OOD detection · selective risk · posterior efficiency</p></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Efficiency</div>
+      <h2>O(mn) becomes O(r(m+n)).</h2>
+      <div class="scale">
+        <div class="card"><span class="big-o">O(mn)</span><small>full weight posterior</small></div>
+        <div class="scale-arrow">→</div>
+        <div class="card"><span class="big-o">O(r(m+n))</span><small>factor posterior</small></div>
+      </div>
+      <div class="punch">up to <b>33×</b> fewer parameters than 5-member Deep Ensembles</div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Efficiency Evidence</div>
+      <h2>Less posterior machinery, competitive uncertainty.</h2>
+      <div class="grid-2 evidence">
+        <figure><img src="assets/figures/model_params.png" alt=""><figcaption>Parameter scaling</figcaption></figure>
+        <figure><img src="assets/figures/radar_plot_efficiency_adjusted_trans.png" alt=""><figcaption>Efficiency-adjusted Transformer metrics</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">Spectral Evidence</div>
+      <h2>The rank constraint is aligned with observed singular value decay.</h2>
+      <div class="grid-2">
+        <div><p class="lead">When layer spectra decay quickly, the rank-r manifold is not an arbitrary bottleneck. It is a structured approximation class.</p><p class="lead" style="color:var(--cyan)">This is where approximation theory meets posterior geometry.</p></div>
+        <div class="figure medium"><img src="assets/figures/singular_value_analysis_selected.png" alt=""></div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="kicker">What This Enables</div>
+      <h2>Theory-backed scalable uncertainty estimation.</h2>
+      <div class="agenda">
+        <div class="card"><b>Scalable Bayesian Transformers</b><span>posterior structure without ensemble-scale cost</span></div>
+        <div class="card"><b>Structured posteriors</b><span>latent factors as a geometry-aware uncertainty interface</span></div>
+        <div class="card"><b>Trustworthy AI</b><span>uncertainty that can travel into deployment constraints</span></div>
+      </div>
+    </section>
+
+    <section class="slide manifold">
+      <div class="kicker">Research Agenda</div>
+      <h2>Bayesian deep learning can scale by changing the geometry of the posterior.</h2>
+      <div class="closing-links">
+        <div>arradiat.github.io/projects/singular-bnn</div>
+        <div>arxiv.org/abs/2602.00387</div>
+        <div>github.com/arradiat/SBNN</div>
+        <div>mame.toure@mail.mcgill.ca</div>
+      </div>
+      <p class="lead" style="color:var(--gold)">Singular Bayesian Neural Networks</p>
+    </section>
+  </body>
+</html>
