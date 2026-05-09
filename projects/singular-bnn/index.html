@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Singular Bayesian Neural Networks | ICML 2026</title>
+
+  <meta
+    name="description"
+    content="Project page for Singular Bayesian Neural Networks (ICML 2026). Low-rank Bayesian neural networks with singular posterior geometry and scalable uncertainty quantification."
+  />
+
+  <link rel="stylesheet" href="./style.css" />
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']]
+      }
+    };
+  </script>
+
+  <script
+    defer
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+
+<body>
+
+  <header class="navbar">
+    <div class="nav-left">
+      <a href="/" class="brand">Mame Diarra Touré</a>
+    </div>
+
+    <nav class="nav-right">
+      <a href="#overview">Overview</a>
+      <a href="#theory">Theory</a>
+      <a href="#results">Results</a>
+      <a href="#resources">Resources</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <div class="conference-badge">
+        ICML 2026
+      </div>
+
+      <h1>
+        Singular Bayesian<br />
+        Neural Networks
+      </h1>
+
+      <p class="subtitle">
+        Low-rank Bayesian neural networks with singular posterior geometry,
+        reduced complexity scaling, and scalable uncertainty quantification.
+      </p>
+
+      <div class="authors">
+        <strong>Mame Diarra Touré</strong><br />
+        with David A. Stephens<br />
+        McGill University
+      </div>
+
+      <div class="hero-buttons">
+
+        <a
+          class="primary-btn"
+          href="https://arxiv.org/abs/2602.00387"
+          target="_blank">
+          arXiv
+        </a>
+
+        <a
+          class="secondary-btn"
+          href="https://arxiv.org/pdf/2602.00387"
+          target="_blank">
+          Paper PDF
+        </a>
+
+       <a
+  class="secondary-btn"
+  href="https://github.com/arradiat/SBNN"
+  target="_blank">
+  GitHub
+</a>
+
+      </div>
+
+    </div>
+
+    <div class="hero-visual">
+
+      <div class="orbital-container">
+
+        <div class="volume-cloud"></div>
+
+        <div class="manifold-surface"></div>
+
+      </div>
+
+      <div class="hero-formula">
+        $W = AB^\top$
+      </div>
+
+      <div class="hero-caption">
+        Low-rank Bayesian posteriors concentrate on rank-constrained manifolds.
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="tldr-section">
+
+    <div class="section-tag">
+      TL;DR
+    </div>
+
+    <p>
+      We parameterize Bayesian neural network weights through low-rank
+      factors $W = AB^\top$, inducing a singular posterior geometry
+      concentrated on the rank-$r$ manifold. This reduces variational
+      complexity from $O(mn)$ to $O(r(m+n))$ while maintaining strong
+      uncertainty-aware performance across MLPs, LSTMs, and Transformers.
+    </p>
+
+  </section>
+
+  <section id="overview" class="content-section">
+
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2>Core idea</h2>
+    </div>
+
+    <div class="two-column">
+
+      <div>
+
+        <h3>From mean-field to structured low-rank geometry</h3>
+
+        <p>
+          Standard Bayesian neural networks often rely on fully factorized
+          posteriors that ignore structured correlations between weights.
+          We instead introduce low-rank variational factors:
+        </p>
+
+        <div class="equation-box">
+          $$A \in \mathbb{R}^{m \times r}, \qquad
+          B \in \mathbb{R}^{n \times r}, \qquad
+          W = AB^\top.$$
+        </div>
+
+        <p>
+          Although the factors themselves can be mean-field,
+          the induced posterior over $W$ becomes highly structured,
+          introducing correlations through shared latent factors.
+        </p>
+
+      </div>
+
+      <div class="metric-column">
+
+        <div class="metric-card">
+          <span>Complexity</span>
+          <strong>$O(r(m+n))$</strong>
+          <small>instead of $O(mn)$</small>
+        </div>
+
+        <div class="metric-card">
+          <span>Posterior support</span>
+          <strong>rank-$r$ manifold</strong>
+          <small>singular in ambient matrix space</small>
+        </div>
+
+        <div class="metric-card">
+          <span>Architectures</span>
+          <strong>MLP · LSTM · Transformer</strong>
+          <small>drop-in Bayesian layers</small>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="figure-section">
+
+    <figure>
+
+      <img
+        src="../../Singular_Bayesian_Neural_Networks_Revised/figures/figure_geometric_distinction.png"
+        alt="Posterior geometry figure"
+      />
+
+      <figcaption>
+        <strong>Posterior geometry.</strong>
+        Mean-field posteriors occupy a full-dimensional volume,
+        whereas low-rank posteriors concentrate on the rank-constrained manifold.
+      </figcaption>
+
+    </figure>
+
+  </section>
+
+  <section id="theory" class="dark-section">
+
+    <div class="section-header dark-header">
+      <span class="section-number">02</span>
+      <h2>Theory</h2>
+    </div>
+
+    <div class="theorem-grid">
+
+      <div class="theorem-card">
+
+        <h3>Singular posterior support</h3>
+
+        <div class="equation-box dark-eq">
+          $$q_W(\mathcal{R}_r)=1,
+          \qquad
+          \lambda(\mathcal{R}_r)=0,
+          \qquad
+          q_W \perp \lambda.$$
+        </div>
+
+        <p>
+          The induced posterior is singular with respect to Lebesgue measure
+          on the ambient weight space.
+        </p>
+
+      </div>
+
+      <div class="theorem-card">
+
+        <h3>Reduced complexity scaling</h3>
+
+        <div class="equation-box dark-eq">
+          $$\sqrt{
+          \frac{r(m+n)}{mn}
+          }$$
+        </div>
+
+        <p>
+          Low-rank posteriors reduce the dominant complexity scaling
+          when $r \ll \min(m,n)$.
+        </p>
+
+      </div>
+
+      <div class="theorem-card">
+
+        <h3>Structured correlations</h3>
+
+        <p>
+          Shared latent factors induce non-trivial covariance structure
+          between weights, unlike fully factorized posteriors.
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="figure-grid">
+
+    <figure>
+
+      <img
+        src="../../Singular_Bayesian_Neural_Networks_Revised/figures/weight_correlation_heatmap.png"
+        alt="Weight correlation heatmap"
+      />
+
+      <figcaption>
+        Induced correlation structure in low-rank Bayesian weights.
+      </figcaption>
+
+    </figure>
+
+    <figure>
+
+      <img
+        src="../../Singular_Bayesian_Neural_Networks_Revised/figures/combined_bound.png"
+        alt="Combined bound figure"
+      />
+
+      <figcaption>
+        PAC-Bayes and Gaussian complexity perspectives on low-rank scaling.
+      </figcaption>
+
+    </figure>
+
+  </section>
+
+  <section id="results" class="content-section">
+
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2>Experimental highlights</h2>
+    </div>
+
+    <div class="results-grid">
+
+      <div class="result-card">
+
+        <h3>MIMIC-III ICU mortality</h3>
+
+        <ul>
+          <li>Strong OOD detection</li>
+          <li>Competitive calibration</li>
+          <li>Substantially fewer parameters</li>
+        </ul>
+
+      </div>
+
+      <div class="result-card">
+
+        <h3>Beijing PM$_{2.5}$ forecasting</h3>
+
+        <ul>
+          <li>Selective prediction improvements</li>
+          <li>Reliable uncertainty intervals</li>
+          <li>Parameter-efficient Bayesian LSTM</li>
+        </ul>
+
+      </div>
+
+      <div class="result-card">
+
+        <h3>SST-2 Transformer</h3>
+
+        <ul>
+          <li>Competitive OOD performance</li>
+          <li>Scalable Bayesian Transformer</li>
+          <li>Reduced storage requirements</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <section class="figure-grid">
+
+    <figure>
+      <img
+        src="../../Singular_Bayesian_Neural_Networks_Revised/figures/radar_plot_multiseed_avg.png"
+        alt="Radar plot"
+      />
+    </figure>
+
+    <figure>
+      <img
+        src="../../Singular_Bayesian_Neural_Networks_Revised/figures/selective_pred.png"
+        alt="Selective prediction"
+      />
+    </figure>
+
+    <figure>
+      <img
+        src="../../Singular_Bayesian_Neural_Networks_Revised/figures/metrics_radar_lstm.png"
+        alt="LSTM metrics"
+      />
+    </figure>
+
+    <figure>
+      <img
+        src="../../Singular_Bayesian_Neural_Networks_Revised/figures/aggregated_radar_4seeds.png"
+        alt="Transformer radar"
+      />
+    </figure>
+
+  </section>
+
+  <section class="interactive-section">
+
+    <div>
+
+      <div class="section-tag">
+        Interactive
+      </div>
+
+      <h2>Parameter-count intuition</h2>
+
+      <p>
+        Move the rank slider to compare full-rank and low-rank parameterization
+        for a single $256 \times 256$ layer.
+      </p>
+
+    </div>
+
+    <div class="slider-panel">
+
+      <label for="rank-slider">
+        Rank $r$:
+        <strong id="rank-value">16</strong>
+      </label>
+
+      <input
+        type="range"
+        min="1"
+        max="128"
+        value="16"
+        id="rank-slider"
+      />
+
+      <div class="bar-group">
+
+        <div>
+
+          <span>Full rank</span>
+
+          <div class="bar-background">
+            <div
+              class="bar-fill full-bar"
+              id="full-bar">
+            </div>
+          </div>
+
+          <strong id="full-count">65536</strong>
+
+        </div>
+
+        <div>
+
+          <span>Low rank</span>
+
+          <div class="bar-background">
+            <div
+              class="bar-fill low-bar"
+              id="low-bar">
+            </div>
+          </div>
+
+          <strong id="low-count">8192</strong>
+
+        </div>
+
+      </div>
+
+      <p id="saving-text">
+        8× fewer parameters.
+      </p>
+
+    </div>
+
+  </section>
+
+  <section id="resources" class="content-section">
+
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2>Resources</h2>
+    </div>
+
+    <div class="resource-grid">
+
+      <a
+        class="resource-card"
+        href="https://arxiv.org/abs/2602.00387"
+        target="_blank">
+
+        <strong>arXiv</strong>
+        <span>Paper abstract</span>
+
+      </a>
+
+      <a
+        class="resource-card"
+        href="https://arxiv.org/pdf/2602.00387"
+        target="_blank">
+
+        <strong>PDF</strong>
+        <span>Full paper</span>
+
+      </a>
+
+      <a
+  class="resource-card"
+  href="https://github.com/arradiat/SBNN"
+  target="_blank">
+        
+
+        <strong>GitHub</strong>
+        <span>Code and repositories</span>
+
+      </a>
+
+      <a
+        class="resource-card"
+        href="/"
+        target="_blank">
+
+        <strong>Homepage</strong>
+        <span>Main academic page</span>
+
+      </a>
+
+    </div>
+
+  </section>
+
+  <section class="citation-section">
+
+    <h2>Citation</h2>
+
+    <pre><code>@inproceedings{toure2026singular,
+  title     = {Singular Bayesian Neural Networks},
+  author    = {Toure, Mame Diarra and Stephens, David A.},
+  booktitle = {International Conference on Machine Learning},
+  year      = {2026}
+}</code></pre>
+
+    <button id="copy-bibtex">
+      Copy BibTeX
+    </button>
+
+  </section>
+
+  <footer>
+    © 2026 Mame Diarra Touré
+  </footer>
+
+  <script src="./script.js"></script>
+
+</body>
+</html>
