@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Singular Bayesian Neural Networks | ICML 2026</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2308090d'/%3E%3Cpath d='M12 42c10-22 30-22 40 0' fill='none' stroke='%2375e6ff' stroke-width='5'/%3E%3Ccircle cx='22' cy='35' r='3' fill='%23f5c66b'/%3E%3Ccircle cx='42' cy='35' r='3' fill='%23a7f3d0'/%3E%3C/svg%3E">
+    <link rel="stylesheet" href="vendor/reveal/reveal.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section class="title-slide" data-background-gradient="radial-gradient(circle at 68% 42%, rgba(112, 223, 255, .15), transparent 26%), #08090d">
+          <canvas class="manifold-canvas" data-variant="title" aria-hidden="true"></canvas>
+          <div class="deck-kicker">ICML 2026 Accepted Paper</div>
+          <h1>Singular<br>Bayesian Neural Networks</h1>
+          <p class="authors">Mame Diarra Touré · David A. Stephens</p>
+          <div class="title-equation">W = AB<sup>T</sup> &nbsp;⇒&nbsp; q<sub>W</sub> lives on a rank-r manifold</div>
+          <div class="link-row">
+            <a href="https://arradiat.github.io/projects/singular-bnn/">project</a>
+            <a href="https://arxiv.org/abs/2602.00387">arXiv</a>
+            <a href="https://github.com/arradiat/SBNN">code</a>
+          </div>
+        </section>
+
+        <section>
+          <div class="eyebrow">The Bottleneck</div>
+          <h2>Bayesian uncertainty is powerful. Full weight-space posteriors are expensive.</h2>
+          <div class="split">
+            <div>
+              <p class="lead">Modern networks scale by widening matrices. Standard BNNs put distributional parameters on every entry.</p>
+              <div class="metric-row">
+                <div><b>O(mn)</b><span>weight coordinates</span></div>
+                <div><b>2×</b><span>mean + scale</span></div>
+                <div><b>5×</b><span>ensemble cost</span></div>
+              </div>
+            </div>
+            <div class="scaling-bars" aria-label="Parameter scaling illustration">
+              <div class="bar full"><span>Full-rank VI</span></div>
+              <div class="bar ensemble"><span>Deep ensemble</span></div>
+              <div class="bar low"><span>Low-rank factors</span></div>
+            </div>
+          </div>
+          <footer>https://arradiat.github.io/projects/singular-bnn/</footer>
+        </section>
+
+        <section>
+          <div class="eyebrow">Mean-Field VI</div>
+          <h2>The hidden cost is not only parameters. It is independence bias.</h2>
+          <div class="comparison">
+            <div class="posterior-card fragment">
+              <div class="grid-noise independent"></div>
+              <h3>Mean-field over W</h3>
+              <p>Each weight fluctuates alone.</p>
+              <code>Cov(W<sub>ij</sub>, W<sub>i'j'</sub>) = 0</code>
+            </div>
+            <div class="posterior-card accent fragment">
+              <div class="grid-noise structured"></div>
+              <h3>Low-rank factors</h3>
+              <p>Shared latent factors couple weights.</p>
+              <code>Cov(W<sub>ij</sub>, W<sub>i'j'</sub>) ≠ 0</code>
+            </div>
+          </div>
+          <p class="tagline fragment">This trades a bias of independence for a bias of correlation.</p>
+        </section>
+
+        <section>
+          <div class="eyebrow">The Move</div>
+          <h2>Parameterize matrices through latent factors.</h2>
+          <div class="factorization">
+            <div class="matrix w">W</div>
+            <div class="equals">=</div>
+            <div class="matrix a">A</div>
+            <div class="matrix b">B<sup>T</sup></div>
+          </div>
+          <div class="formula-strip">
+            <span>A ∈ R<sup>m×r</sup></span>
+            <span>B ∈ R<sup>n×r</sup></span>
+            <span>r ≪ min(m,n)</span>
+          </div>
+          <p class="lead centered">Uncertainty is learned in factor space, then pushed into weight space.</p>
+        </section>
+
+        <section>
+          <div class="eyebrow">Pushforward Posterior</div>
+          <h2>q(A,B) induces q<sub>W</sub> through multiplication.</h2>
+          <div class="pushforward">
+            <div class="measure source">
+              <span>q(A,B)</span>
+              <small>mean-field over factors</small>
+            </div>
+            <svg viewBox="0 0 520 160" role="img" aria-label="Pushforward map">
+              <defs>
+                <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+                  <path d="M0,0 L12,6 L0,12 Z"></path>
+                </marker>
+              </defs>
+              <path class="map-path" d="M40 82 C150 8, 250 156, 366 76" marker-end="url(#arrow)"></path>
+              <text x="168" y="58">T(A,B)=ABᵀ</text>
+            </svg>
+            <div class="measure target">
+              <span>q<sub>W</sub></span>
+              <small>posterior over weights</small>
+            </div>
+          </div>
+          <p class="tagline">The posterior is not defined by a density over all of weight space. It is the image of a factor distribution.</p>
+        </section>
+
+        <section>
+          <div class="eyebrow">Central Theorem</div>
+          <h2>q<sub>W</sub> is singular with respect to Lebesgue measure.</h2>
+          <div class="theorem-card">
+            <p>If W = AB<sup>T</sup> with A ∈ R<sup>m×r</sup>, B ∈ R<sup>n×r</sup>, then q<sub>W</sub>(R<sub>r</sub>) = 1.</p>
+            <p>For r &lt; min(m,n), R<sub>r</sub> has Lebesgue measure zero in R<sup>m×n</sup>.</p>
+            <div class="therefore">q<sub>W</sub> ⟂ λ</div>
+          </div>
+          <p class="note">“Singular” here means measure-theoretic singularity: posterior support is constrained to the rank-r set.</p>
+        </section>
+
+        <section class="visual-slide">
+          <canvas class="manifold-canvas" data-variant="manifold" aria-hidden="true"></canvas>
+          <div class="eyebrow">Geometric Intuition</div>
+          <h2>Posterior mass lives on the rank-r manifold.</h2>
+          <div class="callout fragment">Full-dimensional noise becomes structured uncertainty on a lower-dimensional surface.</div>
+          <div class="paper-inset fragment">
+            <img src="assets/figures/figure_geometric_distinction.png" alt="Geometric distinction between mean-field and low-rank posteriors">
+          </div>
+          <footer>Rank-r support changes geometry, inductive bias, and complexity.</footer>
+        </section>
+
+        <section>
+          <div class="eyebrow">Structured Uncertainty</div>
+          <h2>Shared factors create correlation patterns mean-field cannot express.</h2>
+          <div class="figure-frame wide">
+            <img src="assets/figures/weight_correlation_heatmap.png" alt="Weight correlation heatmap comparing full-rank BBB and low-rank Gaussian posterior">
+          </div>
+          <div class="caption">Empirical weight correlations: diagonal independence versus block-structured factor uncertainty.</div>
+        </section>
+
+        <section>
+          <div class="eyebrow">Theory Stack</div>
+          <h2>The geometry buys more than compression.</h2>
+          <div class="theory-stack">
+            <div class="fragment"><b>Approximation</b><span>Eckart-Young-Mirsky: rank bias controlled by tail singular values.</span></div>
+            <div class="fragment"><b>PAC-Bayes</b><span>Complexity scales as √r(m+n), not √mn.</span></div>
+            <div class="fragment"><b>Gaussian complexity</b><span>Low-rank deterministic bounds transfer to Bayesian predictive means.</span></div>
+          </div>
+          <div class="figure-frame bound fragment">
+            <img src="assets/figures/combined_bound.png" alt="Combined theoretical bound visualization">
+          </div>
+        </section>
+
+        <section>
+          <div class="eyebrow">Architecture Coverage</div>
+          <h2>Same posterior idea, three model families.</h2>
+          <div class="architecture-row">
+            <div class="arch fragment"><span>MLP</span><small>standard dense layers</small></div>
+            <div class="arch fragment"><span>LSTM</span><small>input-to-hidden + recurrent gates</small></div>
+            <div class="arch fragment"><span>Transformer</span><small>position-wise low-rank factors</small></div>
+          </div>
+          <p class="lead centered">Variational layers act as drop-in replacements for standard Keras layers.</p>
+        </section>
+
+        <section>
+          <div class="eyebrow">Empirical Story</div>
+          <h2>Competitive uncertainty across tabular, time-series, and text benchmarks.</h2>
+          <div class="figure-grid">
+            <figure>
+              <img src="assets/figures/radar_plot_multiseed_avg.png" alt="Multi-seed radar plot for MIMIC results">
+              <figcaption>MIMIC-III</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/figures/metrics_radar_lstm.png" alt="Radar plot for LSTM Beijing PM2.5 metrics">
+              <figcaption>Beijing PM2.5</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/figures/aggregated_radar_4seeds.png" alt="Aggregated radar plot for Transformer SST-2 metrics">
+              <figcaption>SST-2 / AGNews</figcaption>
+            </figure>
+          </div>
+          <p class="note">Deep Ensembles remain strong on some in-distribution likelihood metrics; the low-rank posterior changes the quality-efficiency frontier.</p>
+        </section>
+
+        <section>
+          <div class="eyebrow">Selective Prediction</div>
+          <h2>Uncertainty should decide when the model abstains.</h2>
+          <div class="split">
+            <div class="figure-frame tall">
+              <img src="assets/figures/selective_pred.png" alt="Selective prediction curves">
+            </div>
+            <div>
+              <p class="lead">The practical target is not only calibrated confidence. It is useful confidence under distribution shift.</p>
+              <div class="mini-list">
+                <span>OOD detection</span>
+                <span>selective risk</span>
+                <span>posterior efficiency</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="eyebrow">Efficiency</div>
+          <h2>O(mn) becomes O(r(m+n)).</h2>
+          <div class="scaling-visual">
+            <div class="scale-card">
+              <span class="big-o">O(mn)</span>
+              <small>full weight posterior</small>
+            </div>
+            <div class="scale-arrow">→</div>
+            <div class="scale-card active">
+              <span class="big-o">O(r(m+n))</span>
+              <small>factor posterior</small>
+            </div>
+          </div>
+          <div class="efficiency-punch">up to <b>33×</b> fewer parameters than 5-member Deep Ensembles</div>
+          <div class="efficiency-figures fragment">
+            <div class="figure-frame slim">
+              <img src="assets/figures/model_params.png" alt="Model parameter comparison">
+            </div>
+            <div class="figure-frame slim">
+              <img src="assets/figures/radar_plot_efficiency_adjusted_trans.png" alt="Efficiency-adjusted Transformer radar plot">
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="eyebrow">Spectral Evidence</div>
+          <h2>The rank constraint is aligned with observed singular value decay.</h2>
+          <div class="split">
+            <div>
+              <p class="lead">When layer spectra decay quickly, the rank-r manifold is not an arbitrary bottleneck. It is a structured approximation class.</p>
+              <p class="tagline">This is where approximation theory meets posterior geometry.</p>
+            </div>
+            <div class="figure-frame">
+              <img src="assets/figures/singular_value_analysis_selected.png" alt="Selected singular value decay analysis">
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <div class="eyebrow">What This Enables</div>
+          <h2>Theory-backed scalable uncertainty estimation.</h2>
+          <div class="enablement">
+            <div><b>Scalable Bayesian Transformers</b><span>posterior structure without ensemble-scale cost</span></div>
+            <div><b>Structured posteriors</b><span>latent factors as a geometry-aware uncertainty interface</span></div>
+            <div><b>Trustworthy AI</b><span>uncertainty that can travel into deployment constraints</span></div>
+          </div>
+        </section>
+
+        <section class="closing-slide">
+          <canvas class="manifold-canvas" data-variant="closing" aria-hidden="true"></canvas>
+          <div class="eyebrow">Research Agenda</div>
+          <h2>Bayesian deep learning can scale by changing the geometry of the posterior.</h2>
+          <div class="closing-grid">
+            <a href="https://arradiat.github.io/projects/singular-bnn/">arradiat.github.io/projects/singular-bnn</a>
+            <a href="https://arxiv.org/abs/2602.00387">arxiv.org/abs/2602.00387</a>
+            <a href="https://github.com/arradiat/SBNN">github.com/arradiat/SBNN</a>
+            <span>mame.toure@mail.mcgill.ca</span>
+          </div>
+          <p class="final-line">Singular Bayesian Neural Networks</p>
+        </section>
+      </div>
+    </div>
+
+    <script src="vendor/reveal/reveal.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
