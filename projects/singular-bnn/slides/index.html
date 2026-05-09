@@ -118,16 +118,23 @@
           <p class="note">“Singular” here means measure-theoretic singularity: posterior support is constrained to the rank-r set.</p>
         </section>
 
-        <section class="visual-slide">
-          <canvas class="manifold-canvas" data-variant="manifold" aria-hidden="true"></canvas>
-          <div class="eyebrow">Geometric Intuition</div>
-          <h2>Posterior mass lives on the rank-r manifold.</h2>
-          <div class="callout fragment">Full-dimensional noise becomes structured uncertainty on a lower-dimensional surface.</div>
-          <div class="paper-inset fragment">
-            <img src="assets/figures/figure_geometric_distinction.png" alt="Geometric distinction between mean-field and low-rank posteriors">
-          </div>
-          <footer>Rank-r support changes geometry, inductive bias, and complexity.</footer>
-        </section>
+   <section class="visual-slide">
+  <canvas class="manifold-canvas" data-variant="manifold" aria-hidden="true"></canvas>
+  <div class="eyebrow">Geometric Intuition</div>
+  <h2>Posterior mass lives on the rank-r manifold.</h2>
+  <div class="callout fragment">Full-dimensional noise becomes structured uncertainty on a lower-dimensional surface.</div>
+  <footer>Rank-r support changes geometry, inductive bias, and complexity.</footer>
+</section>
+
+<section class="geometry-figure-slide">
+  <div class="eyebrow">Mean-Field vs Low-Rank</div>
+  <h2>The distinction is geometric, not cosmetic.</h2>
+  <div class="figure-frame geometry-panel">
+    <img src="assets/figures/figure_geometric_distinction.png" alt="Geometric distinction between mean-field and low-rank posteriors">
+  </div>
+  <div class="caption">Mean-field fills volume; the induced low-rank posterior concentrates on the rank-r manifold.</div>
+</section>
+
 
         <section>
           <div class="eyebrow">Structured Uncertainty</div>
@@ -199,31 +206,38 @@
             </div>
           </div>
         </section>
+<section>
+  <div class="eyebrow">Efficiency</div>
+  <h2>O(mn) becomes O(r(m+n)).</h2>
+  <div class="scaling-visual">
+    <div class="scale-card">
+      <span class="big-o">O(mn)</span>
+      <small>full weight posterior</small>
+    </div>
+    <div class="scale-arrow">→</div>
+    <div class="scale-card active">
+      <span class="big-o">O(r(m+n))</span>
+      <small>factor posterior</small>
+    </div>
+  </div>
+  <div class="efficiency-punch">up to <b>33×</b> fewer parameters than 5-member Deep Ensembles</div>
+</section>
 
-        <section>
-          <div class="eyebrow">Efficiency</div>
-          <h2>O(mn) becomes O(r(m+n)).</h2>
-          <div class="scaling-visual">
-            <div class="scale-card">
-              <span class="big-o">O(mn)</span>
-              <small>full weight posterior</small>
-            </div>
-            <div class="scale-arrow">→</div>
-            <div class="scale-card active">
-              <span class="big-o">O(r(m+n))</span>
-              <small>factor posterior</small>
-            </div>
-          </div>
-          <div class="efficiency-punch">up to <b>33×</b> fewer parameters than 5-member Deep Ensembles</div>
-          <div class="efficiency-figures fragment">
-            <div class="figure-frame slim">
-              <img src="assets/figures/model_params.png" alt="Model parameter comparison">
-            </div>
-            <div class="figure-frame slim">
-              <img src="assets/figures/radar_plot_efficiency_adjusted_trans.png" alt="Efficiency-adjusted Transformer radar plot">
-            </div>
-          </div>
-        </section>
+<section class="efficiency-evidence-slide">
+  <div class="eyebrow">Efficiency Evidence</div>
+  <h2>Less posterior machinery, competitive uncertainty.</h2>
+  <div class="evidence-pair">
+    <figure>
+      <img src="assets/figures/model_params.png" alt="Model parameter comparison">
+      <figcaption>Parameter scaling</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/figures/radar_plot_efficiency_adjusted_trans.png" alt="Efficiency-adjusted Transformer radar plot">
+      <figcaption>Efficiency-adjusted Transformer metrics</figcaption>
+    </figure>
+  </div>
+</section>
+
 
         <section>
           <div class="eyebrow">Spectral Evidence</div>
