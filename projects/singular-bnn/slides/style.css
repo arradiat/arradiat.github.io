@@ -751,3 +751,242 @@ footer {
     left: 26px;
   }
 }
+/* ---- ICML upload sizing fixes ---- */
+
+.reveal section {
+  overflow: hidden;
+  padding: 40px 62px;
+}
+
+.reveal h1 {
+  font-size: clamp(54px, 7.2vw, 104px);
+  line-height: 0.92;
+}
+
+.reveal h2 {
+  font-size: clamp(34px, 3.8vw, 56px);
+  line-height: 1.04;
+  max-width: 980px;
+}
+
+.eyebrow,
+.deck-kicker {
+  margin-bottom: 16px;
+}
+
+.lead {
+  font-size: 25px;
+  margin-top: 24px;
+}
+
+.split {
+  gap: 42px;
+  margin-top: 34px;
+}
+
+.metric-row {
+  margin-top: 30px;
+}
+
+.metric-row div {
+  padding: 18px 16px;
+}
+
+.grid-noise {
+  height: 138px;
+  margin-bottom: 20px;
+}
+
+.comparison {
+  gap: 24px;
+  margin-top: 36px;
+}
+
+.posterior-card {
+  padding: 24px;
+}
+
+.tagline {
+  font-size: 23px;
+  margin-top: 24px;
+}
+
+.factorization {
+  margin: 46px auto 26px;
+}
+
+.matrix {
+  min-height: 185px;
+  font-size: 58px;
+}
+
+.pushforward {
+  margin-top: 44px;
+}
+
+.theorem-card {
+  margin-top: 34px;
+  padding: 28px 34px;
+}
+
+.theorem-card p {
+  font-size: 23px;
+  margin-bottom: 18px;
+}
+
+.therefore {
+  font-size: 52px;
+}
+
+.callout {
+  font-size: 22px;
+  margin-top: 30px;
+  padding: 18px 22px;
+}
+
+.paper-inset {
+  max-width: 360px;
+  right: 62px;
+  bottom: 70px;
+}
+
+.figure-frame {
+  padding: 12px;
+}
+
+.figure-frame.wide {
+  height: 440px;
+  margin-top: 30px;
+}
+
+.figure-frame.bound {
+  height: 180px;
+  margin-top: 18px;
+}
+
+.figure-frame.tall {
+  height: 390px;
+}
+
+.figure-frame.slim {
+  height: 170px;
+  margin-top: 18px;
+}
+
+.caption {
+  margin-top: 12px;
+}
+
+.theory-stack {
+  margin-top: 28px;
+}
+
+.theory-stack div {
+  min-height: 126px;
+  padding: 18px;
+}
+
+.theory-stack b {
+  font-size: 21px;
+  margin-bottom: 10px;
+}
+
+.theory-stack span {
+  font-size: 16px;
+}
+
+.architecture-row {
+  margin-top: 42px;
+}
+
+.arch {
+  min-height: 170px;
+  padding: 20px;
+}
+
+.arch span {
+  font-size: 38px;
+}
+
+.arch small {
+  font-size: 17px;
+  margin-top: 12px;
+}
+
+.figure-grid {
+  margin-top: 30px;
+}
+
+.figure-grid figure {
+  height: 286px;
+  min-height: 0;
+  padding: 12px;
+}
+
+.figure-grid figcaption {
+  font-size: 15px;
+  margin-top: 8px;
+}
+
+.scaling-visual {
+  margin-top: 34px;
+}
+
+.scale-card {
+  min-height: 128px;
+  padding: 24px;
+}
+
+.big-o {
+  font-size: 42px;
+}
+
+.efficiency-punch {
+  font-size: 27px;
+  margin-top: 22px;
+}
+
+.efficiency-punch b {
+  font-size: 50px;
+}
+
+.enablement {
+  margin-top: 38px;
+}
+
+.enablement div {
+  padding: 20px 24px;
+}
+
+.enablement b {
+  font-size: 25px;
+}
+
+.enablement span {
+  font-size: 18px;
+}
+
+.closing-grid {
+  margin-top: 36px;
+}
+
+.closing-grid a,
+.closing-grid span {
+  font-size: 18px;
+  padding: 12px 16px;
+}
+
+.final-line {
+  margin-top: 30px;
+}
+
+footer {
+  bottom: 22px;
+  left: 62px;
+}
+
+@media print {
+  .reveal section {
+    padding: 34px 54px;
+  }
+}
