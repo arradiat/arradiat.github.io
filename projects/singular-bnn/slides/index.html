@@ -96,12 +96,14 @@
         <section class="dark">
           <div class="kicker">The Move</div>
           <h2>Learn uncertainty in factor space, then map it into weight space.</h2>
-          <div class="factor-row">
-            <div class="matrix w">W</div>
-            <div class="eq">=</div>
-            <div class="matrix a">A</div>
-            <div class="matrix b">B<sup>T</sup></div>
-          </div>
+         <div class="factor-row">
+  <div class="matrix w">W</div>
+  <div class="eq">=</div>
+  <div class="matrix a">A</div>
+  <div class="times">·</div>
+  <div class="matrix b">B<sup>T</sup></div>
+</div>
+
           <div class="card-row">
             <article><b>Variational posterior</b><span>q(A,B)=q<sub>A</sub>(A)q<sub>B</sub>(B), mean-field Gaussians over factor entries.</span></article>
             <article><b>Parameter count</b><span>O(mn) becomes O(r(m+n)); rank controls expressiveness.</span></article>
