@@ -40,6 +40,8 @@
       <a href="#theory">Theory</a>
       <a href="#results">Results</a>
       <a href="#resources">Resources</a>
+      <a href="#tables">Tables</a>
+
     </nav>
   </header>
 
@@ -309,7 +311,7 @@
   <section id="results" class="content-section">
 
     <div class="section-header">
-      <span class="section-number">03</span>
+      <span class="section-number">04</span>
       <h2>Experimental highlights</h2>
     </div>
 
@@ -331,7 +333,7 @@
 
         <h3>Beijing PM$_{2.5}$ forecasting</h3>
 
-        <ul>+ <li>Best coverage among compared LSTM uncertainty methods</li>
+        <ul> <li>Best coverage among compared LSTM uncertainty methods</li>
 <li>17.4% MAE reduction at 80% retention in selective prediction</li>
 <li>64% fewer parameters than Full-Rank BBB</li>
         </ul>
@@ -385,6 +387,225 @@
     </figure>
 
   </section>
+<section id="tables" class="content-section table-section">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <h2>Detailed empirical evidence</h2>
+  </div>
+
+  <p class="section-lead">
+    We evaluate Singular BNNs across tabular, time-series, and Transformer settings.
+    The goal is not a single universal win, but a quality-efficiency tradeoff:
+    structured Bayesian uncertainty with far fewer parameters.
+  </p>
+
+  <div class="setup-grid">
+    <article>
+      <strong>MLP · MIMIC-III</strong>
+      <span>ICU mortality prediction; adult ICU train/test, newborn ICU OOD; rank r=15.</span>
+    </article>
+    <article>
+      <strong>LSTM · Beijing PM₂.₅</strong>
+      <span>24-hour forecasting; Guangzhou used as OOD shift; ranks r=14,20.</span>
+    </article>
+    <article>
+      <strong>Transformer · SST-2</strong>
+      <span>4-layer Transformer; AG News OOD; rank r=16; BERT tokenizer.</span>
+    </article>
+  </div>
+
+  <div class="table-card">
+    <h3>MIMIC-III: low-rank gives the strongest OOD uncertainty</h3>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th><th>AUROC ↑</th><th>AUPR-Err ↑</th><th>AUC-OOD ↑</th><th>AUPR-OOD ↑</th><th>AUPR-In ↑</th><th>NLL ↓</th><th>Params ↓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Deterministic</td><td>.922</td><td>.145</td><td>.500</td><td>.544</td><td>.456</td><td><strong>.284</strong></td><td>22.4k</td></tr>
+          <tr><td>Deep Ensemble</td><td><strong>.929</strong></td><td>.237</td><td>.738</td><td>.754</td><td>.721</td><td>.300</td><td>112k</td></tr>
+          <tr><td>Full-Rank BBB</td><td>.895</td><td>.412</td><td>.770</td><td>.759</td><td>.807</td><td>.401</td><td>44.8k</td></tr>
+          <tr class="ours"><td>Low-Rank BBB</td><td>.895</td><td><strong>.540</strong></td><td><strong>.802</strong></td><td><strong>.788</strong></td><td><strong>.824</strong></td><td>.433</td><td><strong>13.6k</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Low-Rank BBB uses 70% fewer parameters than Full-Rank BBB and 88% fewer than a 5-member Deep Ensemble.</p>
+  </div>
+
+  <div class="table-card">
+    <h3>Beijing PM₂.₅: strongest coverage and selective prediction</h3>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th><th>MAE ↓</th><th>ECE ↓</th><th>PICP ↑</th><th>AUROC-OOD ↑</th><th>AUPR-OOD ↑</th><th>Params ↓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Deterministic</td><td>10.79</td><td>—</td><td>—</td><td>.500</td><td>.500</td><td><strong>33K</strong></td></tr>
+          <tr><td>Full-Rank BBB</td><td>10.55</td><td><strong>.111</strong></td><td>.788</td><td>.492</td><td>.743</td><td>132K</td></tr>
+          <tr class="ours"><td>Low-Rank BBB</td><td>10.63</td><td>.114</td><td><strong>.790</strong></td><td>.710</td><td>.861</td><td>47K</td></tr>
+          <tr><td>Deep Ensemble</td><td><strong>10.45</strong></td><td>.317</td><td>.310</td><td><strong>.730</strong></td><td><strong>.883</strong></td><td>330K</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">At 80% retention, Low-Rank BBB achieves 17.4% MAE reduction through selective prediction.</p>
+  </div>
+
+  <div class="table-card">
+    <h3>SST-2 Transformer: scalable Bayesian uncertainty</h3>
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th><th>Acc ↑</th><th>NLL ↓</th><th>AUROC-OOD ↑</th><th>MI Ratio ↑</th><th>AUPR-In ↑</th><th>Params ↓</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Deterministic</td><td>.812</td><td>.490</td><td>.500</td><td>.000</td><td>.102</td><td>9.9M</td></tr>
+          <tr><td>Deep Ensemble</td><td><strong>.825</strong></td><td><strong>.434</strong></td><td><strong>.657</strong></td><td><strong>1.55</strong></td><td>.267</td><td>49.6M</td></tr>
+          <tr><td>Full-Rank BBB</td><td>.752</td><td>.552</td><td>.622</td><td>1.31</td><td>.222</td><td>19.8M</td></tr>
+          <tr class="ours"><td>Low-Rank BBB</td><td>.806</td><td>.527</td><td>.640</td><td>1.35</td><td><strong>.302</strong></td><td><strong>1.5M</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">Low-Rank BBB uses 13× fewer parameters than Full-Rank BBB and 33× fewer than Deep Ensemble.</p>
+  </div>
+
+  <div class="table-card compact">
+    <h3>SWAG comparison</h3>
+    <p>
+      SWAG is a strong scalable posterior baseline, but the appendix comparisons do not overturn the
+      low-rank quality-efficiency tradeoff. On SST-2, SWAG reaches 0.808 accuracy but uses 208.37M
+      parameters, compared with 1.47M for Low-Rank BBB. On MIMIC-III, SWAG is stronger on in-domain
+      AUROC and NLL but weaker on MI-based OOD separation. On Beijing, SWAG has high coverage but much
+      wider intervals and weaker OOD detection.
+    </p>
+  </div>
+</section>
+<section class="content-section formula-section">
+  <div class="section-header">
+    <span class="section-number">03</span>
+    <h2>The mathematical mechanism</h2>
+  </div>
+
+  <p class="section-lead">
+    The paper’s key move is to define a simple mean-field posterior in factor space,
+    then study the induced posterior measure over the full weight matrix.
+  </p>
+
+  <div class="formula-grid">
+    <article class="formula-card wide">
+      <h3>Low-rank Bayesian weight matrix</h3>
+      <div class="equation-box">
+        $$W = AB^\top,\qquad
+        A \in \mathbb{R}^{m \times r},\quad
+        B \in \mathbb{R}^{n \times r}.$$
+      </div>
+      <p>
+        The variational posterior is placed over the factors rather than directly over
+        every entry of the full matrix.
+      </p>
+    </article>
+
+    <article class="formula-card">
+      <h3>Factor posterior</h3>
+      <div class="equation-box">
+        $$q(A,B)=q_A(A)q_B(B).$$
+      </div>
+      <p>
+        The factors may be mean-field, but the induced posterior over $W$ is not
+        an independent posterior over weight entries.
+      </p>
+    </article>
+
+    <article class="formula-card">
+      <h3>Pushforward posterior</h3>
+      <div class="equation-box">
+        $$q_W = T_{\#}q_{A,B},\qquad T(A,B)=AB^\top.$$
+      </div>
+      <p>
+        This pushforward measure is the central object: it describes the posterior
+        distribution over the actual weight matrix $W$.
+      </p>
+    </article>
+
+    <article class="formula-card wide">
+      <h3>Singular support theorem</h3>
+      <div class="equation-box">
+        $$q_W(\mathcal{R}_r)=1,\qquad
+        \lambda(\mathcal{R}_r)=0,\qquad
+        q_W \perp \lambda.$$
+      </div>
+      <p>
+        When $r < \min(m,n)$, the posterior is supported on the rank-at-most-$r$
+        set $\mathcal{R}_r$, which has Lebesgue measure zero in the ambient
+        matrix space.
+      </p>
+    </article>
+
+    <article class="formula-card">
+      <h3>Parameter scaling</h3>
+      <div class="equation-box">
+        $$O(mn)\quad \longrightarrow \quad O(r(m+n)).$$
+      </div>
+      <p>
+        This is the computational reason the method can scale better than full-rank
+        Bayesian weight-space inference.
+      </p>
+    </article>
+
+    <article class="formula-card">
+      <h3>PAC-Bayes scaling</h3>
+      <div class="equation-box">
+        $$\sqrt{\frac{r(m+n)}{mn}}.$$
+      </div>
+      <p>
+        The low-rank complexity term becomes smaller when
+        $r \ll \min(m,n)$.
+      </p>
+    </article>
+
+    <article class="formula-card wide">
+      <h3>Rank-induced approximation bias</h3>
+      <div class="equation-box">
+        $$\left|
+        \mathbb{E}[\ell(W^\star x,y)]
+        -
+        \mathbb{E}[\ell(W_r^\star x,y)]
+        \right|
+        \le
+        LR\sqrt{\sum_{i>r}\sigma_i^2(W^\star)}.$$
+      </div>
+      <p>
+        When the singular values of a useful full-rank solution decay quickly,
+        the approximation cost of moving to rank $r$ can be controlled.
+      </p>
+    </article>
+
+    <article class="formula-card wide">
+      <h3>Structured covariance</h3>
+      <div class="equation-box small-eq">
+        $$\mathrm{Cov}(W_{ij},W_{i'j'})
+        =
+        \sum_k
+        \Big[
+        \mathbb{E}[A_{ik}A_{i'k}]
+        \mathbb{E}[B_{jk}B_{j'k}]
+        -
+        \mathbb{E}[A_{ik}]\mathbb{E}[A_{i'k}]
+        \mathbb{E}[B_{jk}]\mathbb{E}[B_{j'k}]
+        \Big].$$
+      </div>
+      <p>
+        Shared latent factors induce non-zero covariance between weight entries,
+        even though the factor posterior itself is mean-field.
+      </p>
+    </article>
+  </div>
+</section>
 
   <section class="interactive-section">
 
@@ -463,7 +684,7 @@
   <section id="resources" class="content-section">
 
     <div class="section-header">
-      <span class="section-number">04</span>
+      <span class="section-number">06</span>
       <h2>Resources</h2>
     </div>
 
