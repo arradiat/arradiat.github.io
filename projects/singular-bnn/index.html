@@ -564,7 +564,7 @@
 
       <div class="contribution-card">
         <h4>Singularity</h4>
-        <p>$q_W$ is singular with respect to Lebesgue measure on the ambient weight space — a formal, measure-theoretic result.</p>
+        <p>$q_W$ is singular with respect to Lebesgue measure on the ambient weight space.</p>
       </div>
 
       <div class="contribution-card">
@@ -585,7 +585,7 @@
     </div>
 
     <div class="core-thesis">
-      Core thesis: low-rank is not merely parameter economy — it changes posterior <em>support</em>,
+      Core thesis: low-rank is not merely parameter economy, it changes posterior <em>support</em>,
       <em>covariance</em>, and <em>capacity</em>.
     </div>
 
@@ -611,7 +611,7 @@
       <div class="challenge-card">
         <div class="stat">O(mn)</div>
         <h4>Parameter explosion</h4>
-        <p>Standard mean-field MFVI requires 2 variational parameters per weight — doubling the parameter count per layer, scaling as $O(mn)$ for a single matrix.</p>
+        <p>Standard mean-field MFVI requires 2 variational parameters per weight, doubling the parameter count per layer, scaling as $O(mn)$ for a single matrix.</p>
       </div>
 
       <div class="challenge-card">
@@ -623,7 +623,7 @@
       <div class="challenge-card">
         <div class="stat">5×</div>
         <h4>Ensemble cost</h4>
-        <p>Deep Ensembles — the practical gold standard — require 5 full model copies, making them prohibitively expensive for Transformer-scale architectures.</p>
+        <p>Deep Ensembles, the practical gold standard, require 5 full model copies, making them prohibitively expensive for modern-scale architectures.</p>
       </div>
 
     </div>
@@ -1097,7 +1097,7 @@
     </div>
 
     <p class="section-lead">
-      The rank-$r$ manifold is not an arbitrary bottleneck — it is a
+      The rank-$r$ manifold is not an arbitrary bottleneck, it is a
       structured approximation class supported by the empirical spectral
       structure of learned neural network weights.
     </p>
@@ -1128,9 +1128,7 @@
         <h4>Rank ablations confirm the effect</h4>
         <p>
           Experiments include SVD-initialized vs. randomly initialized low-rank
-          factors, and rank ablations across architectures. The SVD initialization
-          consistently outperforms random initialization, confirming that the model
-          exploits spectral structure.
+          factors, and rank ablations across architectures.
         </p>
       </div>
 
@@ -1505,7 +1503,7 @@
     <h3 style="margin-bottom:0.5rem;">Calibration – OOD detection tradeoff</h3>
     <p style="opacity:0.75; font-size:0.9rem; max-width:720px;">
       A consistent pattern emerges across all three tasks: the rank constraint trades predictive
-      sharpness (NLL) for broader epistemic uncertainty — which benefits OOD detection, abstention,
+      sharpness (NLL) for broader epistemic uncertainty, which benefits OOD detection, abstention,
       and coverage.
     </p>
 
@@ -1516,7 +1514,7 @@
       </div>
       <div class="tradeoff-card">
         <h4>SST-2</h4>
-        <p>Deep Ensemble is stronger on both NLL and OOD. Low-rank remains competitive at 33× fewer parameters — an entirely different efficiency regime.</p>
+        <p>Deep Ensemble is stronger on both NLL and OOD. Low-rank remains competitive at 33× fewer parameters, an entirely different efficiency regime.</p>
       </div>
       <div class="tradeoff-card">
         <h4>Beijing PM₂.₅</h4>
@@ -1559,7 +1557,7 @@
     <!-- Honest takeaway -->
     <h3 style="margin-top:2.5rem; margin-bottom:0.5rem;">Honest takeaway</h3>
     <p style="opacity:0.75; font-size:0.9rem; margin-bottom:0;">
-      The empirical message is not compression alone — and it is not that low-rank always wins every metric.
+      The empirical message is not compression alone and it is not that low-rank always wins every metric.
     </p>
 
     <div class="takeaway-grid">
@@ -1573,7 +1571,7 @@
       </div>
       <div class="takeaway-card blue">
         <h4>Why it matters</h4>
-        <p>Trustworthy AI often needs useful uncertainty under shift, abstention, and deployment constraints — not only marginal NLL. SBNNs make that goal practical at modern scales.</p>
+        <p>Trustworthy AI often needs useful uncertainty under shift, abstention, and deployment constraints, not only marginal NLL. SBNNs make that goal practical at modern scales.</p>
       </div>
     </div>
 
