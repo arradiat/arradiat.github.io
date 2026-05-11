@@ -1,76 +1,577 @@
-const rankSlider = document.getElementById("rank-slider");
-const rankValue = document.getElementById("rank-value");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Singular Bayesian Neural Networks | ICML 2026</title>
+  <meta name="description" content="Project page for Singular Bayesian Neural Networks (ICML 2026). Low-rank Bayesian neural networks with singular posterior geometry and scalable uncertainty quantification." />
 
-const fullCount = document.getElementById("full-count");
-const lowCount = document.getElementById("low-count");
+  <link rel="stylesheet" href="./style.css" />
 
-const lowBar = document.getElementById("low-bar");
+  <!-- Inline supplementary styles (kept exactly as original) -->
+  <style>
+    .section-lead { font-size: 1.05rem; line-height: 1.7; opacity: 0.85; max-width: 780px; margin-bottom: 0; }
+    .inline-note  { font-size: 0.82rem; opacity: 0.6; font-style: italic; }
+  </style>
 
-const savingText = document.getElementById("saving-text");
+  <script>
+    window.MathJax = { tex: { inlineMath: [['$','$']], displayMath: [['$$','$$']] } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
 
-const M = 256;
-const N = 256;
+<!-- NAV ────────────────────────────────────────────────────────────────── -->
+<header class="navbar">
+  <div class="nav-left"><a href="/" class="brand">Mame Diarra Toure</a></div>
+  <nav class="nav-right">
+    <a href="#overview">Overview</a>
+    <a href="#theory">Theory</a>
+    <a href="#experiments">Experiments</a>
+    <a href="#results">Results</a>
+    <a href="#insights">Insights</a>
+    <a href="#resources">Resources</a>
+    <a href="#tables">Tables</a>
+  </nav>
+</header>
 
-function updateSlider() {
+<!-- HERO ───────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="conference-badge">ICML 2026</div>
+    <h1>Singular Bayesian<br />Neural Networks</h1>
+    <p class="subtitle">Low-rank Bayesian neural networks with singular posterior geometry, reduced complexity scaling, and scalable uncertainty quantification.</p>
+    <div class="authors"><strong>Mame Diarra Touré</strong>, David A. Stephens<br />McGill University</div>
+    <div class="hero-buttons">
+      <a class="primary-btn"   href="https://arxiv.org/abs/2602.00387" target="_blank">arXiv</a>
+      <a class="secondary-btn" href="https://arxiv.org/pdf/2602.00387" target="_blank">Paper PDF</a>
+      <a class="secondary-btn" href="https://github.com/arradiat/SBNN"  target="_blank">GitHub</a>
+      <a class="secondary-btn" href="https://arradiat.github.io/projects/singular-bnn/slides/" target="_blank">Slides</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="orbital-container">
+      <div class="volume-cloud"></div>
+      <div class="manifold-surface"></div>
+    </div>
+    <div class="hero-formula">$W = AB^\top$</div>
+    <div class="hero-caption">Low-rank Bayesian posteriors concentrate on rank-constrained manifolds.</div>
+  </div>
+</section>
 
-  const r = parseInt(rankSlider.value);
+<!-- TL;DR ──────────────────────────────────────────────────────────────── -->
+<section class="tldr-section">
+  <div class="section-tag">TL;DR</div>
+  <p>We parameterize Bayesian neural network weights through low-rank factors $W = AB^\top$, inducing a singular posterior geometry concentrated on the rank-$r$ manifold. This reduces variational complexity from $O(mn)$ to $O(r(m+n))$ while maintaining competitive uncertainty-aware performance across MLPs, LSTMs, and Transformers.</p>
+</section>
 
-  rankValue.textContent = r;
+<!-- 01 — WHAT THIS PAPER SHOWS ─────────────────────────────────────────── -->
+<section class="dark-section">
+  <div class="section-header dark-header">
+    <span class="section-number">01</span>
+    <h2>What this paper shows</h2>
+  </div>
+  <p class="section-lead">Low-rank variational BNNs do not merely save parameters — they change the geometry, covariance structure, and complexity of the posterior.</p>
+  <div class="contribution-grid">
+    <div class="contribution-card fade-up"><h4>Method</h4><p>End-to-end variational learning over low-rank factors $W = AB^\top$, trained from scratch without pretrained backbones.</p></div>
+    <div class="contribution-card fade-up"><h4>Geometry</h4><p>The induced posterior $q_W$ is a pushforward measure supported on the rank-$r$ manifold $\mathcal{R}_r \subset \mathbb{R}^{m \times n}$.</p></div>
+    <div class="contribution-card fade-up"><h4>Singularity</h4><p>$q_W$ is singular with respect to Lebesgue measure on the ambient weight space.</p></div>
+    <div class="contribution-card fade-up"><h4>Correlations</h4><p>Mean-field factors over $A, B$ still induce structured, non-trivial covariance between entries of $W$ through shared latent dimensions.</p></div>
+    <div class="contribution-card fade-up"><h4>Theory</h4><p>Three certificates: approximation error (Eckart–Young–Mirsky), PAC-Bayes generalization bounds, and Gaussian complexity transfer.</p></div>
+    <div class="contribution-card fade-up"><h4>Evidence</h4><p>Validated on MLPs (MIMIC-III), LSTMs (Beijing PM₂.₅), and Transformers (SST-2) with OOD evaluation on domain-shifted test sets.</p></div>
+  </div>
+  <div class="core-thesis">Core thesis: low-rank is not merely parameter economy, it changes posterior <em>support</em>, <em>covariance</em>, and <em>capacity</em>.</div>
+</section>
 
-  const fullParams = M * N;
+<!-- 02 — MOTIVATION ────────────────────────────────────────────────────── -->
+<section id="overview" class="content-section">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2>Motivation</h2>
+  </div>
+  <p class="section-lead">Bayesian neural networks provide principled uncertainty, but full weight-space inference does not scale. Three obstacles block practical deployment.</p>
+  <div class="challenge-grid">
+    <div class="challenge-card fade-up"><div class="stat">O(mn)</div><h4>Parameter explosion</h4><p>Standard mean-field MFVI requires 2 variational parameters per weight, doubling the parameter count per layer, scaling as $O(mn)$ for a single matrix.</p></div>
+    <div class="challenge-card fade-up"><div class="stat">2×</div><h4>Independence assumption</h4><p>Fully factorized posteriors ignore structured correlations between weights, limiting expressiveness and the model's ability to represent epistemic uncertainty coherently.</p></div>
+    <div class="challenge-card fade-up"><div class="stat">5×</div><h4>Ensemble cost</h4><p>Deep Ensembles, the practical gold standard, require 5 full model copies, making them prohibitively expensive for modern-scale architectures.</p></div>
+  </div>
+  <div class="key-gap"><strong>Key gap:</strong> No prior work trains low-rank BNNs end-to-end across diverse architectures (MLPs, LSTMs, Transformers) with rigorous theoretical guarantees on posterior geometry.</div>
+  <h3 style="margin-top:2.5rem; margin-bottom:0.5rem;">What existing low-rank methods miss</h3>
+  <p style="opacity:0.75; font-size:0.9rem; margin-bottom:0;">This paper is not LoRA with uncertainty pasted on top. The novelty is the induced posterior measure over $W$: its support, geometry, covariance, and complexity all change.</p>
+  <div class="comparison-table-wrap">
+    <table class="comparison-table">
+      <thead><tr><th>Approach</th><th>Backbone</th><th>Posterior object</th><th>What is missing</th></tr></thead>
+      <tbody>
+        <tr><td>Post-hoc perturbations</td><td>Pretrained</td><td>Noise around fixed weights</td><td><span class="missing-tag">Not end-to-end uncertainty</span></td></tr>
+        <tr><td>Low-rank covariance</td><td>Full $W$ means</td><td>Covariance approximation</td><td><span class="missing-tag">Still O(mn) weight means</span></td></tr>
+        <tr><td>Bayesian LoRA</td><td>Pretrained / fine-tuning</td><td>Adapter uncertainty</td><td><span class="missing-tag">Not from-scratch BNN training</span></td></tr>
+        <tr class="ours-row"><td><strong>SBNN (ours)</strong></td><td>From scratch</td><td>Singular $q_W$ on rank-$r$ support</td><td><span class="ours-tag">Pushforward posterior</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-  const lowParams = r * (M + N);
+<!-- 03 — CORE IDEA ─────────────────────────────────────────────────────── -->
+<section class="content-section">
+  <div class="section-header">
+    <span class="section-number">03</span>
+    <h2>Core idea</h2>
+  </div>
+  <div class="two-column">
+    <div>
+      <h3>From mean-field to structured low-rank geometry</h3>
+      <p>Standard Bayesian neural networks often rely on fully factorized posteriors that ignore structured correlations between weights. We instead introduce low-rank variational factors:</p>
+      <div class="equation-box">$$A \in \mathbb{R}^{m \times r}, \qquad B \in \mathbb{R}^{n \times r}, \qquad W = AB^\top.$$</div>
+      <p>Although the factors themselves can be mean-field, the induced posterior over $W$ becomes highly structured, introducing correlations through shared latent factors. Optimized via the reparameterization trick (Bayes by Backprop) with Adam — implemented as drop-in Keras layer replacements for dense layers, LSTM gates, and Transformer projections.</p>
+    </div>
+    <div class="metric-column">
+      <div class="metric-card"><span>Complexity</span><strong>$O(r(m+n))$</strong><small>instead of $O(mn)$</small></div>
+      <div class="metric-card"><span>Posterior support</span><strong>rank-$r$ manifold</strong><small>singular in ambient matrix space</small></div>
+      <div class="metric-card"><span>Architectures</span><strong>MLP · LSTM · Transformer</strong><small>drop-in Bayesian layers</small></div>
+    </div>
+  </div>
+  <div class="elbo-box">
+    <h4>Evidence Lower Bound (ELBO)</h4>
+    <div class="equation-box">$$\mathcal{L}(q) \;=\; \underbrace{\mathbb{E}_{q_A q_B}\!\left[\log p(\mathcal{D}\mid AB^\top)\right]}_{\text{Data fit}} \;-\; \underbrace{\beta\,\mathrm{KL}(q_A \,\|\, p_A)}_{\text{Reg. on }A} \;-\; \underbrace{\beta\,\mathrm{KL}(q_B \,\|\, p_B)}_{\text{Reg. on }B}$$</div>
+    <div class="elbo-parts">
+      <div class="elbo-part data"><strong>Data fit</strong><span>Expected log-likelihood under the joint factor posterior</span></div>
+      <div class="elbo-part reg"><strong>Regularisation on A</strong><span>KL divergence from prior on left factor</span></div>
+      <div class="elbo-part reg"><strong>Regularisation on B</strong><span>KL divergence from prior on right factor</span></div>
+    </div>
+  </div>
+</section>
 
-  fullCount.textContent =
-    fullParams.toLocaleString();
+<!-- FIGURE — geometric distinction ────────────────────────────────────── -->
+<section class="figure-section">
+  <figure>
+    <img src="../../Singular_Bayesian_Neural_Networks_Revised/figures/figure_geometric_distinction.png" alt="Posterior geometry figure" />
+    <figcaption><strong>Posterior geometry.</strong> Mean-field posteriors occupy a full-dimensional volume, whereas low-rank posteriors concentrate on the rank-constrained manifold.</figcaption>
+  </figure>
+</section>
 
-  lowCount.textContent =
-    lowParams.toLocaleString();
+<!-- ════════════════════════════════════════════════════════════════════════
+     04 — MATHEMATICAL MECHANISM
+     This section covers the MECHANICS of the construction only.
+     Theorems (EYM bound, PAC-Bayes, Gaussian complexity) live in §05.
+     Removed from original: "Singular support theorem" and "Rank-induced
+     approximation bias" — both were duplicates of §05 content.
+════════════════════════════════════════════════════════════════════════ -->
+<section class="content-section formula-section">
+  <div class="section-header">
+    <span class="section-number">04</span>
+    <h2>The mathematical mechanism</h2>
+  </div>
+  <p class="section-lead">The paper's key move is to define a simple mean-field posterior in factor space, then study the induced posterior measure over the full weight matrix.</p>
 
-  const ratio =
-    (fullParams / lowParams).toFixed(1);
+  <div class="formula-grid">
 
-  savingText.textContent =
-    `${ratio}× fewer parameters for a ${M} × ${N} layer.`;
+    <article class="formula-card wide fade-up">
+      <h3>Low-rank Bayesian weight matrix</h3>
+      <div class="equation-box">$$W = AB^\top,\qquad A \in \mathbb{R}^{m \times r},\quad B \in \mathbb{R}^{n \times r}.$$</div>
+      <p>The variational posterior is placed over the factors rather than directly over every entry of the full matrix.</p>
+    </article>
 
-  const percent =
-    Math.min(
-      100,
-      (lowParams / fullParams) * 100
-    );
+    <article class="formula-card fade-up">
+      <h3>Factor posterior</h3>
+      <div class="equation-box">$$q(A,B)=q_A(A)q_B(B).$$</div>
+      <p>The factors may be mean-field, but the induced posterior over $W$ is not an independent posterior over weight entries.</p>
+    </article>
 
-  lowBar.style.width = `${percent}%`;
-}
+    <article class="formula-card fade-up">
+      <h3>Pushforward posterior</h3>
+      <div class="equation-box">$$q_W = T_{\#}q_{A,B},\qquad T(A,B)=AB^\top.$$</div>
+      <p>This pushforward measure is the central object: it describes the posterior distribution over the actual weight matrix $W$.</p>
+    </article>
 
-rankSlider.addEventListener(
-  "input",
-  updateSlider
-);
+    <article class="formula-card fade-up">
+      <h3>Parameter scaling</h3>
+      <div class="equation-box">$$O(mn)\quad \longrightarrow \quad O(r(m+n)).$$</div>
+      <p>A direct consequence of the factorisation: variational parameters scale with factor dimensions, not the full matrix.</p>
+    </article>
 
-updateSlider();
+    <article class="formula-card fade-up">
+      <h3>Singular support</h3>
+      <div class="equation-box">$$q_W(\mathcal{R}_r)=1,\qquad \lambda(\mathcal{R}_r)=0,\qquad q_W \perp \lambda.$$</div>
+      <p>When $r &lt; \min(m,n)$, the posterior concentrates on the rank-at-most-$r$ set, which has Lebesgue measure zero. Formal proof is in §05.</p>
+    </article>
 
-const copyButton =
-  document.getElementById("copy-bibtex");
+    <article class="formula-card wide fade-up">
+      <h3>Structured covariance</h3>
+      <div class="equation-box small-eq">$$\mathrm{Cov}(W_{ij},W_{i'j'}) = \sum_k \Big[\mathbb{E}[A_{ik}A_{i'k}]\mathbb{E}[B_{jk}B_{j'k}] - \mathbb{E}[A_{ik}]\mathbb{E}[A_{i'k}]\mathbb{E}[B_{jk}]\mathbb{E}[B_{j'k}]\Big].$$</div>
+      <p>Shared latent factors induce non-zero covariance between weight entries, even though the factor posterior itself is mean-field. Rank $r$ controls how expressive these correlations can be.</p>
+    </article>
 
-copyButton.addEventListener(
-  "click",
-  () => {
+  </div>
+</section>
 
-    const bibtex =
-`@inproceedings{toure2026singular,
-  title     = {Singular Bayesian Neural Networks},
-  author    = {Toure, Mame Diarra and Stephens, David A.},
-  booktitle = {International Conference on Machine Learning},
-  year      = {2026}
-}`;
+<!-- ════════════════════════════════════════════════════════════════════════
+     05 — THEORY
+     All three theoretical guarantees live here and only here.
+     Notation for W* and W_r* defined at the top since EYM needs it.
+════════════════════════════════════════════════════════════════════════ -->
+<section id="theory" class="dark-section">
+  <div class="section-header dark-header">
+    <span class="section-number">05</span>
+    <h2>Theory</h2>
+  </div>
+  <p class="section-lead" style="color:inherit; opacity:0.8;">The paper provides three theory certificates, not one. Each addresses a distinct aspect of the low-rank posterior's behaviour.</p>
 
-    navigator.clipboard.writeText(bibtex);
+  <!-- Notation — defined here because EYM bound (guarantee ①) needs it -->
+  <div class="def-notation" style="max-width:1200px; margin: 0 auto 2rem;">
+    <strong>Notation.</strong>
+    $W^\star \in \mathbb{R}^{m \times n}$ is the optimal full-rank weight matrix (the population-risk minimiser), with ordered singular values $\sigma_1(W^\star) \ge \sigma_2(W^\star) \ge \cdots$.
+    Its best rank-$r$ approximation (truncated SVD) is $W_r^\star = \sum_{i=1}^{r}\sigma_i(W^\star)\,u_i v_i^\top$.
+  </div>
 
-    copyButton.textContent = "Copied!";
+  <div class="theorem-grid" style="margin-top:0;">
+    <div class="theorem-card fade-up">
+      <h3>Singular posterior support</h3>
+      <div class="equation-box dark-eq">$$q_W(\mathcal{R}_r)=1,\quad \lambda(\mathcal{R}_r)=0,\quad q_W \perp \lambda.$$</div>
+      <p>The induced posterior is singular with respect to Lebesgue measure on the ambient weight space.</p>
+    </div>
+    <div class="theorem-card fade-up">
+      <h3>Reduced complexity scaling</h3>
+      <div class="equation-box dark-eq">$$\sqrt{\frac{r(m+n)}{mn}}$$</div>
+      <p>Low-rank posteriors reduce the dominant complexity scaling when $r \ll \min(m,n)$.</p>
+    </div>
+    <div class="theorem-card fade-up">
+      <h3>Gaussian Complexity Transfer</h3>
+      <div class="equation-box dark-eq">$$\mathcal{G}(F^\mathrm{BNN}) \;\le\; \mathcal{G}(F^{\mathrm{Pinto}(C,r)})$$</div>
+      <p>The BNN predictive mean lies in $\overline{\mathrm{conv}}(\mathrm{supp}\,q_W)$. Gaussian complexity is invariant under convex hull and closure, so deterministic bounds transfer to Bayesian predictive means.</p>
+    </div>
+  </div>
 
-    setTimeout(() => {
-      copyButton.textContent = "Copy BibTeX";
-    }, 1500);
+  <h3 style="margin-top:2.5rem; margin-bottom:0; max-width:1200px; margin-left:auto; margin-right:auto;">Three guarantees in detail</h3>
 
-  }
-);
+  <div class="guarantee-grid" style="max-width:1200px; margin: 1.25rem auto 0;">
+    <div class="guarantee-card fade-up">
+      <div class="num">①</div>
+      <h4>Loss Approximation (Eckart–Young–Mirsky)</h4>
+      <div class="equation-box dark-eq" style="font-size:0.85rem; margin:0.75rem 0;">$$\bigl|\mathbb{E}[\ell(W^\star x,y)] - \mathbb{E}[\ell(W_r^\star x,y)]\bigr| \le LR\!\sqrt{\textstyle\sum_{i>r}\sigma_i^2(W^\star)}$$</div>
+      <p>The loss gap between optimal full-rank $W^\star$ and its best rank-$r$ approximation $W_r^\star$ is controlled by tail singular values. Rapid spectral decay means small rank-induced bias.</p>
+    </div>
+    <div class="guarantee-card fade-up">
+      <div class="num">②</div>
+      <h4>PAC-Bayes Generalization Bounds</h4>
+      <div class="equation-box dark-eq" style="font-size:0.85rem; margin:0.75rem 0;">$$\frac{\mathrm{Complexity}(Q_\mathrm{LR})}{\mathrm{Complexity}(Q_\mathrm{full})} \approx \sqrt{r\!\left(\tfrac{1}{m}+\tfrac{1}{n}\right)} \;\ll\; 1$$</div>
+      <p>Complexity scales as $O(r(m+n))$ vs $O(mn)$. The bound is non-vacuous for low ranks where full-rank BNNs already fail.</p>
+    </div>
+    <div class="guarantee-card fade-up">
+      <div class="num">③</div>
+      <h4>Gaussian Complexity Transfer</h4>
+      <div class="equation-box dark-eq" style="font-size:0.85rem; margin:0.75rem 0;">$$\mathcal{G}(F^\mathrm{BNN}) \;\le\; \mathcal{G}(F^{\mathrm{Pinto}(C,r)})$$</div>
+      <p>The BNN predictive mean lies in $\overline{\mathrm{conv}}(\mathrm{supp}\,q_W)$. Gaussian complexity is invariant under convex hull and closure, so deterministic complexity bounds transfer to Bayesian predictive means.</p>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2.5rem; margin-bottom:0.5rem; max-width:1200px; margin-left:auto; margin-right:auto;">PAC-Bayes: complexity reduction in practice</h3>
+  <div style="max-width:1200px; margin: 0 auto;">
+    <div class="pac-split">
+      <div class="pac-box fullrank">
+        <h5>Full-Rank MFVI</h5>
+        <div class="equation-box dark-eq" style="font-size:0.82rem;">$$L(Q) \le \hat{L}(Q) + \sqrt{\frac{C_{\max}\cdot mn + \log(2\sqrt{N}/\delta)}{2N}}$$</div>
+        <div class="scaling">Complexity scales as O(mn)</div>
+      </div>
+      <div class="pac-box lowrank">
+        <h5>Low-Rank (Ours)</h5>
+        <div class="equation-box dark-eq" style="font-size:0.82rem;">$$L(Q) \le \hat{L}(Q) + \sqrt{\frac{C_{\max}\cdot r(m+n) + \log(2\sqrt{N}/\delta)}{2N}}$$</div>
+        <div class="scaling">Complexity scales as O(r(m+n))</div>
+      </div>
+    </div>
+    <p style="font-size:0.88rem; opacity:0.7; margin:0 0 1rem;">Practical numbers for $m=n=512$ (relative complexity, lower is better):</p>
+    <div class="reduction-row">
+      <div class="reduction-chip"><div class="big">25×</div><small>fewer at r=64</small></div>
+      <div class="reduction-chip"><div class="big">64×</div><small>fewer at r=16</small></div>
+      <div class="reduction-chip"><div class="big">128×</div><small>fewer at r=8</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- FIGURES — weight correlation + combined bound ───────────────────────── -->
+<section class="figure-grid">
+  <figure>
+    <img src="../../Singular_Bayesian_Neural_Networks_Revised/figures/weight_correlation_heatmap.png" alt="Weight correlation heatmap" />
+    <figcaption>Induced correlation structure in low-rank Bayesian weights.</figcaption>
+  </figure>
+  <figure>
+    <img src="../../Singular_Bayesian_Neural_Networks_Revised/figures/combined_bound.png" alt="Combined bound figure" />
+    <figcaption>PAC-Bayes and Gaussian complexity perspectives on low-rank scaling. Note the critical rank transition: both bounds decrease as rank drops.</figcaption>
+  </figure>
+</section>
+
+<!-- 06 — WHY RANK IS PLAUSIBLE ─────────────────────────────────────────── -->
+<section class="content-section">
+  <div class="section-header">
+    <span class="section-number">06</span>
+    <h2>Why rank is plausible</h2>
+  </div>
+  <p class="section-lead">The rank-$r$ manifold is not an arbitrary bottleneck, it is a structured approximation class supported by the empirical spectral structure of learned neural network weights.</p>
+  <div class="rank-insight">
+    <div class="rank-insight-card fade-up"><h4>Observed singular value decay</h4><p>Weight matrices in trained neural networks routinely exhibit fast singular value decay: a small number of dominant directions captures most of the representational capacity. This motivates the rank-$r$ manifold as a natural approximation class rather than an artificial constraint.</p></div>
+    <div class="rank-insight-card fade-up"><h4>EYM tail bound is tight in practice</h4><p>The Eckart–Young–Mirsky bound controls rank approximation error through tail singular values $\sigma_{r+1}^2(W^\star) + \cdots$. When layer spectra decay quickly, these tails are small, and the rank-$r$ bias is genuinely negligible.</p></div>
+    <div class="rank-insight-card fade-up"><h4>Rank ablations confirm the effect</h4><p>Experiments include SVD-initialized vs. randomly initialized low-rank factors, and rank ablations across architectures.</p></div>
+    <div class="rank-insight-card fade-up"><h4>Practical rank selection</h4><p>Ranks are chosen per-architecture based on empirical validation: $r=15$ for the MLP on MIMIC-III, $r=14/20$ for the LSTM on Beijing PM₂.₅, and $r=16$ for the Transformer on SST-2. Adaptive rank selection via sparse priors is a natural future direction.</p></div>
+  </div>
+</section>
+
+<!-- INTERACTIVE SLIDER ─────────────────────────────────────────────────── -->
+<section class="interactive-section">
+  <div>
+    <div class="section-tag">Interactive</div>
+    <h2>Parameter-count intuition</h2>
+    <p>Move the rank slider to compare full-rank and low-rank parameterization for a single $256 \times 256$ layer.</p>
+  </div>
+  <div class="slider-panel">
+    <label for="rank-slider">Rank $r$: <strong id="rank-value">16</strong></label>
+    <input type="range" min="1" max="128" value="16" id="rank-slider" />
+    <div class="bar-group">
+      <div><span>Full rank</span><div class="bar-background"><div class="bar-fill full-bar" id="full-bar"></div></div><strong id="full-count">65536</strong></div>
+      <div><span>Low rank</span><div class="bar-background"><div class="bar-fill low-bar" id="low-bar"></div></div><strong id="low-count">8192</strong></div>
+    </div>
+    <p id="saving-text">8× fewer parameters.</p>
+  </div>
+</section>
+
+<!-- 07 — EXPERIMENTS ───────────────────────────────────────────────────── -->
+<section id="experiments" class="dark-section">
+  <div class="section-header dark-header">
+    <span class="section-number">07</span>
+    <h2>Experimental design</h2>
+  </div>
+  <p class="section-lead" style="color:inherit; opacity:0.8;">Three architectures. Three domain-shift scenarios. Six uncertainty baselines. Each setting includes OOD evaluation on held-out distribution shifts.</p>
+  <div class="design-table-wrap" style="max-width:1200px; margin: 0 auto;">
+    <table class="design-table">
+      <thead><tr><th>Dataset</th><th>Architecture</th><th>In-distribution</th><th>OOD shift</th><th>Rank</th><th>Key metrics</th></tr></thead>
+      <tbody>
+        <tr><td><strong>MIMIC-III ICU mortality</strong></td><td>2-layer MLP</td><td>40,406 adult ICU patients, 44 clinical features</td><td>Adult ICU → Newborn ICU (5,357 OOD)</td><td><code>r=15</code></td><td>AUROC, AUC-OOD, AUPR-OOD, AUPR-In, NLL, Params</td></tr>
+        <tr><td><strong>Beijing PM₂.₅ forecasting</strong></td><td>2-layer LSTM</td><td>29,213 train, 24-step windows</td><td>Beijing → Guangzhou (20,050 OOD)</td><td><code>r=14,20</code></td><td>MAE, ECE, PICP, AUROC-OOD, AUPR-OOD, Params</td></tr>
+        <tr><td><strong>SST-2 sentiment</strong></td><td>4-layer Transformer (d=256)</td><td>67,349 train, 872 dev (movie reviews)</td><td>Movie reviews → AG News (7,600 OOD)</td><td><code>r=16</code></td><td>Accuracy, NLL, AUROC-OOD, MI Ratio, AUPR-In, Params, Time</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="baselines-note" style="max-width:1200px; margin: 1rem auto 0;">
+    <strong>Baselines compared:</strong> Deterministic · Deep Ensemble (M=5) · Full-Rank BBB · Low-Rank (random init) · Low-Rank (SVD init) · Rank-1 Multiplicative · SWAG (supplementary). All Bayesian models optimized with Adam via the reparameterization trick.
+  </div>
+</section>
+
+<!-- 08 — EXPERIMENTAL HIGHLIGHTS ──────────────────────────────────────── -->
+<section id="results" class="content-section">
+  <div class="section-header">
+    <span class="section-number">08</span>
+    <h2>Experimental highlights</h2>
+  </div>
+  <div class="results-grid">
+    <div class="result-card fade-up"><h3>MIMIC-III ICU mortality</h3><ul><li>Best reported OOD detection metrics in the clinical-shift setting</li><li>Competitive in-domain performance with explicit uncertainty tradeoffs</li><li>70% fewer parameters than Full-Rank BBB; 88% fewer than Deep Ensemble</li></ul></div>
+    <div class="result-card fade-up"><h3>Beijing PM₂.₅ forecasting</h3><ul><li>Best coverage among compared LSTM uncertainty methods</li><li>17.4% MAE reduction at 80% retention in selective prediction</li><li>64% fewer parameters than Full-Rank BBB</li></ul></div>
+    <div class="result-card fade-up"><h3>SST-2 Transformer</h3><ul><li>Best AUPR-In and second-best AUROC-OOD among Transformer methods</li><li>1.5M parameters for Low-Rank BBB</li><li>13× fewer parameters than Full-Rank BBB; 33× fewer than Deep Ensemble</li></ul></div>
+  </div>
+</section>
+
+<!-- 08b — DETAILED EMPIRICAL EVIDENCE ──────────────────────────────────── -->
+<section id="tables" class="content-section table-section" style="padding-top:0;">
+  <div class="section-header">
+    <span class="section-number">08b</span>
+    <h2>Detailed empirical evidence</h2>
+  </div>
+  <p class="section-lead">We evaluate Singular BNNs across tabular, time-series, and Transformer settings. The goal is not a single universal win, but a quality-efficiency tradeoff: structured Bayesian uncertainty with far fewer parameters.</p>
+
+  <div class="setup-grid">
+    <article><strong>MLP · MIMIC-III</strong><span>ICU mortality prediction; adult ICU train/test, newborn ICU OOD; rank r=15.</span></article>
+    <article><strong>LSTM · Beijing PM₂.₅</strong><span>24-hour forecasting; Guangzhou used as OOD shift; ranks r=14,20.</span></article>
+    <article><strong>Transformer · SST-2</strong><span>4-layer Transformer; AG News OOD; rank r=16; BERT tokenizer.</span></article>
+  </div>
+
+  <!-- GPU profiling — shown first so practitioners see efficiency before results -->
+  <div class="gpu-callout fade-up">
+    <div class="gpu-callout-header">
+      <div class="section-tag">Efficiency first</div>
+      <h3>Controlled GPU profiling — SST-2 (same GPU, fixed steps)</h3>
+    </div>
+      <p>Controlled profiling shows that the parameter savings translate into practical resource savings: Low-Rank BBB uses about half the peak GPU memory of Full-Rank BBB and trains over 3× faster per epoch than a 5-member Deep Ensemble under the same fixed-step benchmark.</p>
+    <div style="overflow-x:auto;">
+      <table class="profiling-table">
+        <thead><tr><th>Model</th><th>Params</th><th>Peak Memory</th><th>Epoch Time</th></tr></thead>
+        <tbody>
+          <tr class="ours"><td><strong>Low-Rank BBB</strong></td><td>1.47M</td><td>357.5 MB</td><td><strong>5.88s</strong></td></tr>
+          <tr><td>Full-Rank BBB</td><td>19.84M</td><td>721.1 MB</td><td>6.45s</td></tr>
+          <tr><td>Deep Ensemble</td><td>49.61M</td><td>670.1 MB</td><td>18.99s</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- MIMIC-III table + radar -->
+  <div class="exp-table-radar">
+    <div class="table-card">
+      <h3>MIMIC-III: low-rank gives the strongest OOD uncertainty</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Model</th><th>AUROC ↑</th><th>AUPR-Err ↑</th><th>AUC-OOD ↑</th><th>AUPR-OOD ↑</th><th>AUPR-In ↑</th><th>NLL ↓</th><th>Params ↓</th></tr></thead>
+          <tbody>
+            <tr><td>Deterministic</td><td>.922</td><td>.145</td><td>.500</td><td>.544</td><td>.456</td><td><strong>.284</strong></td><td>22.4k</td></tr>
+            <tr><td>Deep Ensemble</td><td><strong>.929</strong></td><td>.237</td><td>.738</td><td>.754</td><td>.721</td><td>.300</td><td>112k</td></tr>
+            <tr><td>Full-Rank BBB</td><td>.895</td><td>.412</td><td>.770</td><td>.759</td><td>.807</td><td>.401</td><td>44.8k</td></tr>
+            <tr class="ours"><td>Low-Rank BBB</td><td>.895</td><td><strong>.540</strong></td><td><strong>.802</strong></td><td><strong>.788</strong></td><td><strong>.824</strong></td><td>.433</td><td><strong>13.6k</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Low-Rank BBB uses 70% fewer parameters than Full-Rank BBB and 88% fewer than a 5-member Deep Ensemble.</p>
+    </div>
+    <figure class="exp-radar-fig">
+      <img src="../../Singular_Bayesian_Neural_Networks_Revised/figures/radar_plot_multiseed_avg.png" alt="MIMIC-III radar" />
+      <figcaption>Multi-seed averaged metrics — MIMIC-III.</figcaption>
+    </figure>
+  </div>
+
+  <!-- Beijing table + two figures -->
+  <div class="exp-table-radar">
+    <div class="table-card">
+      <h3>Beijing PM₂.₅: strongest coverage and selective prediction</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Model</th><th>MAE ↓</th><th>ECE ↓</th><th>PICP ↑</th><th>AUROC-OOD ↑</th><th>AUPR-OOD ↑</th><th>Params ↓</th></tr></thead>
+          <tbody>
+            <tr><td>Deterministic</td><td>10.79</td><td>—</td><td>—</td><td>.500</td><td>.500</td><td><strong>33K</strong></td></tr>
+            <tr><td>Full-Rank BBB</td><td>10.55</td><td><strong>.111</strong></td><td>.788</td><td>.492</td><td>.743</td><td>132K</td></tr>
+            <tr class="ours"><td>Low-Rank BBB</td><td>10.63</td><td>.114</td><td><strong>.790</strong></td><td>.710</td><td>.861</td><td>47K</td></tr>
+            <tr><td>Deep Ensemble</td><td><strong>10.45</strong></td><td>.317</td><td>.310</td><td><strong>.730</strong></td><td><strong>.883</strong></td><td>330K</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">At 80% retention, Low-Rank BBB achieves 17.4% MAE reduction (MAE 8.71 vs 9.21 for Deep Ensemble), demonstrating that structured correlations improve selective prediction quality.</p>
+    </div>
+    <div class="exp-radar-figs">
+      <figure><img src="../../Singular_Bayesian_Neural_Networks_Revised/figures/selective_pred.png" alt="Selective prediction" /><figcaption>Selective prediction — Beijing PM₂.₅.</figcaption></figure>
+      <figure><img src="../../Singular_Bayesian_Neural_Networks_Revised/figures/metrics_radar_lstm.png" alt="LSTM radar" /><figcaption>Uncertainty radar — LSTM.</figcaption></figure>
+    </div>
+  </div>
+
+  <!-- SST-2 table + radar -->
+  <div class="exp-table-radar">
+    <div class="table-card">
+      <h3>SST-2 Transformer: scalable Bayesian uncertainty</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Model</th><th>Acc ↑</th><th>NLL ↓</th><th>AUROC-OOD ↑</th><th>MI Ratio ↑</th><th>AUPR-In ↑</th><th>Params ↓</th><th>Time</th></tr></thead>
+          <tbody>
+            <tr><td>Deterministic</td><td>.812</td><td>.490</td><td>.500</td><td>.000</td><td>.102</td><td>9.9M</td><td>7.7 min</td></tr>
+            <tr><td>Deep Ensemble</td><td><strong>.825</strong></td><td><strong>.434</strong></td><td><strong>.657</strong></td><td><strong>1.55</strong></td><td>.267</td><td>49.6M</td><td>64.7 min</td></tr>
+            <tr><td>Full-Rank BBB</td><td>.752</td><td>.552</td><td>.622</td><td>1.31</td><td>.222</td><td>19.8M</td><td>23.1 min</td></tr>
+            <tr class="ours"><td>Low-Rank BBB</td><td>.806</td><td>.527</td><td>.640</td><td>1.35</td><td><strong>.302</strong></td><td><strong>1.5M</strong></td><td>8.2 min</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">Low-Rank BBB uses 13× fewer parameters than Full-Rank BBB and 33× fewer than Deep Ensemble, training in 8.2 min vs 64.7 min for Deep Ensemble.</p>
+    </div>
+    <figure class="exp-radar-fig">
+      <img src="../../Singular_Bayesian_Neural_Networks_Revised/figures/aggregated_radar_4seeds.png" alt="Transformer radar" />
+      <figcaption>Aggregated radar — 4 seeds, SST-2.</figcaption>
+    </figure>
+  </div>
+
+  <!-- SWAG comparison -->
+  <div class="table-card compact">
+    <h3>SWAG comparison</h3>
+    <p>SWAG is a strong scalable posterior baseline, but the appendix comparisons do not overturn the low-rank quality-efficiency tradeoff. On SST-2, SWAG reaches 0.808 accuracy but uses 208.37M parameters, compared with 1.47M for Low-Rank BBB. On MIMIC-III, SWAG is stronger on in-domain AUROC and NLL but weaker on MI-based OOD separation (0.634/0.680 vs 0.802/0.788). On Beijing, SWAG has high coverage but much wider intervals and weaker OOD detection.</p>
+    <div class="design-table-wrap" style="margin-top:1rem;">
+      <table class="design-table">
+        <thead><tr><th>Setting</th><th>SWAG strength</th><th>Low-rank advantage</th></tr></thead>
+        <tbody>
+          <tr><td>SST-2</td><td>Accuracy tied (0.808 vs 0.806)</td><td>1.47M params vs 208.37M; better OOD</td></tr>
+          <tr><td>MIMIC-III</td><td>Higher in-domain AUROC / NLL</td><td>OOD MI metrics: 0.802/0.788 vs 0.634/0.680</td></tr>
+          <tr><td>Beijing PM₂.₅</td><td>Higher raw coverage</td><td>Much narrower intervals; stronger OOD for low-rank</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 09 — KEY INSIGHTS ──────────────────────────────────────────────────── -->
+<section id="insights" class="dark-section">
+  <div class="section-header dark-header">
+    <span class="section-number">09</span>
+    <h2>Key insights</h2>
+  </div>
+
+  <h3 style="margin-bottom:0.5rem; max-width:1200px; margin-left:auto; margin-right:auto;">Calibration – OOD detection tradeoff</h3>
+  <p style="opacity:0.75; font-size:0.9rem; max-width:720px; margin: 0 auto 1rem;">A consistent pattern emerges across all three tasks: the rank constraint trades predictive sharpness (NLL) for broader epistemic uncertainty, which benefits OOD detection, abstention, and coverage.</p>
+  <div class="tradeoff-grid" style="max-width:1200px; margin: 0 auto 0;">
+    <div class="tradeoff-card fade-up"><h4>MIMIC-III</h4><p>Low-rank improves OOD detection despite weaker NLL than Deep Ensembles. Structured uncertainty outperforms under clinical domain shift.</p></div>
+    <div class="tradeoff-card fade-up"><h4>SST-2</h4><p>Deep Ensemble is stronger on both NLL and OOD. Low-rank remains competitive at 33× fewer parameters, an entirely different efficiency regime.</p></div>
+    <div class="tradeoff-card fade-up"><h4>Beijing PM₂.₅</h4><p>Low-rank achieves best calibration, coverage, and selective prediction. OOD advantage is secondary to interval quality.</p></div>
+  </div>
+  <div class="hypothesis-box" style="max-width:1200px; margin: 1.5rem auto 0;">
+    <strong>Hypothesis:</strong> The rank constraint on $\mathcal{R}_r$ enforces structured weight correlations (Lemma 3.2) that maintain broader epistemic uncertainty distributions. This benefits abstention, coverage, and OOD awareness at the cost of predictive sharpness (NLL). The tradeoff is task-dependent, with OOD-critical settings (e.g. clinical shift in MIMIC-III) favoring the low-rank posterior.
+  </div>
+
+  <!-- Ensembling — highlighted -->
+  <div class="ens-highlight-box fade-up" style="max-width:1200px; margin: 2.5rem auto 0;">
+    <span class="ens-eyebrow">Result · Low-Rank Ensembling</span>
+    <h3>Ensembling and low-rank are complementary — not competing.</h3>
+    <p>Ensembling five low-rank members further improves all uncertainty metrics, showing the two techniques are complementary. This opens a practical design space: smaller, cheaper ensembles of low-rank members at a fraction of the cost of full-rank ensembles.</p>
+    <div class="ensembling-bar">
+      <div class="ens-chip"><div class="arrow">0.638 → 0.731</div><div style="font-size:1.1rem; font-weight:700; color:var(--accent);">+0.093</div><div class="metric">AUROC-OOD</div></div>
+      <div class="ens-chip"><div class="arrow">0.166 → 0.054</div><div style="font-size:1.1rem; font-weight:700; color:var(--accent);">−0.112</div><div class="metric">ECE (lower is better)</div></div>
+      <div class="ens-chip"><div class="arrow">0.523 → 0.415</div><div style="font-size:1.1rem; font-weight:700; color:var(--accent);">−0.108</div><div class="metric">NLL (lower is better)</div></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2.5rem; margin-bottom:0.5rem; max-width:1200px; margin-left:auto; margin-right:auto;">Honest takeaway</h3>
+  <p style="opacity:0.75; font-size:0.9rem; margin-bottom:0; max-width:1200px; margin-left:auto; margin-right:auto;">The empirical message is not compression alone and it is not that low-rank always wins every metric.</p>
+  <div class="takeaway-grid" style="max-width:1200px; margin: 1.75rem auto 0;">
+    <div class="takeaway-card green fade-up"><h4>Where low-rank shines</h4><p>OOD separation on MIMIC; coverage and selective prediction on Beijing; efficiency-adjusted uncertainty on SST-2. Useful uncertainty under shift and deployment constraints.</p></div>
+    <div class="takeaway-card amber fade-up"><h4>Where ensembles remain strong</h4><p>In-distribution likelihood and predictive sharpness can favor Deep Ensembles. Calibration gaps remain in some settings. SWAG is a credible high-parameter baseline.</p></div>
+    <div class="takeaway-card blue fade-up"><h4>Why it matters</h4><p>Trustworthy AI often needs useful uncertainty under shift, abstention, and deployment constraints, not only marginal NLL. SBNNs make that goal practical at modern scales.</p></div>
+  </div>
+</section>
+
+<!-- 10 — FUTURE DIRECTIONS ─────────────────────────────────────────────── -->
+<section class="content-section">
+  <div class="section-header">
+    <span class="section-number">10</span>
+    <h2>Future directions</h2>
+  </div>
+  <p class="section-lead"> This work introduces SBNNs through the measure-theoretic singularity of the induced posterior. The singular posterior geometry provides both theoretical foundations and practical benefits for uncertainty quantification, making low-rank factorization a principled path toward scalable Bayesian deep learning. 
+Several natural extensions open from here: </p>
+  <div class="future-grid">
+    <div class="future-card fade-up"><h4>Adaptive rank selection</h4><p>Ranks chosen by spectra, validation tradeoffs, or sparse priors (e.g. spike-and-slab) rather than fixed grids. Per-layer rank scheduling could further reduce parameter count.</p></div>
+    <div class="future-card fade-up"><h4>Bayesian Transformers at scale</h4><p>Extending the framework to large language models and vision transformers. The $O(r(m+n))$ scaling makes this more tractable than full-rank Bayesian inference.</p></div>
+    <div class="future-card fade-up"><h4>Beyond Gaussian factors</h4><p>Laplace, spike-and-slab, and richer factor distributions while keeping singular support. Non-Gaussian factors can represent multi-modal posterior landscapes.</p></div>
+    <div class="future-card fade-up"><h4>Trustworthy AI applications</h4><p>Uncertainty that supports abstention, calibrated coverage, OOD awareness, and constrained deployment in safety-critical domains such as clinical decision support and autonomous systems.</p></div>
+  </div>
+</section>
+
+<!-- 11 — RESOURCES ─────────────────────────────────────────────────────── -->
+<section id="resources" class="content-section">
+  <div class="section-header">
+    <span class="section-number">11</span>
+    <h2>Resources</h2>
+  </div>
+  <div class="resource-grid">
+    <a class="resource-card" href="https://arxiv.org/abs/2602.00387" target="_blank"><strong>arXiv</strong><span>Paper abstract</span></a>
+    <a class="resource-card" href="https://arxiv.org/pdf/2602.00387" target="_blank"><strong>PDF</strong><span>Full paper</span></a>
+    <a class="resource-card" href="https://github.com/arradiat/SBNN" target="_blank"><strong>GitHub</strong><span>Code and repositories</span></a>
+    <a class="resource-card" href="https://arradiat.github.io/projects/singular-bnn/slides/" target="_blank"><strong>Slides</strong><span>Interactive ICML presentation</span></a>
+    <a class="resource-card" href="/" target="_blank"><strong>Homepage</strong><span>Main academic page</span></a>
+  </div>
+</section>
+
+<!-- CITATION ────────────────────────────────────────────────────────────── -->
+<section class="citation-section">
+  <h2>Citation</h2>
+  <pre><code>@inproceedings{
+  Toure2026singular,
+  title={Singular Bayesian Neural Networks},
+  author={Mame Diarra Toure, David A. Stephens},
+  booktitle={Forty-third International Conference on Machine Learning},
+  year={2026},
+  url={https://openreview.net/forum?id=rKD8HtgY8G}
+}</code></pre>
+  <button id="copy-bibtex">Copy BibTeX</button>
+</section>
+
+<footer>© 2026 Mame Diarra Touré</footer>
+
+<script src="./script.js"></script>
+</body>
+</html>
