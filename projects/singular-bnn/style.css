@@ -1,4 +1,3 @@
-/* ─── Base tokens ─────────────────────────────────────────────────────────── */
 :root {
   --bg-dark: #0b1020;
   --bg-dark-2: #121936;
@@ -41,17 +40,22 @@ a {
   text-decoration: none;
 }
 
-/* ─── Nav ────────────────────────────────────────────────────────────────── */
 .navbar {
   position: sticky;
   top: 0;
+
   z-index: 100;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   padding: 18px 6vw;
+
   background: rgba(255,255,255,0.9);
+
   backdrop-filter: blur(12px);
+
   border-bottom: 1px solid #e5eaf3;
 }
 
@@ -74,13 +78,18 @@ a {
   color: #1772d0;
 }
 
-/* ─── Hero ───────────────────────────────────────────────────────────────── */
 .hero {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
+
   gap: 50px;
+
   align-items: center;
-  padding: 90px 6vw 60px;
+
+  padding:
+    90px 6vw
+    60px;
+
   background:
     radial-gradient(
       circle at 80% 10%,
@@ -88,29 +97,49 @@ a {
       var(--bg-dark) 45%,
       #070b16 100%
     );
+
   color: var(--text-light);
 }
 
 .conference-badge {
   display: inline-block;
-  padding: 8px 14px;
+
+  padding:
+    8px 14px;
+
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      var(--accent-2)
+    );
+
   color: #07111f;
+
   font-weight: 800;
 }
 
 .hero h1 {
-  margin: 22px 0 18px;
-  font-size: clamp(42px, 7vw, 82px);
+  margin:
+    22px 0 18px;
+
+  font-size:
+    clamp(42px, 7vw, 82px);
+
   line-height: 0.95;
+
   letter-spacing: -0.05em;
 }
 
 .subtitle {
   max-width: 760px;
+
   color: #d5e2ff;
-  font-size: clamp(18px, 2vw, 23px);
+
+  font-size:
+    clamp(18px, 2vw, 23px);
 }
 
 .authors {
@@ -120,6 +149,7 @@ a {
 
 .hero-buttons {
   margin-top: 28px;
+
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
@@ -128,13 +158,23 @@ a {
 .primary-btn,
 .secondary-btn {
   border-radius: 999px;
-  padding: 12px 18px;
+
+  padding:
+    12px 18px;
+
   transition: 0.2s ease;
 }
 
 .primary-btn {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      var(--accent-2)
+    );
+
   color: #08111e;
+
   font-weight: 800;
 }
 
@@ -149,43 +189,89 @@ a {
 
 .hero-visual {
   border-radius: 28px;
+
   padding: 28px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.03));
-  border: 1px solid rgba(255,255,255,0.12);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.10),
+      rgba(255,255,255,0.03)
+    );
+
+  border:
+    1px solid rgba(255,255,255,0.12);
+
   min-height: 420px;
 }
 
 .orbital-container {
   position: relative;
+
   overflow: hidden;
+
   height: 280px;
+
   border-radius: 22px;
-  background: radial-gradient(circle, #1e2c57, #0c1226);
+
+  background:
+    radial-gradient(
+      circle,
+      #1e2c57,
+      #0c1226
+    );
 }
 
 .volume-cloud {
   position: absolute;
+
   width: 190px;
   height: 190px;
+
   left: 42px;
   top: 42px;
+
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.55), rgba(255,255,255,0));
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.55),
+      rgba(255,255,255,0)
+    );
+
   filter: blur(2px);
 }
 
 .manifold-surface {
   position: absolute;
-  inset: 72px 40px;
+
+  inset:
+    72px 40px;
+
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(123,200,255,0.9), rgba(187,156,255,0.35));
-  transform: rotateX(64deg) rotateZ(-18deg);
-  animation: float 6s ease-in-out infinite;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(123,200,255,0.9),
+      rgba(187,156,255,0.35)
+    );
+
+  transform:
+    rotateX(64deg)
+    rotateZ(-18deg);
+
+  animation:
+    float 6s ease-in-out infinite;
 }
 
 @keyframes float {
   50% {
-    transform: rotateX(62deg) rotateZ(-10deg) translateY(-8px);
+    transform:
+      rotateX(62deg)
+      rotateZ(-10deg)
+      translateY(-8px);
   }
 }
 
@@ -202,23 +288,35 @@ a {
   color: #c6d2ec;
 }
 
-/* ─── TL;DR ──────────────────────────────────────────────────────────────── */
 .tldr-section {
   max-width: 1180px;
-  margin: 40px auto;
-  padding: 28px 32px;
+
+  margin:
+    40px auto;
+
+  padding:
+    28px 32px;
+
   background: white;
+
   border-radius: 24px;
+
   box-shadow: var(--shadow);
+
   border: 1px solid #e4e9f3;
 }
 
 .section-tag {
   display: inline-block;
+
   font-size: 12px;
+
   text-transform: uppercase;
+
   letter-spacing: 0.12em;
+
   color: #1772d0;
+
   font-weight: 800;
 }
 
@@ -227,17 +325,21 @@ a {
   font-size: 19px;
 }
 
-/* ─── Sections ───────────────────────────────────────────────────────────── */
 .content-section {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 50px 6vw;
+
+  margin:
+    0 auto;
+
+  padding:
+    50px 6vw;
 }
 
 .section-header {
   display: flex;
   gap: 16px;
   align-items: center;
+
   margin-bottom: 26px;
 }
 
@@ -248,27 +350,32 @@ a {
 
 .section-header h2 {
   margin: 0;
+
   font-size: 40px;
+
   letter-spacing: -0.04em;
 }
 
-/* ─── Two-column layout ──────────────────────────────────────────────────── */
 .two-column {
   display: grid;
   grid-template-columns: 1fr 360px;
   gap: 36px;
 }
 
-/* ─── Equation boxes ─────────────────────────────────────────────────────── */
 .equation-box {
-  margin: 20px 0;
-  padding: 14px 18px;
+  margin:
+    20px 0;
+
+  padding:
+    14px 18px;
+
   border-radius: 18px;
+
   background: #eef4ff;
+
   border: 1px solid #d9e5fc;
 }
 
-/* ─── Metric cards ───────────────────────────────────────────────────────── */
 .metric-column {
   display: grid;
   gap: 16px;
@@ -279,9 +386,13 @@ a {
 .theorem-card,
 .resource-card {
   background: white;
+
   border-radius: 22px;
+
   padding: 22px;
+
   border: 1px solid #e4e9f3;
+
   box-shadow: var(--shadow);
 }
 
@@ -300,20 +411,27 @@ a {
   color: #697590;
 }
 
-/* ─── Figures ────────────────────────────────────────────────────────────── */
 .figure-section,
 .figure-grid {
   max-width: 1200px;
-  margin: 24px auto;
-  padding: 0 6vw;
+
+  margin:
+    24px auto;
+
+  padding:
+    0 6vw;
 }
 
 .figure-section figure,
 .figure-grid figure {
   background: white;
+
   border-radius: 24px;
+
   padding: 16px;
+
   border: 1px solid #e4e9f3;
+
   box-shadow: var(--shadow);
 }
 
@@ -329,11 +447,13 @@ figure figcaption {
   font-size: 14px;
 }
 
-/* ─── Dark section ───────────────────────────────────────────────────────── */
 .dark-section {
   background: var(--bg-dark);
+
   color: var(--text-light);
-  padding: 60px 6vw;
+
+  padding:
+    60px 6vw;
 }
 
 .dark-header {
@@ -341,12 +461,14 @@ figure figcaption {
   margin: 0 auto 28px auto;
 }
 
-/* ─── Theorem grid ───────────────────────────────────────────────────────── */
 .theorem-grid {
   max-width: 1200px;
+
   margin: 0 auto;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
   gap: 18px;
 }
 
@@ -365,28 +487,35 @@ figure figcaption {
   border: 1px solid #30406d;
 }
 
-/* ─── Results grid ───────────────────────────────────────────────────────── */
 .results-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 18px;
 }
 
-/* ─── Slider ─────────────────────────────────────────────────────────────── */
 .interactive-section {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 60px 6vw;
+
+  margin:
+    0 auto;
+
+  padding:
+    60px 6vw;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 28px;
+
   align-items: center;
 }
 
 .slider-panel {
   background: var(--bg-dark);
+
   color: var(--text-light);
+
   border-radius: 26px;
+
   padding: 26px;
 }
 
@@ -415,15 +544,22 @@ figure figcaption {
 
 .full-bar {
   width: 100%;
-  background: linear-gradient(90deg, #9ec7ff, #6f7fff);
+  background: linear-gradient(
+    90deg,
+    #9ec7ff,
+    #6f7fff
+  );
 }
 
 .low-bar {
   width: 12%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background: linear-gradient(
+    90deg,
+    var(--accent),
+    var(--accent-2)
+  );
 }
 
-/* ─── Resources ──────────────────────────────────────────────────────────── */
 .resource-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -442,39 +578,83 @@ figure figcaption {
   color: #697590;
 }
 
-/* ─── Citation ───────────────────────────────────────────────────────────── */
 .citation-section {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 40px 6vw 80px;
+
+  margin:
+    0 auto;
+
+  padding:
+    40px 6vw
+    80px;
 }
 
 .citation-section pre {
   overflow: auto;
+
   border-radius: 20px;
+
   padding: 22px;
+
   background: #0b1020;
+
   color: white;
 }
 
 #copy-bibtex {
   margin-top: 14px;
+
   border: none;
+
   background: #1772d0;
+
   color: white;
-  padding: 12px 18px;
+
+  padding:
+    12px 18px;
+
   border-radius: 999px;
+
   font-weight: 800;
+
   cursor: pointer;
 }
 
 footer {
   text-align: center;
-  padding: 40px 20px;
+  padding:
+    40px 20px;
+
   color: #697590;
 }
 
-/* ─── Colour overrides (slide-deck palette) ──────────────────────────────── */
+@media (max-width: 900px) {
+
+  .hero,
+  .two-column,
+  .interactive-section {
+    grid-template-columns: 1fr;
+  }
+
+  .figure-grid,
+  .theorem-grid,
+  .results-grid,
+  .resource-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .hero {
+    padding-top: 50px;
+  }
+
+}
+/* Slide-deck color harmonization */
 :root {
   --bg-dark: #160b22;
   --bg-dark-2: #241033;
@@ -505,13 +685,19 @@ body {
   border-bottom: 1px solid #e6ccd7;
 }
 
-.brand { color: #2a102a; }
+.brand {
+  color: #2a102a;
+}
 
-.nav-right a { color: #7e6e82; }
+.nav-right a {
+  color: #7e6e82;
+}
 
 .nav-right a:hover,
 .section-tag,
-.section-number { color: var(--burgundy); }
+.section-number {
+  color: var(--burgundy);
+}
 
 .hero {
   background:
@@ -522,7 +708,7 @@ body {
 
 .conference-badge,
 .primary-btn {
-  background: linear-gradient(135deg, var(--accent, #60e6f2), var(--gold));
+  background: linear-gradient(135deg, var(--cyan, #60e6f2), var(--gold));
   color: #160b22;
 }
 
@@ -531,26 +717,35 @@ body {
   color: var(--text-light);
 }
 
-.secondary-btn:hover { background: rgba(246, 215, 223, 0.08); }
+.secondary-btn:hover {
+  background: rgba(246, 215, 223, 0.08);
+}
 
 .subtitle,
 .authors,
-.hero-caption { color: #e8ddf0; }
+.hero-caption {
+  color: #e8ddf0;
+}
 
 .hero-visual {
-  background: linear-gradient(180deg, rgba(246,215,223,0.10), rgba(96,230,242,0.04));
-  border: 1px solid rgba(246,215,223,0.18);
+  background: linear-gradient(180deg, rgba(246, 215, 223, 0.10), rgba(96, 230, 242, 0.04));
+  border: 1px solid rgba(246, 215, 223, 0.18);
   border-radius: 18px;
 }
 
 .orbital-container {
   background:
-    radial-gradient(circle at 68% 32%, rgba(96,230,242,0.22), transparent 34%),
+    radial-gradient(circle at 68% 32%, rgba(96, 230, 242, 0.22), transparent 34%),
     radial-gradient(circle, #241033, #160b22);
 }
 
-.volume-cloud { background: radial-gradient(circle, rgba(246,215,223,0.52), rgba(246,215,223,0)); }
-.manifold-surface { background: linear-gradient(135deg, rgba(96,230,242,0.9), rgba(185,58,91,0.42)); }
+.volume-cloud {
+  background: radial-gradient(circle, rgba(246, 215, 223, 0.52), rgba(246, 215, 223, 0));
+}
+
+.manifold-surface {
+  background: linear-gradient(135deg, rgba(96, 230, 242, 0.9), rgba(185, 58, 91, 0.42));
+}
 
 .tldr-section,
 .metric-card,
@@ -562,40 +757,76 @@ body {
   box-shadow: var(--shadow);
 }
 
-.equation-box { background: #fbeaf0; border-color: #e6ccd7; }
-.metric-card span, .metric-card small, .resource-card span, figure figcaption, footer { color: #7e6e82; }
-.metric-card strong, .result-card h3, .resource-card strong { color: #2a102a; }
+.equation-box {
+  background: #fbeaf0;
+  border-color: #e6ccd7;
+}
+
+.metric-card span,
+.metric-card small,
+.resource-card span,
+figure figcaption,
+footer {
+  color: #7e6e82;
+}
+
+.metric-card strong,
+.result-card h3,
+.resource-card strong {
+  color: #2a102a;
+}
 
 .dark-section,
 .slider-panel,
 .citation-section pre {
   background:
-    radial-gradient(circle at 82% 12%, rgba(96,230,242,0.10), transparent 26%),
+    radial-gradient(circle at 82% 12%, rgba(96, 230, 242, 0.10), transparent 26%),
     linear-gradient(135deg, #160b22, #100719);
 }
 
 .theorem-card {
-  background: rgba(36,16,51,0.92);
+  background: rgba(36, 16, 51, 0.92);
   border-color: #432052;
 }
 
-.theorem-card h3 { color: #60e6f2; }
-.theorem-card p { color: #e8ddf0; }
-.dark-eq { background: rgba(22,11,34,0.72); border-color: rgba(96,230,242,0.34); }
-.bar-background { background: #432052; }
-.full-bar { background: linear-gradient(90deg, #b9a7c9, #f6d7df); }
-.low-bar { background: linear-gradient(90deg, #60e6f2, #b93a5b); }
-#copy-bibtex { background: var(--burgundy); }
-#copy-bibtex:hover { background: #b93a5b; }
+.theorem-card h3 {
+  color: #60e6f2;
+}
 
-/* ─── Section lead ───────────────────────────────────────────────────────── */
+.theorem-card p {
+  color: #e8ddf0;
+}
+
+.dark-eq {
+  background: rgba(22, 11, 34, 0.72);
+  border-color: rgba(96, 230, 242, 0.34);
+}
+
+.bar-background {
+  background: #432052;
+}
+
+.full-bar {
+  background: linear-gradient(90deg, #b9a7c9, #f6d7df);
+}
+
+.low-bar {
+  background: linear-gradient(90deg, #60e6f2, #b93a5b);
+}
+
+#copy-bibtex {
+  background: var(--burgundy);
+}
+
+#copy-bibtex:hover {
+  background: #b93a5b;
+}
 .section-lead {
   max-width: 860px;
   color: #5f5164;
   font-size: 18px;
 }
 
-/* ─── Setup / table cards ────────────────────────────────────────────────── */
 .setup-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -612,13 +843,29 @@ body {
   box-shadow: var(--shadow);
 }
 
-.setup-grid strong { display: block; color: #7a1e3a; margin-bottom: 6px; }
-.setup-grid span, .table-note { color: #7e6e82; }
+.setup-grid strong {
+  display: block;
+  color: #7a1e3a;
+  margin-bottom: 6px;
+}
 
-.table-card { margin-top: 22px; }
-.table-card h3 { margin-top: 0; color: #2a102a; }
+.setup-grid span,
+.table-note {
+  color: #7e6e82;
+}
 
-.table-scroll { overflow-x: auto; }
+.table-card {
+  margin-top: 22px;
+}
+
+.table-card h3 {
+  margin-top: 0;
+  color: #2a102a;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
 
 .table-card table {
   width: 100%;
@@ -641,12 +888,27 @@ body {
   font-weight: 800;
 }
 
-.table-card tr.ours { background: #eefbfc; }
-.table-card tr.ours td:first-child { color: #7a1e3a; font-weight: 900; }
-.table-card.compact p { margin-bottom: 0; }
+.table-card tr.ours {
+  background: #eefbfc;
+}
 
-/* ─── Formula section ────────────────────────────────────────────────────── */
-.formula-section { padding-top: 64px; }
+.table-card tr.ours td:first-child {
+  color: #7a1e3a;
+  font-weight: 900;
+}
+
+.table-card.compact p {
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .setup-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.formula-section {
+  padding-top: 64px;
+}
 
 .formula-grid {
   display: grid;
@@ -663,250 +925,31 @@ body {
   box-shadow: var(--shadow);
 }
 
-.formula-card.wide { grid-column: span 2; }
-.formula-card h3 { margin-top: 0; color: #7a1e3a; }
-.formula-card p { color: #5f5164; margin-bottom: 0; }
-.small-eq { font-size: 0.88rem; overflow-x: auto; }
-
-/* ════════════════════════════════════════════════════════════════════════════
-   NEW ADDITIONS — only what the targeted changes require
-════════════════════════════════════════════════════════════════════════════ */
-
-/* ─── Gradient bridges between dark ↔ light sections ─────────────────────── */
-.bridge {
-  height: 80px;
-  display: block;
-  margin: 0;
-  padding: 0;
+.formula-card.wide {
+  grid-column: span 2;
 }
 
-.bridge-dark-to-light {
-  background: linear-gradient(to bottom, #160b22 0%, #fff8ef 100%);
+.formula-card h3 {
+  margin-top: 0;
+  color: #7a1e3a;
 }
 
-.bridge-light-to-dark {
-  background: linear-gradient(to bottom, #fff8ef 0%, #160b22 100%);
+.formula-card p {
+  color: #5f5164;
+  margin-bottom: 0;
 }
 
-/* ─── Notation definition box ────────────────────────────────────────────── */
-.def-notation {
-  margin: 0 0 2rem;
-  padding: 1rem 1.5rem;
-  background: rgba(122,30,58,0.05);
-  border: 1px solid rgba(122,30,58,0.18);
-  border-left: 3px solid #7a1e3a;
-  border-radius: 14px;
-  font-size: 0.93rem;
-  line-height: 1.7;
-  color: #3d1a2a;
+.small-eq {
+  font-size: 0.88rem;
+  overflow-x: auto;
 }
 
-.def-notation strong { color: #7a1e3a; }
-
-/* ─── Experiment: table + radar side by side ─────────────────────────────── */
-.exp-table-radar {
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 1.5rem;
-  align-items: start;
-  margin-top: 22px;
-}
-
-.exp-radar-figs {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.exp-radar-fig,
-.exp-radar-figs figure {
-  background: #fff;
-  border: 1px solid #e6ccd7;
-  border-radius: 18px;
-  padding: 14px;
-  box-shadow: var(--shadow);
-  margin: 0;
-}
-
-.exp-radar-fig img,
-.exp-radar-figs figure img {
-  width: 100%;
-  border-radius: 10px;
-  display: block;
-}
-
-.exp-radar-fig figcaption,
-.exp-radar-figs figure figcaption {
-  margin-top: 8px;
-  font-size: 12px;
-  color: #7e6e82;
-  text-align: center;
-  line-height: 1.4;
-}
-
-/* strip the top margin from table-card inside exp-table-radar */
-.exp-table-radar .table-card { margin-top: 0; }
-
-/* ─── GPU profiling callout ──────────────────────────────────────────────── */
-.gpu-callout {
-  background: linear-gradient(
-    135deg,
-    rgba(96,230,242,0.06),
-    rgba(185,58,91,0.04)
-  );
-  border: 1px solid rgba(96,230,242,0.22);
-  border-left: 4px solid #60e6f2;
-  border-radius: 22px;
-  padding: 24px 28px;
-  margin-bottom: 28px;
-}
-
-.gpu-callout-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.gpu-callout h3 {
-  margin: 0;
-  font-size: 20px;
-  letter-spacing: -0.03em;
-  color: #2a102a;
-}
-
-.gpu-callout p {
-  font-size: 14px;
-  color: #7e6e82;
-  margin: 0 0 16px;
-}
-
-/* profiling table inside callout */
-.profiling-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 14px;
-}
-
-.profiling-table th {
-  background: rgba(96,230,242,0.08);
-  padding: 9px 12px;
-  text-align: left;
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-bottom: 2px solid rgba(96,230,242,0.2);
-  color: #0a6b72;
-}
-
-.profiling-table td {
-  padding: 9px 12px;
-  border-bottom: 1px solid #ead5de;
-}
-
-.profiling-table tr.ours td { background: rgba(96,230,242,0.06); }
-.profiling-table tr.ours td:first-child {
-  border-left: 3px solid #60e6f2;
-  font-weight: 800;
-  color: #2a102a;
-}
-
-/* ─── Ensembling highlight ───────────────────────────────────────────────── */
-.ens-highlight-box {
-  margin-top: 2.5rem;
-  padding: 1.75rem 2rem;
-  background: rgba(96,230,242,0.06);
-  border: 1px solid rgba(96,230,242,0.22);
-  border-left: 4px solid #60e6f2;
-  border-radius: 18px;
-  position: relative;
-}
-
-.ens-highlight-box .ens-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #60e6f2;
-  font-weight: 800;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.ens-highlight-box h3 {
-  font-size: 1.1rem;
-  letter-spacing: -0.02em;
-  margin: 0 0 8px;
-  color: #fff8ef;
-}
-
-.ens-highlight-box > p {
-  font-size: 14px;
-  color: rgba(255,248,239,0.65);
-  line-height: 1.6;
-  margin: 0 0 1.25rem;
-  max-width: 680px;
-}
-
-/* ─── Scroll-triggered fade-in animations ────────────────────────────────── */
-.fade-up {
-  opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.45s ease, transform 0.45s ease;
-}
-
-.fade-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* stagger siblings */
-.fade-up:nth-child(1) { transition-delay: 0.00s; }
-.fade-up:nth-child(2) { transition-delay: 0.08s; }
-.fade-up:nth-child(3) { transition-delay: 0.16s; }
-.fade-up:nth-child(4) { transition-delay: 0.24s; }
-.fade-up:nth-child(5) { transition-delay: 0.32s; }
-.fade-up:nth-child(6) { transition-delay: 0.40s; }
-
-/* table row animations */
-.table-card tbody tr {
-  opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-.table-card tbody tr.row-visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-/* ─── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .hero,
-  .two-column,
-  .interactive-section {
+  .formula-grid {
     grid-template-columns: 1fr;
   }
 
-  .figure-grid,
-  .theorem-grid,
-  .results-grid,
-  .resource-grid,
-  .setup-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .formula-grid { grid-template-columns: 1fr; }
-  .formula-card.wide { grid-column: span 1; }
-
-  .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
-  }
-
-  .hero { padding-top: 50px; }
-
-  .exp-table-radar {
-    grid-template-columns: 1fr;
+  .formula-card.wide {
+    grid-column: span 1;
   }
 }
