@@ -573,43 +573,40 @@
       measure over $W$: its support, geometry, covariance, and complexity all change.
     </p>
 
-    <div class="comparison-table-wrap">
-      <table class="comparison-table">
-        <thead>
-          <tr>
-            <th>Approach</th>
-            <th>Backbone</th>
-            <th>Posterior object</th>
-            <th>What is missing</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Post-hoc perturbations</td>
-            <td>Pretrained</td>
-            <td>Noise around fixed weights</td>
-            <td><span class="missing-tag">Not end-to-end uncertainty</span></td>
-          </tr>
-          <tr>
-            <td>Low-rank covariance</td>
-            <td>Full $W$ means</td>
-            <td>Covariance approximation</td>
-            <td><span class="missing-tag">Still O(mn) weight means</span></td>
-          </tr>
-          <tr>
-            <td>Bayesian LoRA</td>
-            <td>Pretrained / fine-tuning</td>
-            <td>Adapter uncertainty</td>
-            <td><span class="missing-tag">Not from-scratch BNN training</span></td>
-          </tr>
-          <tr class="ours-row">
-            <td><strong>SBNN (ours)</strong></td>
-            <td>From scratch</td>
-            <td>Singular $q_W$ on rank-$r$ support</td>
-            <td><span class="ours-tag">Pushforward posterior</span></td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="approach-cards">
+
+      <div class="approach-card">
+        <div class="approach-main">
+          <strong>Post-hoc perturbations</strong>
+          <span class="approach-sub">Pretrained backbone · noise added around fixed deterministic weights</span>
+        </div>
+        <span class="approach-status">Not end-to-end uncertainty</span>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-main">
+          <strong>Low-rank posterior covariance</strong>
+          <span class="approach-sub">Full $W$ means still $O(mn)$ · low rank only in the covariance approximation</span>
+        </div>
+        <span class="approach-status">Still O(mn) weight means</span>
+      </div>
+
+      <div class="approach-card">
+        <div class="approach-main">
+          <strong>Bayesian LoRA</strong>
+          <span class="approach-sub">Pretrained / fine-tuning · adapter uncertainty only · affine subspace support</span>
+        </div>
+        <span class="approach-status">Not from-scratch BNN training</span>
+      </div>
+
+      <div class="approach-card ours-approach">
+        <div class="approach-main">
+          <strong>★ SBNN (ours)</strong>
+          <span class="approach-sub">Learned from scratch · singular $q_W$ concentrated on rank-$r$ manifold · structured covariance via shared factors</span>
+        </div>
+        <span class="approach-status">Pushforward posterior</span>
+      </div>
+
     </div>
   </section>
 
@@ -1342,49 +1339,66 @@
         Each setting includes OOD evaluation on held-out distribution shifts.
       </p>
 
-      <div class="design-table-wrap">
-        <table class="design-table">
-          <thead>
-            <tr>
-              <th>Dataset</th>
-              <th>Architecture</th>
-              <th>In-distribution</th>
-              <th>OOD shift</th>
-              <th>Rank</th>
-              <th>Key metrics</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>MIMIC-III ICU mortality</strong></td>
-              <td>2-layer MLP</td>
-              <td>40,406 adult ICU patients, 44 clinical features</td>
-              <td>Adult ICU → Newborn ICU (5,357 OOD)</td>
-              <td><code>r=15</code></td>
-              <td>AUROC, AUC-OOD, AUPR-OOD, AUPR-In, NLL, Params</td>
-            </tr>
-            <tr>
-              <td><strong>Beijing PM₂.₅ forecasting</strong></td>
-              <td>2-layer LSTM</td>
-              <td>29,213 train, 24-step windows</td>
-              <td>Beijing → Guangzhou (20,050 OOD)</td>
-              <td><code>r=14,20</code></td>
-              <td>MAE, ECE, PICP, AUROC-OOD, AUPR-OOD, Params</td>
-            </tr>
-            <tr>
-              <td><strong>SST-2 sentiment</strong></td>
-              <td>4-layer Transformer (d=256)</td>
-              <td>67,349 train, 872 dev (movie reviews)</td>
-              <td>Movie reviews → AG News (7,600 OOD)</td>
-              <td><code>r=16</code></td>
-              <td>Accuracy, NLL, AUROC-OOD, MI Ratio, AUPR-In, Params, Time</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="exp-design-grid">
+
+        <div class="exp-design-card">
+          <span class="exp-design-badge mlp">MLP · Clinical</span>
+          <h4>MIMIC-III ICU Mortality</h4>
+          <div class="exp-design-row">
+            <span class="exp-design-label">In-dist</span>
+            <span class="exp-design-val">40,406 adult ICU patients, 44 clinical features</span>
+          </div>
+          <div class="exp-design-row">
+            <span class="exp-design-label">OOD</span>
+            <span class="exp-design-val">Adult ICU → Newborn ICU (5,357 samples)</span>
+          </div>
+          <div class="exp-design-row">
+            <span class="exp-design-label">Metrics</span>
+            <span class="exp-design-val">AUROC · AUC-OOD · AUPR-OOD · AUPR-In · NLL</span>
+          </div>
+          <span class="exp-design-rank">r = 15</span>
+        </div>
+
+        <div class="exp-design-card">
+          <span class="exp-design-badge lstm">LSTM · Time Series</span>
+          <h4>Beijing PM₂.₅ Forecasting</h4>
+          <div class="exp-design-row">
+            <span class="exp-design-label">In-dist</span>
+            <span class="exp-design-val">29,213 train samples, 24-hour sliding windows</span>
+          </div>
+          <div class="exp-design-row">
+            <span class="exp-design-label">OOD</span>
+            <span class="exp-design-val">Beijing → Guangzhou climate (20,050 samples)</span>
+          </div>
+          <div class="exp-design-row">
+            <span class="exp-design-label">Metrics</span>
+            <span class="exp-design-val">MAE · ECE · PICP · AUROC-OOD · AUPR-OOD</span>
+          </div>
+          <span class="exp-design-rank">r = 14, 20</span>
+        </div>
+
+        <div class="exp-design-card">
+          <span class="exp-design-badge transformer">Transformer · NLP</span>
+          <h4>SST-2 Sentiment</h4>
+          <div class="exp-design-row">
+            <span class="exp-design-label">In-dist</span>
+            <span class="exp-design-val">67,349 train, 872 dev (movie reviews)</span>
+          </div>
+          <div class="exp-design-row">
+            <span class="exp-design-label">OOD</span>
+            <span class="exp-design-val">Movie reviews → AG News (7,600 samples)</span>
+          </div>
+          <div class="exp-design-row">
+            <span class="exp-design-label">Metrics</span>
+            <span class="exp-design-val">Accuracy · NLL · AUROC-OOD · MI Ratio · Params · Time</span>
+          </div>
+          <span class="exp-design-rank">r = 16</span>
+        </div>
+
       </div>
 
-      <div class="baselines-note">
-        <strong>Baselines compared:</strong>
+      <div class="exp-baselines-note">
+        <strong style="color:rgba(255,255,255,0.6);">Baselines:</strong>
         Deterministic · Deep Ensemble (M=5) · Full-Rank BBB · Low-Rank (random init) ·
         Low-Rank (SVD init) · Rank-1 Multiplicative · SWAG (supplementary).
         All Bayesian models optimized with Adam via the reparameterization trick.
