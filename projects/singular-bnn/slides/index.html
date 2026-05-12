@@ -7,10 +7,109 @@
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23160B22'/%3E%3Cpath d='M10 42c11-23 33-23 44 0' fill='none' stroke='%2360E6F2' stroke-width='5'/%3E%3Ccircle cx='23' cy='35' r='3' fill='%23E9B96B'/%3E%3Ccircle cx='42' cy='35' r='3' fill='%23F6D7DF'/%3E%3C/svg%3E">
     <link rel="stylesheet" href="vendor/reveal/reveal.css">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Styles only for the 6 NEW slides (11,12,16,18,20,24).
+         Every existing slide uses only your existing style.css classes. -->
+    <style>
+      /* ── Slide 11: numbered guarantee cards ── */
+      .guarantee-cards{display:flex;gap:14px;flex:1}
+      .guarantee-card{flex:1;display:flex;flex-direction:column;gap:9px;
+        background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10);
+        border-radius:13px;padding:16px}
+      .g-num{width:28px;height:28px;border-radius:50%;border:2px solid #60e6f2;
+        display:flex;align-items:center;justify-content:center;
+        font-size:.88rem;font-weight:800;color:#60e6f2;flex-shrink:0}
+      .guarantee-card h4{margin:0;font-size:.83rem;font-weight:800;color:#60e6f2}
+      .g-eq{background:rgba(22,11,34,.75);border:1px solid rgba(96,230,242,.22);
+        border-radius:7px;padding:7px 9px;font-size:.72rem;
+        font-family:'Courier New',monospace;color:#fff8ef;
+        line-height:1.55;white-space:pre-wrap}
+      .guarantee-card p{font-size:.75rem;color:#b9a7c9;line-height:1.45;margin:0}
+
+      /* ── Slide 12: PAC-Bayes split + reduction chips ── */
+      .pac-split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+      .pac-box{border-radius:12px;padding:14px 16px}
+      .pac-box.fullrank{background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2)}
+      .pac-box.lowrank{background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.22)}
+      .pac-box h5{margin:0 0 7px;font-size:.78rem;color:#b9a7c9}
+      .pac-eq{background:rgba(22,11,34,.6);border:1px solid rgba(96,230,242,.18);
+        border-radius:6px;padding:6px 8px;font-size:.72rem;
+        font-family:monospace;color:#fff8ef;line-height:1.5;margin-bottom:7px}
+      .pac-scale{font-size:.8rem;font-weight:700}
+      .pac-box.fullrank .pac-scale{color:#ef4444}
+      .pac-box.lowrank  .pac-scale{color:#10b981}
+      .reduction-chips{display:flex;gap:10px;margin-top:12px}
+      .r-chip{flex:1;text-align:center;padding:11px 8px;
+        background:rgba(96,230,242,.10);border:1px solid rgba(96,230,242,.28);
+        border-radius:9px}
+      .r-chip .big{display:block;font-size:1.5rem;font-weight:900;
+        color:#60e6f2;letter-spacing:-.04em;line-height:1}
+      .r-chip small{font-size:.68rem;color:#b9a7c9;display:block;margin-top:2px}
+
+      /* ── Slides 16, 18, 20: proper results tables ── */
+      .rtable{width:100%;border-collapse:collapse;font-size:.75rem;margin:10px 0}
+      .rtable th{background:rgba(122,30,58,.10);color:#7a1e3a;padding:6px 9px;
+        border-bottom:2px solid rgba(122,30,58,.2);font-size:9.5px;
+        letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;text-align:left}
+      .rtable td{padding:6px 9px;border-bottom:1px solid rgba(122,30,58,.09);
+        color:#2a102a;white-space:nowrap}
+      .rtable tr.ours td{background:rgba(96,230,242,.07);font-weight:700}
+      .rtable tr.ours td:first-child{border-left:3px solid #60e6f2;color:#0a6b72}
+      .rtable td.b{color:#7a1e3a;font-weight:800}
+      .stat-chips{display:flex;gap:9px;margin-top:10px}
+      .stat-chip{flex:1;text-align:center;padding:9px 6px;
+        background:rgba(122,30,58,.07);border:1px solid rgba(122,30,58,.16);
+        border-radius:9px}
+      .stat-chip .sv{display:block;font-size:1.25rem;font-weight:900;
+        color:#7a1e3a;letter-spacing:-.03em;line-height:1;margin-bottom:3px}
+      .stat-chip small{font-size:.65rem;color:#7e6e82;line-height:1.3;display:block}
+      .key-finding{margin-top:9px;padding:8px 11px;
+        background:rgba(96,230,242,.07);border:1px solid rgba(96,230,242,.18);
+        border-left:3px solid #60e6f2;border-radius:8px;
+        font-size:.73rem;color:#5f5164;line-height:1.5}
+
+      /* ── Slide 20: GPU profiling sub-section ── */
+      .gpu-section{margin-top:10px}
+      .gpu-label{font-size:9.5px;text-transform:uppercase;letter-spacing:.1em;
+        color:#60e6f2;font-weight:800;margin-bottom:6px}
+      .gpu-table{width:100%;border-collapse:collapse;font-size:.75rem}
+      .gpu-table th{background:rgba(96,230,242,.08);color:#0a6b72;padding:6px 9px;
+        border-bottom:2px solid rgba(96,230,242,.2);font-size:9.5px;
+        text-transform:uppercase;letter-spacing:.06em;text-align:left}
+      .gpu-table td{padding:6px 9px;border-bottom:1px solid rgba(122,30,58,.09);color:#2a102a}
+      .gpu-table tr.ours td{background:rgba(96,230,242,.07)}
+      .gpu-table tr.ours td:first-child{border-left:3px solid #60e6f2;font-weight:800;color:#0a6b72}
+
+      /* ── Slide 24: calibration–OOD insight cards + ensemble callout ── */
+      .insight-cards{display:flex;gap:10px;margin:10px 0}
+      .insight-card{flex:1;border-radius:11px;padding:12px 14px;
+        background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10)}
+      .ic-label{font-size:9.5px;text-transform:uppercase;letter-spacing:.09em;
+        font-weight:800;margin-bottom:5px}
+      .insight-card:nth-child(1) .ic-label{color:#60e6f2}
+      .insight-card:nth-child(2) .ic-label{color:#e9b96b}
+      .insight-card:nth-child(3) .ic-label{color:#f06e8a}
+      .insight-card p{font-size:.75rem;color:#b9a7c9;line-height:1.5;margin:0}
+      .hypothesis-box{padding:9px 13px;font-size:.73rem;color:#b9a7c9;
+        font-style:italic;line-height:1.5;margin-bottom:9px;
+        background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+        border-radius:8px}
+      .ensemble-box{background:rgba(96,230,242,.07);border:1px solid rgba(96,230,242,.22);
+        border-left:3px solid #60e6f2;border-radius:9px;padding:11px 14px}
+      .ensemble-box .ens-label{font-size:9.5px;text-transform:uppercase;
+        letter-spacing:.12em;color:#60e6f2;font-weight:800;margin-bottom:7px}
+      .ens-deltas{display:flex;gap:12px}
+      .ens-delta{text-align:center;flex:1}
+      .ens-delta .ev{display:block;font-size:1.05rem;font-weight:900;
+        color:#60e6f2;letter-spacing:-.02em;line-height:1;margin-bottom:2px}
+      .ens-delta small{font-size:.65rem;color:#b9a7c9}
+    </style>
   </head>
   <body>
     <div class="reveal">
       <div class="slides">
+
+        <!-- 1 ─ TITLE ──────────────────────────────────────────────────── -->
         <section class="title-slide dark">
           <canvas class="manifold-canvas" data-variant="title" aria-hidden="true"></canvas>
           <div class="kicker">ICML 2026 Accepted Paper</div>
@@ -24,20 +123,22 @@
           <footer>arradiat.github.io/projects/singular-bnn · github.com/arradiat/SBNN · arXiv:2602.00387</footer>
         </section>
 
+        <!-- 2 ─ CONTRIBUTION MAP ─────────────────────────────────────── -->
         <section class="light">
           <div class="kicker">Contribution Map</div>
           <h2>This paper shows that low-rank variational BNNs induce singular posterior geometry.</h2>
           <div class="contribution-grid">
             <article><b>Method</b><span>End-to-end variational learning over low-rank factors W = AB<sup>T</sup>.</span></article>
             <article><b>Geometry</b><span>The induced q<sub>W</sub> is a pushforward posterior supported on the rank-r manifold.</span></article>
-            <article><b>Singularity</b><span>q<sub>W</sub> is singular with respect to Lebesgue measure when r &lt; min(m,n).</span></article>
+            <article><b>Singularity</b><span>q<sub>W</sub> is singular w.r.t. Lebesgue measure when r &lt; min(m,n).</span></article>
             <article><b>Correlation</b><span>Mean-field factors still induce structured weight correlations in W.</span></article>
-            <article><b>Theory</b><span>Approximation, PAC-Bayes, and Gaussian-complexity guarantees.</span></article>
-            <article><b>Evidence</b><span>MLPs, LSTMs, Transformers; MIMIC, Beijing PM2.5, SST-2.</span></article>
+            <article><b>Theory</b><span>Approximation (EYM), PAC-Bayes, and Gaussian-complexity guarantees.</span></article>
+            <article><b>Evidence</b><span>MLPs, LSTMs, Transformers; MIMIC-III, Beijing PM₂.₅, SST-2.</span></article>
           </div>
           <p class="bottom-thesis">Core thesis: low-rank is not merely parameter economy; it changes posterior support, covariance, and capacity.</p>
         </section>
 
+        <!-- 3 ─ PROBLEM ──────────────────────────────────────────────── -->
         <section class="dark">
           <div class="kicker">Problem</div>
           <h2>Bayesian neural networks provide uncertainty, but full weight-space inference is expensive.</h2>
@@ -62,7 +163,7 @@
                 </div>
                 <em>Every cell gets its own posterior.</em>
               </div>
-                            <div class="compare-arrow">→</div>
+              <div class="compare-arrow">→</div>
               <div class="compare-panel sbnn">
                 <b>SBNN factor space</b>
                 <div class="factor-mini" aria-hidden="true">
@@ -80,30 +181,31 @@
           <p class="bottom-thesis blush">But modern weight matrices often have fast spectral decay.</p>
         </section>
 
+        <!-- 4 ─ WHAT EXISTING LOW-RANK METHODS MISS ─────────────────── -->
         <section class="light">
           <div class="kicker">What Existing Low-Rank Methods Miss</div>
-          <h2>The paper is not LoRA with uncertainty pasted on top.</h2>
+          <h2>Not LoRA — a different posterior object.</h2>
           <div class="comparison-table">
-            <div class="head">Approach</div><div class="head">Backbone</div><div class="head">Posterior object</div><div class="head">Missing piece</div>
-            <div>Post-hoc perturbations</div><div>pretrained</div><div>noise around fixed weights</div><div>not end-to-end uncertainty</div>
-            <div>Low-rank covariance</div><div>full W means</div><div>covariance approximation</div><div>still O(mn) weight means</div>
-            <div>Bayesian LoRA</div><div>pretrained/fine-tuning</div><div>adapter uncertainty</div><div>not from-scratch BNN training</div>
-            <div class="ours">SBNN</div><div class="ours">from scratch</div><div class="ours">singular q<sub>W</sub> on rank-r support</div><div class="ours">pushforward posterior</div>
+            <div class="head">Approach</div><div class="head">Backbone</div><div class="head">Posterior object</div><div class="head">Support of posterior</div>
+            <div>Post-hoc noise</div><div>Pretrained</div><div>Noise on fixed W</div><div>Full ambient ℝ<sup>mn</sup></div>
+            <div>Low-rank covariance</div><div>Full W means</div><div>Covariance approx.</div><div>Full ambient ℝ<sup>mn</sup></div>
+            <div>Bayesian LoRA</div><div>Pretrained adapter</div><div>Adapter uncertainty</div><div>Rank-r adapter only</div>
+            <div class="ours">SBNN (ours)</div><div class="ours">From scratch</div><div class="ours">Singular q<sub>W</sub></div><div class="ours">Rank-r manifold ℳ<sub>r</sub></div>
           </div>
-          <p class="bottom-thesis">The novelty is the induced posterior measure over W: its support, geometry, covariance, and complexity all change.</p>
+          <p class="bottom-thesis">The differentiator is the support: SBNN puts probability on the rank-<em>r</em> manifold itself, not on ambient ℝ<sup>mn</sup>.</p>
         </section>
 
+        <!-- 5 ─ THE MOVE ─────────────────────────────────────────────── -->
         <section class="dark">
           <div class="kicker">The Move</div>
           <h2>Learn uncertainty in factor space, then map it into weight space.</h2>
-         <div class="factor-row">
-  <div class="matrix w">W</div>
-  <div class="eq">=</div>
-  <div class="matrix a">A</div>
-  <div class="times">·</div>
-  <div class="matrix b">B<sup>T</sup></div>
-</div>
-
+          <div class="factor-row">
+            <div class="matrix w">W</div>
+            <div class="eq">=</div>
+            <div class="matrix a">A</div>
+            <div class="times">·</div>
+            <div class="matrix b">B<sup>T</sup></div>
+          </div>
           <div class="card-row">
             <article><b>Variational posterior</b><span>q(A,B)=q<sub>A</sub>(A)q<sub>B</sub>(B), mean-field Gaussians over factor entries.</span></article>
             <article><b>Parameter count</b><span>O(mn) becomes O(r(m+n)); rank controls expressiveness.</span></article>
@@ -111,6 +213,7 @@
           </div>
         </section>
 
+        <!-- 6 ─ PUSHFORWARD POSTERIOR ────────────────────────────────── -->
         <section class="light">
           <div class="kicker">Pushforward Posterior</div>
           <h2>The posterior over W is induced, not independently assigned.</h2>
@@ -122,25 +225,28 @@
           <p class="bottom-thesis">This is the formal turn: the Bayesian object is a pushforward measure on weight space.</p>
         </section>
 
+        <!-- 7 ─ CENTRAL THEOREM ───────────────────────────────────────── -->
         <section class="dark theorem-slide">
           <div class="kicker">Central Theorem</div>
           <h2>q<sub>W</sub> is singular with respect to Lebesgue measure.</h2>
           <div class="theorem-box">
-            <p>If r &lt; min(m,n), and W = AB<sup>T</sup> with A ∈ R<sup>m×r</sup>, B ∈ R<sup>n×r</sup>:</p>
-            <strong>q<sub>W</sub>(R<sub>r</sub>) = 1 &nbsp;&nbsp; and &nbsp;&nbsp; λ(R<sub>r</sub>) = 0</strong>
+            <p>If r &lt; min(m,n), and W = AB<sup>T</sup> with A ∈ ℝ<sup>m×r</sup>, B ∈ ℝ<sup>n×r</sup>:</p>
+            <strong>q<sub>W</sub>(ℛ<sub>r</sub>) = 1 &nbsp;&nbsp; and &nbsp;&nbsp; λ(ℛ<sub>r</sub>) = 0</strong>
             <em>therefore</em>
             <strong class="singular">q<sub>W</sub> ⟂ λ</strong>
           </div>
-          <p class="bottom-thesis blush">The posterior cannot be represented as a full-dimensional density over R<sup>m×n</sup>. It lives on zero-volume rank-r support.</p>
+          <p class="bottom-thesis blush">The posterior cannot be represented as a full-dimensional density over ℝ<sup>m×n</sup>. It lives on zero-volume rank-r support.</p>
         </section>
 
+        <!-- 8 ─ GEOMETRIC DISTINCTION ────────────────────────────────── -->
         <section class="light">
           <div class="kicker">Geometric Distinction</div>
           <h2>Mean-field fills volume. Low-rank mass lives on a manifold.</h2>
           <figure class="figure wide"><img src="assets/figures/figure_geometric_distinction.png" alt="Geometric distinction between mean-field and low-rank posteriors"></figure>
-          <p class="caption">This is why “singular BNN” is the right phrase: the posterior support itself has changed.</p>
+          <p class="caption">This is why "singular BNN" is the right phrase: the posterior support itself has changed.</p>
         </section>
 
+        <!-- 9 ─ STRUCTURED LATENT-FACTOR UNCERTAINTY ─────────────────── -->
         <section class="dark">
           <div class="kicker">Structured Latent-Factor Uncertainty</div>
           <h2>Mean-field factors do not imply mean-field weights.</h2>
@@ -154,18 +260,79 @@
           </div>
         </section>
 
+        <!-- 10 ─ THEORY STACK ─────────────────────────────────────────── -->
         <section class="light">
           <div class="kicker">Theory Stack</div>
           <h2>The paper gives three theory certificates, not one.</h2>
           <div class="card-row">
             <article><b>Approximation</b><span>Eckart–Young–Mirsky controls rank-r approximation by the tail singular values of W*.</span></article>
-            <article><b>Learned factors</b><span>Error decomposes into learning error ||W−W<sub>r</sub>*||<sub>F</sub> plus unavoidable rank bias σ<sub>&gt;r</sub>.</span></article>
+            <article><b>Learned factors</b><span>Error decomposes into learning error ‖W−W<sub>r</sub>*‖<sub>F</sub> plus unavoidable rank bias σ<sub>&gt;r</sub>.</span></article>
             <article><b>Generalization</b><span>PAC-Bayes complexity scales as √r(m+n), and Gaussian complexity transfers to Bayesian predictive means.</span></article>
           </div>
           <figure class="figure short"><img src="assets/figures/combined_bound.png" alt="PAC-Bayes and Gaussian complexity bounds"></figure>
           <p class="caption">Figure result: PAC-Bayes shows a critical rank transition; Gaussian complexity decreases with rank reduction.</p>
         </section>
 
+        <!-- 11 ─ THREE CERTIFICATES — FORMAL STATEMENTS [NEW] ─────────── -->
+        <section class="dark">
+          <div class="kicker">Three Certificates — Formal Statements</div>
+          <h2>Each certificate addresses a distinct aspect of the low-rank posterior.</h2>
+          <div class="guarantee-cards">
+            <div class="guarantee-card">
+              <div class="g-num">①</div>
+              <h4>Loss Approximation (Eckart–Young–Mirsky)</h4>
+              <div class="g-eq">|𝔼[ℓ(W*x,y)] − 𝔼[ℓ(W*ᵣx,y)]|
+≤ L·R·√(Σᵢ₌ᵣ₊₁ σᵢ²(W*))</div>
+              <p>Rapid singular-value decay ⇒ small rank-induced bias.</p>
+            </div>
+            <div class="guarantee-card">
+              <div class="g-num">②</div>
+              <h4>PAC-Bayes Generalization Bounds</h4>
+              <div class="g-eq">Complexity(Q_LR)/Complexity(Q_full)
+≈ √(r(1/m + 1/n)) ≪ 1
+
+O(r(m+n)) vs O(mn) — tighter bounds
+when r ≪ min(m,n).</div>
+              <p>Non-vacuous for low ranks where full-rank BNNs already fail.</p>
+            </div>
+            <div class="guarantee-card">
+              <div class="g-num">③</div>
+              <h4>Gaussian Complexity Transfer</h4>
+              <div class="g-eq">𝒢(F^BNN) ≤ 𝒢(F^{Pinto(C,r)})
+
+f_BNN ∈ conv̄(supp q_W)
+GC invariant under closure + conv hull</div>
+              <p>Deterministic rank-sensitive bounds transfer to Bayesian predictive means without degradation.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 12 ─ PAC-BAYES: COMPLEXITY REDUCTION [NEW] ────────────────── -->
+        <section class="dark">
+          <div class="kicker">PAC-Bayes: Complexity Reduction in Detail</div>
+          <h2>Low-rank changes the dominant scaling term in the generalization bound.</h2>
+          <div class="pac-split">
+            <div class="pac-box fullrank">
+              <h5>Full-Rank MFVI</h5>
+              <div class="pac-eq">L(Q) ≤ L̂(Q) + √((C·mn + log(2√N/δ)) / 2N)</div>
+              <p class="pac-scale">Complexity: O(mn)</p>
+            </div>
+            <div class="pac-box lowrank">
+              <h5>Low-Rank (Ours)</h5>
+              <div class="pac-eq">L(Q) ≤ L̂(Q) + √((C·r(m+n) + log(2√N/δ)) / 2N)</div>
+              <p class="pac-scale">Complexity: O(r(m+n))</p>
+            </div>
+          </div>
+          <p style="font-size:.8rem;color:#b9a7c9;margin:6px 0 0;">Practical numbers for m = n = 512 (relative complexity, lower is better):</p>
+          <div class="reduction-chips">
+            <div class="r-chip"><span class="big">25×</span><small>fewer at r = 64</small></div>
+            <div class="r-chip"><span class="big">64×</span><small>fewer at r = 16</small></div>
+            <div class="r-chip"><span class="big">128×</span><small>fewer at r = 8</small></div>
+          </div>
+          <p class="bottom-thesis blush">Even if empirical risk is slightly higher, the overall bound can still be tighter due to the reduced complexity term.</p>
+        </section>
+
+        <!-- 13 ─ IMPLEMENTATION ───────────────────────────────────────── -->
         <section class="dark">
           <div class="kicker">Implementation</div>
           <h2>The framework is not architecture-specific.</h2>
@@ -177,18 +344,20 @@
           <p class="bottom-thesis blush">Drop-in variational layers make the geometry portable across model families.</p>
         </section>
 
+        <!-- 14 ─ EXPERIMENTAL DESIGN ─────────────────────────────────── -->
         <section class="light">
           <div class="kicker">Experimental Design</div>
           <h2>Three architectures. Three data regimes. Six uncertainty baselines.</h2>
           <div class="comparison-table compact">
             <div class="head">Dataset</div><div class="head">Architecture</div><div class="head">Shift</div><div class="head">Rank</div>
             <div>MIMIC-III ICU mortality</div><div>2-layer MLP</div><div>adult ICU → newborn ICU</div><div>r=15</div>
-            <div>Beijing PM2.5 forecasting</div><div>2-layer LSTM</div><div>Beijing → Guangzhou</div><div>r=14/20</div>
+            <div>Beijing PM₂.₅ forecasting</div><div>2-layer LSTM</div><div>Beijing → Guangzhou</div><div>r=14/20</div>
             <div>SST-2 sentiment</div><div>4-layer Transformer</div><div>movie reviews → AGNews</div><div>r=16</div>
           </div>
           <p class="bottom-thesis">Baselines: deterministic, Deep Ensemble, Full-Rank BBB, Low-Rank random init, Low-Rank SVD init, Rank-1 multiplicative; SWAG added as supplementary comparator.</p>
         </section>
 
+        <!-- 15 ─ RESULT: MIMIC-III ────────────────────────────────────── -->
         <section class="dark result-slide">
           <div class="kicker">Result: MIMIC-III</div>
           <h2>On clinical shift, low-rank gives the strongest OOD uncertainty.</h2>
@@ -206,8 +375,32 @@
           </div>
         </section>
 
+        <!-- 16 ─ MIMIC-III TABLE [NEW] ───────────────────────────────── -->
+        <section class="light">
+          <div class="kicker">MIMIC-III · ICU Mortality Prediction (MLP)</div>
+          <h2>Full results — averaged over 5 independent runs.</h2>
+          <table class="rtable">
+            <thead>
+              <tr><th>Model</th><th>AUROC ↑</th><th>AUPR-Err ↑</th><th>AUC-OOD ↑</th><th>AUPR-OOD ↑</th><th>AUPR-In ↑</th><th>NLL ↓</th><th>Params ↓</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Deterministic</td><td>.922</td><td>.145</td><td>.500</td><td>.544</td><td>.456</td><td class="b">.284</td><td>22.4K</td></tr>
+              <tr><td>Deep Ensemble</td><td class="b">.929</td><td>.237</td><td>.738</td><td>.754</td><td>.721</td><td>.300</td><td>112K</td></tr>
+              <tr><td>Full-Rank BBB</td><td>.895</td><td>.412</td><td>.770</td><td>.759</td><td>.807</td><td>.401</td><td>44.8K</td></tr>
+              <tr class="ours"><td>★ Low-Rank (ours)</td><td>.895</td><td class="b">.540</td><td class="b">.802</td><td class="b">.788</td><td class="b">.824</td><td>.433</td><td class="b">13.6K</td></tr>
+            </tbody>
+          </table>
+          <div class="stat-chips">
+            <div class="stat-chip"><span class="sv">70%</span><small>fewer params than<br>Full-Rank BBB</small></div>
+            <div class="stat-chip"><span class="sv">88%</span><small>fewer params than<br>Deep Ensemble</small></div>
+            <div class="stat-chip"><span class="sv">0.540</span><small>AUPR-Error<br>(best in class)</small></div>
+            <div class="stat-chip"><span class="sv">0.802</span><small>AUC-OOD<br>(best in class)</small></div>
+          </div>
+        </section>
+
+        <!-- 17 ─ RESULT: BEIJING PM2.5 ───────────────────────────────── -->
         <section class="light result-slide">
-          <div class="kicker">Result: Beijing PM2.5</div>
+          <div class="kicker">Result: Beijing PM₂.₅</div>
           <h2>For time-series forecasting, uncertainty quality shows up in coverage and abstention.</h2>
           <div class="two-figures">
             <figure class="figure"><img src="assets/figures/metrics_radar_lstm.png" alt="Beijing LSTM radar plot"></figure>
@@ -220,6 +413,31 @@
           </div>
         </section>
 
+        <!-- 18 ─ BEIJING TABLE [NEW] ─────────────────────────────────── -->
+        <section class="light">
+          <div class="kicker">Beijing PM₂.₅ · Time-Series Forecasting (LSTM)</div>
+          <h2>Full results — averaged over 4 independent runs.</h2>
+          <table class="rtable">
+            <thead>
+              <tr><th>Model</th><th>MAE ↓</th><th>ECE ↓</th><th>PICP ↑</th><th>AUROC-OOD ↑</th><th>AUPR-OOD ↑</th><th>Params ↓</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Deterministic</td><td>10.79</td><td>—</td><td>—</td><td>.500</td><td>.500</td><td class="b">33K</td></tr>
+              <tr><td>Full-Rank BBB</td><td class="b">10.55</td><td class="b">.111</td><td>.788</td><td>.492</td><td>.743</td><td>132K</td></tr>
+              <tr class="ours"><td>★ Low-Rank (ours)</td><td>10.63</td><td>.114</td><td class="b">.790</td><td>.710</td><td>.861</td><td class="b">47K</td></tr>
+              <tr><td>Rank-1 Mult.</td><td>10.80</td><td>.307</td><td>.449</td><td>.580</td><td>.751</td><td>66K</td></tr>
+              <tr><td>Deep Ensemble</td><td class="b">10.45</td><td>.317</td><td>.310</td><td class="b">.730</td><td class="b">.883</td><td>330K</td></tr>
+            </tbody>
+          </table>
+          <div class="stat-chips">
+            <div class="stat-chip"><span class="sv">0.790</span><small>PICP, best<br>prediction coverage</small></div>
+            <div class="stat-chip"><span class="sv">17.4%</span><small>MAE reduction<br>at 80% retention</small></div>
+            <div class="stat-chip"><span class="sv">6.6×</span><small>fewer params than<br>Deep Ensemble</small></div>
+          </div>
+          <div class="key-finding">Low-Rank achieves MAE 8.71 vs 9.21 for Deep Ensemble at 80% retention — structured rank-r correlations yield better-calibrated abstention when filtering the 20% most uncertain predictions.</div>
+        </section>
+
+        <!-- 19 ─ RESULT: SST-2 TRANSFORMER ──────────────────────────── -->
         <section class="dark result-slide">
           <div class="kicker">Result: SST-2 Transformer</div>
           <h2>At Transformer scale, the parameter story becomes decisive.</h2>
@@ -237,6 +455,35 @@
           </div>
         </section>
 
+        <!-- 20 ─ SST-2 TABLE + GPU PROFILING [NEW] ────────────────────── -->
+        <section class="light">
+          <div class="kicker">SST-2 Sentiment · Transformer Efficiency</div>
+          <h2>Full results + controlled GPU profiling — averaged over 4 runs.</h2>
+          <table class="rtable">
+            <thead>
+              <tr><th>Model</th><th>Acc ↑</th><th>NLL ↓</th><th>AUROC-OOD ↑</th><th>MI Ratio ↑</th><th>AUPR-In ↑</th><th>Params ↓</th><th>Time</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Deterministic</td><td>.812</td><td>.490</td><td>.500</td><td>.00</td><td>.102</td><td>9.9M</td><td>7.7 min</td></tr>
+              <tr><td>Deep Ensemble</td><td class="b">.825</td><td class="b">.434</td><td class="b">.657</td><td class="b">1.55</td><td>.267</td><td>49.6M</td><td>64.7 min</td></tr>
+              <tr><td>Full-Rank BBB</td><td>.752</td><td>.552</td><td>.622</td><td>1.31</td><td>.222</td><td>19.8M</td><td>23.1 min</td></tr>
+              <tr class="ours"><td>★ Low-Rank (ours)</td><td>.806</td><td>.527</td><td>.640</td><td>1.35</td><td class="b">.302</td><td class="b">1.5M</td><td class="b">8.2 min</td></tr>
+            </tbody>
+          </table>
+          <div class="gpu-section">
+            <div class="gpu-label">⚡ Controlled GPU Profiling — same device, fixed steps (SST-2)</div>
+            <table class="gpu-table">
+              <thead><tr><th>Model</th><th>Params</th><th>Peak Memory</th><th>Epoch Time</th></tr></thead>
+              <tbody>
+                <tr class="ours"><td>★ Low-Rank BBB (ours)</td><td>1.47 M</td><td>357.5 MB</td><td><strong>5.88 s</strong></td></tr>
+                <tr><td>Full-Rank BBB</td><td>19.84 M</td><td>721.1 MB</td><td>6.45 s</td></tr>
+                <tr><td>Deep Ensemble</td><td>49.61 M</td><td>670.1 MB</td><td>18.99 s</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- 21 ─ EFFICIENCY EVIDENCE ─────────────────────────────────── -->
         <section class="light">
           <div class="kicker">Efficiency Evidence</div>
           <h2>The quality-efficiency frontier changes.</h2>
@@ -244,9 +491,10 @@
             <figure class="figure"><img src="assets/figures/model_params.png" alt="Model parameter comparison"></figure>
             <figure class="figure"><img src="assets/figures/radar_plot_efficiency_adjusted_trans.png" alt="Efficiency adjusted Transformer radar"></figure>
           </div>
-          <p class="bottom-thesis">The result is not “low-rank always wins every metric”; it is that useful Bayesian uncertainty becomes plausible at modern parameter scales.</p>
+          <p class="bottom-thesis">The result is not "low-rank always wins every metric"; it is that useful Bayesian uncertainty becomes plausible at modern parameter scales.</p>
         </section>
 
+        <!-- 22 ─ WHY RANK IS PLAUSIBLE ───────────────────────────────── -->
         <section class="dark">
           <div class="kicker">Why Rank Is Plausible</div>
           <h2>Observed singular value decay supports the rank-r constraint.</h2>
@@ -259,6 +507,7 @@
           </div>
         </section>
 
+        <!-- 23 ─ COMPARATOR: SWAG ─────────────────────────────────────── -->
         <section class="light">
           <div class="kicker">Comparator: SWAG</div>
           <h2>A strong posterior baseline does not overturn the central tradeoff.</h2>
@@ -268,9 +517,39 @@
             <div>MIMIC</div><div>Higher in-domain AUROC/NLL</div><div class="span2">OOD MI metrics: 0.802 / 0.788 vs 0.634 / 0.680</div>
             <div>Beijing</div><div>Higher coverage</div><div class="span2">Much narrower/costlier tradeoff; stronger OOD for low-rank</div>
           </div>
-          <p class="bottom-thesis">SWAG is a credible baseline. However, SBNN’s geometry gives a better quality-efficiency path in the paper’s target regimes.</p>
+          <p class="bottom-thesis">SWAG is a credible baseline. However, SBNN's geometry gives a better quality-efficiency path in the paper's target regimes.</p>
         </section>
 
+        <!-- 24 ─ KEY INSIGHT: CALIBRATION–OOD TRADEOFF [NEW] ──────────── -->
+        <section class="dark">
+          <div class="kicker">Key Insight: Calibration – OOD Detection Tradeoff</div>
+          <h2>A consistent but task-dependent pattern across all three experiments.</h2>
+          <div class="insight-cards">
+            <div class="insight-card">
+              <div class="ic-label">MIMIC-III</div>
+              <p>Low-rank improves OOD detection despite weaker NLL than Deep Ensembles. Structured uncertainty outperforms under clinical domain shift.</p>
+            </div>
+            <div class="insight-card">
+              <div class="ic-label">SST-2</div>
+              <p>Deep Ensemble stronger on both NLL and OOD. Low-rank competitive at 33× fewer parameters — a completely different efficiency regime.</p>
+            </div>
+            <div class="insight-card">
+              <div class="ic-label">Beijing PM₂.₅</div>
+              <p>Low-rank achieves best calibration, coverage, and selective prediction. OOD advantage is secondary to interval quality.</p>
+            </div>
+          </div>
+          <div class="hypothesis-box">Hypothesis: The rank constraint on ℛ<sub>r</sub> enforces structured weight correlations (Lemma 3.2) that maintain broader epistemic uncertainty. This benefits abstention, coverage, and OOD awareness at the cost of predictive sharpness (NLL). The tradeoff is task-dependent.</div>
+          <div class="ensemble-box">
+            <div class="ens-label">✦ Ensembling closes the gap — 5 low-rank members, still cheaper than one full-rank BBB</div>
+            <div class="ens-deltas">
+              <div class="ens-delta"><span class="ev">+0.093</span><small>AUROC-OOD<br>0.638 → 0.731</small></div>
+              <div class="ens-delta"><span class="ev">−0.112</span><small>ECE ↓<br>0.166 → 0.054</small></div>
+              <div class="ens-delta"><span class="ev">−0.108</span><small>NLL ↓<br>0.523 → 0.415</small></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 25 ─ HONEST TAKEAWAY ──────────────────────────────────────── -->
         <section class="dark">
           <div class="kicker">Honest Takeaway</div>
           <h2>The empirical message is not compression alone.</h2>
@@ -282,6 +561,7 @@
           <p class="bottom-thesis blush">SBNNs make that goal more practical: structured uncertainty, lower cost, and scalable to modern architectures.</p>
         </section>
 
+        <!-- 26 ─ RESEARCH AGENDA ──────────────────────────────────────── -->
         <section class="light">
           <div class="kicker">Research Agenda</div>
           <h2>A platform for scalable Bayesian posteriors in modern architectures.</h2>
@@ -293,6 +573,7 @@
           </div>
         </section>
 
+        <!-- 27 ─ CLOSING ─────────────────────────────────────────────── -->
         <section class="closing-slide dark">
           <canvas class="manifold-canvas" data-variant="closing" aria-hidden="true"></canvas>
           <div class="kicker">Closing</div>
@@ -305,6 +586,7 @@
             <span>mame.toure@mail.mcgill.ca</span>
           </div>
         </section>
+
       </div>
     </div>
     <script src="vendor/reveal/reveal.js"></script>
