@@ -1,0 +1,525 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mame Diarra Toure</title>
+  <meta name="author" content="Mame Diarra Toure">
+  <meta name="description" content="Mame Diarra Toure — PhD candidate in Applied Mathematics at McGill University working on Bayesian Deep Learning and Uncertainty Quantification.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --paper:      #FBFAF6;
+      --paper-2:    #F3F1EA;
+      --ink:        #1B1A17;
+      --muted:      #6E6A60;
+      --accent:     #0E5247;
+      --accent-2:   #14776A;
+      --accent-soft:rgba(14, 82, 71, 0.08);
+      --line:       rgba(27, 26, 23, 0.12);
+      --shadow:     0 18px 40px -22px rgba(27, 26, 23, 0.45);
+      --maxw:       820px;
+      --ease:       cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+    body {
+      margin: 0;
+      background-color: var(--paper);
+      background-image:
+        radial-gradient(120% 80% at 100% 0%, rgba(20,119,106,0.06) 0%, rgba(20,119,106,0) 45%),
+        radial-gradient(90% 70% at 0% 100%, rgba(14,82,71,0.05) 0%, rgba(14,82,71,0) 50%);
+      color: var(--ink);
+      font-family: 'Newsreader', Georgia, serif;
+      font-size: 18px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* faint paper grain */
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .wrap { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+    a { color: var(--accent); text-decoration: none; }
+
+    /* animated underline on inline links */
+    .ulink { position: relative; }
+    .ulink::after {
+      content: ""; position: absolute; left: 0; bottom: -1px;
+      width: 100%; height: 1.5px; background: var(--accent-2);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s var(--ease);
+    }
+    .ulink:hover::after { transform: scaleX(1); }
+
+    /* ---------- Nav ---------- */
+    nav {
+      position: sticky; top: 0; z-index: 40;
+      backdrop-filter: saturate(140%) blur(10px);
+      background: rgba(251, 250, 246, 0.72);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
+    }
+    nav.scrolled { border-bottom-color: var(--line); background: rgba(251, 250, 246, 0.9); }
+    .nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 14px 28px;
+      display: flex; align-items: center; justify-content: space-between; }
+    .monogram {
+      font-family: 'Fraunces', serif; font-weight: 600; letter-spacing: 0.04em;
+      font-size: 18px; color: var(--ink);
+    }
+    .monogram .dot-i { color: var(--accent-2); }
+    .nav-links { display: flex; gap: 26px; font-size: 14px; font-family: 'Newsreader', serif; }
+    .nav-links a { color: var(--muted); letter-spacing: 0.02em; transition: color 0.25s ease; }
+    .nav-links a:hover { color: var(--accent); }
+    @media (max-width: 620px) { .nav-links { gap: 16px; font-size: 13px; } .nav-links .hide-sm { display:none; } }
+
+    /* ---------- Hero ---------- */
+    header { padding: 64px 0 26px; }
+    .hero { display: grid; grid-template-columns: 1fr 168px; gap: 38px; align-items: start; }
+    @media (max-width: 680px) { .hero { grid-template-columns: 1fr; gap: 26px; } }
+
+    .name {
+      font-family: 'Fraunces', serif;
+      font-optical-sizing: auto;
+      font-weight: 600;
+      font-size: clamp(38px, 7vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -0.015em;
+      margin: 0 0 6px;
+    }
+    .name .accent-dot { color: var(--accent-2); }
+    .role {
+      font-size: 17px; color: var(--muted); font-style: italic;
+      margin: 0 0 18px;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: 'Newsreader', serif; font-size: 14.5px; font-style: normal;
+      color: var(--accent); background: var(--accent-soft);
+      border: 1px solid rgba(14,82,71,0.18);
+      padding: 7px 14px; border-radius: 999px;
+      margin-bottom: 22px;
+    }
+    .dot {
+      width: 9px; height: 9px; border-radius: 50%; background: var(--accent-2);
+      position: relative; flex: none;
+    }
+    .dot::after {
+      content: ""; position: absolute; inset: 0; border-radius: 50%;
+      background: var(--accent-2); animation: pulse 2.2s var(--ease) infinite;
+    }
+    @keyframes pulse {
+      0%   { transform: scale(1);   opacity: 0.7; }
+      70%  { transform: scale(2.6); opacity: 0; }
+      100% { transform: scale(2.6); opacity: 0; }
+    }
+
+    header p { margin: 0 0 14px; }
+    header p strong { color: var(--ink); font-weight: 600; }
+
+    .links {
+      margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px;
+      font-size: 15px;
+    }
+    .links a {
+      border: 1px solid var(--line); border-radius: 8px;
+      padding: 7px 15px; color: var(--ink);
+      transition: all 0.28s var(--ease); background: rgba(255,255,255,0.4);
+    }
+    .links a:hover {
+      border-color: var(--accent); color: var(--accent);
+      transform: translateY(-2px); box-shadow: 0 8px 18px -12px rgba(14,82,71,0.6);
+    }
+
+    .portrait {
+      width: 168px; height: 196px; border-radius: 14px; object-fit: cover;
+      filter: grayscale(0.35) contrast(1.02);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      transition: filter 0.5s var(--ease), transform 0.5s var(--ease);
+    }
+    .portrait:hover { filter: grayscale(0); transform: translateY(-3px) rotate(-0.6deg); }
+    @media (max-width: 680px) { .portrait { width: 132px; height: 154px; } }
+
+    /* ---------- Sections ---------- */
+    section { padding: 30px 0; }
+    h2 {
+      font-family: 'Fraunces', serif; font-weight: 600;
+      font-size: 25px; letter-spacing: -0.01em;
+      margin: 0 0 4px; display: flex; align-items: baseline; gap: 12px;
+    }
+    h2 .idx { font-size: 13px; color: var(--accent-2); font-family: 'Newsreader', serif;
+      font-weight: 500; letter-spacing: 0.08em; transform: translateY(-3px); }
+    .rule { height: 1px; background: var(--line); margin: 14px 0 22px; transform-origin: left;
+      animation: none; }
+    .lead { color: var(--muted); margin: 0 0 6px; }
+    .lead strong { color: var(--ink); }
+    .lead em { color: var(--accent); font-style: italic; }
+
+    /* ---------- Entry rows ---------- */
+    .entry {
+      display: grid; grid-template-columns: 150px 1fr; gap: 22px;
+      padding: 18px 18px 18px 16px; border-radius: 12px;
+      border-left: 2px solid transparent;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .entry:hover { background: rgba(255,255,255,0.55); border-left-color: var(--accent-2); transform: translateX(2px); }
+    @media (max-width: 600px) { .entry { grid-template-columns: 1fr; gap: 6px; padding: 14px; } }
+
+    .meta { color: var(--muted); font-size: 14.5px; }
+    .meta .venue { font-weight: 600; }
+    .meta .venue.icml { color: var(--accent); }
+    .meta .place { font-size: 13px; opacity: 0.85; }
+
+    .ptitle {
+      font-family: 'Fraunces', serif; font-weight: 600; font-size: 18.5px;
+      line-height: 1.25; color: var(--ink); transition: color 0.25s ease;
+    }
+    .entry:hover .ptitle { color: var(--accent); }
+    .authors { font-size: 15px; color: var(--ink); margin-top: 3px; }
+    .authors .me { color: var(--accent); font-weight: 600; }
+    .pubmeta { font-size: 14px; color: var(--muted); font-style: italic; margin-top: 2px; }
+    .publinks { font-size: 14px; margin-top: 4px; }
+    .publinks a { font-weight: 500; }
+    .abstract { font-size: 15.5px; color: #3a382f; margin: 8px 0 0; }
+    .abstract strong { color: var(--accent); font-weight: 600; }
+    .pill {
+      display: inline-block; font-size: 11.5px; font-style: normal;
+      background: var(--accent-soft); color: var(--accent);
+      padding: 2px 9px; border-radius: 999px; font-weight: 600;
+      letter-spacing: 0.03em; margin-left: 4px;
+    }
+
+    .role-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17.5px; color: var(--ink); }
+    .entry p { margin: 6px 0 0; font-size: 15.5px; color: #3a382f; }
+
+    /* ---------- Footer ---------- */
+    footer { padding: 40px 0 56px; color: var(--muted); font-size: 13.5px;
+      display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); margin-top: 20px; }
+    footer .top { color: var(--muted); }
+    footer .top:hover { color: var(--accent); }
+    @media (max-width: 480px) { footer { flex-direction: column; gap: 10px; } }
+
+    /* ---------- Reveal animations ---------- */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .reveal.is-visible { opacity: 1; transform: none; }
+
+    .load { opacity: 0; transform: translateY(16px); animation: rise 0.8s var(--ease) forwards; }
+    @keyframes rise { to { opacity: 1; transform: none; } }
+    .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.16s; }
+    .d3 { animation-delay: 0.27s; } .d4 { animation-delay: 0.38s; }
+    .d5 { animation-delay: 0.49s; } .d6 { animation-delay: 0.60s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal, .load { opacity: 1 !important; transform: none !important; animation: none !important; }
+      .dot::after { animation: none; }
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <span class="monogram">Mame D<span class="dot-i">.</span> Toure</span>
+      <div class="nav-links">
+        <a href="#about" class="hide-sm">About</a>
+        <a href="#research">Research</a>
+        <a href="#experience">Experience</a>
+        <a href="#mentorship" class="hide-sm">Mentorship</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="wrap">
+
+    <!-- ================= HERO ================= -->
+    <header id="about">
+      <div class="hero">
+        <div>
+          <h1 class="name load d1">Mame Diarra Toure<span class="accent-dot">.</span></h1>
+          <p class="role load d2">PhD Candidate in Applied Mathematics, McGill University</p>
+
+          <span class="badge load d2">
+            <span class="dot"></span>
+            Open to full-time research roles, starting Fall 2027
+          </span>
+
+          <p class="load d3">
+            I am a PhD candidate in Applied Mathematics at
+            <a class="ulink" href="https://www.mcgill.ca/mathstat/about-us">McGill University</a>,
+            advised by <a class="ulink" href="https://www.math.mcgill.ca/dstephens/">David Stephens</a>.
+            My research focuses on <strong>Bayesian Deep Learning</strong> and
+            <strong>Uncertainty Quantification</strong>. I expect to complete my PhD in
+            <strong>Spring 2027</strong>.
+          </p>
+          <p class="load d3">
+            I develop <em>scalable</em> variational methods to make neural networks robust,
+            interpretable, and computationally efficient, bridging theoretical rigor and
+            practical deployment to build <strong>safe and trustworthy AI systems</strong>.
+          </p>
+          <p class="load d4">
+            In 2024 I was awarded the
+            <a class="ulink" href="https://mila.quebec/en/news/for-a-third-consecutive-year-mila-is-launching-its-equity-diversity-and-inclusion-0">Women in AI Excellence Scholarship</a>
+            from <a class="ulink" href="https://mila.quebec/en/">Mila (Quebec AI Institute)</a>.
+            My academic foundation was built in France: after the intensive
+            <strong>Classes Préparatoires aux Grandes Écoles</strong>, I earned an Engineering Degree
+            from <strong>ENSIIE</strong> and an MSc in Quantitative Finance from
+            <strong>Paris-Saclay University</strong>, where I graduated with First Class Honours and
+            received the
+            <a class="ulink" href="https://fondation-hadamard.fr/en/our-programs/transversal-programs/graduate-program/">Sophie Germain Excellence Scholarship</a>
+            from the Jacques Hadamard Mathematics Foundation (FMJH). I also worked as a Quantitative
+            Analyst at <strong>Société Générale</strong>.
+          </p>
+
+          <div class="links load d5">
+            <a class="ulink" href="mailto:mame.toure@mail.mcgill.ca">Email</a>
+            <a href="Mame_Diarra_Toure_Resume_2026_-2.pdf">CV</a>
+            <a href="https://github.com/arradiat">GitHub</a>
+            <a href="https://scholar.google.com/">Scholar</a>
+            <a href="PHOTO%20IDENTITE%202026.jpeg">Headshot</a>
+          </div>
+        </div>
+
+        <img class="portrait load d3" src="PHOTO%20IDENTITE%202026.jpeg" alt="Mame Diarra Toure"
+             onerror="this.style.display='none'">
+      </div>
+    </header>
+
+    <!-- ================= RESEARCH ================= -->
+    <section id="research">
+      <h2 class="reveal"><span class="idx">01</span> Research &amp; Publications</h2>
+      <div class="rule reveal"></div>
+      <p class="lead reveal">
+        My primary research develops scalable <strong>low-rank variational inference</strong> methods
+        (<em>W &approx; AB<sup>T</sup></em>) for Bayesian neural networks, with provable
+        guarantees and an emphasis on parameter efficiency. I also study whether these structures let
+        networks automatically adapt their complexity to the data (Occam's Razor).
+      </p>
+
+      <!-- ICML -->
+      <div class="entry reveal">
+        <div class="meta">
+          <div class="venue icml">ICML 2026</div>
+          <div class="place">Seoul, July 2026</div>
+        </div>
+        <div>
+          <a class="ulink" href="https://arxiv.org/abs/2602.00387"><span class="ptitle">Singular Bayesian Neural Networks</span></a>
+          <span class="pill">Accepted</span>
+          <div class="authors"><span class="me">Mame Diarra Toure</span>, David A. Stephens</div>
+          <div class="pubmeta">International Conference on Machine Learning (ICML), 2026</div>
+          <div class="publinks">
+            <a class="ulink" href="https://arxiv.org/pdf/2602.00387">PDF</a> /
+            <a class="ulink" href="https://arxiv.org/abs/2602.00387">arXiv</a> /
+            <a class="ulink" href="/projects/singular-bnn/">Project page</a>
+          </div>
+          <p class="abstract">
+            A low-rank variational inference framework for Bayesian neural networks that parameterizes
+            weights as <strong>W = AB<sup>T</sup></strong>, reducing parameter complexity from O(mn) to
+            O((m+n)r). This induces a posterior singular with respect to the Lebesgue measure, capturing
+            structured weight correlations through shared latent factors. We derive PAC-Bayes generalization
+            bounds and prove loss bounds via the Eckart-Young-Mirsky theorem. Empirically, the method matches
+            5-member Deep Ensembles with up to <strong>15&times; fewer parameters</strong> and substantially
+            improves out-of-distribution detection across MLPs, LSTMs, and Transformers.
+          </p>
+        </div>
+      </div>
+
+      <!-- Per-class -->
+      <div class="entry reveal">
+        <div class="meta"><div class="venue">Preprint</div><div class="place">2026</div></div>
+        <div>
+          <a class="ulink" href="https://arxiv.org/abs/2602.21160"><span class="ptitle">Not Just How Much, But Where: Decomposing Epistemic Uncertainty into Per-Class Contributions</span></a>
+          <div class="authors"><span class="me">Mame Diarra Toure</span>, David A. Stephens</div>
+          <div class="pubmeta">arXiv:2602.21160 (under review), 2026</div>
+          <div class="publinks">
+            <a class="ulink" href="https://arxiv.org/pdf/2602.21160">PDF</a> /
+            <a class="ulink" href="https://arxiv.org/abs/2602.21160">arXiv</a>
+          </div>
+          <p class="abstract">
+            We decompose mutual information into a per-class uncertainty vector
+            <strong>C<sub>k</sub>(x) = &sigma;<sub>k</sub>&sup2; / (2&mu;<sub>k</sub>)</strong>,
+            letting safety-critical classifiers distinguish <em>where</em> a model is uncertain, not just
+            how much. Applied to diabetic retinopathy grading, the critical-class score reduces selective
+            risk by <strong>34.7%</strong> over mutual information and <strong>56.2%</strong> over variance baselines.
+          </p>
+        </div>
+      </div>
+
+      <!-- Certify -->
+      <div class="entry reveal">
+        <div class="meta"><div class="venue icml">SPIGM @ ICML 2026</div><div class="place">Workshop</div></div>
+        <div>
+          <a class="ulink" href="certify_deterministic_center.pdf"><span class="ptitle">When Does a Low-Rank Bayesian Neural Network Certify Its Deterministic Center?</span></a>
+          <span class="pill">Accepted</span>
+          <div class="authors"><span class="me">Mame Diarra Toure</span>, David A. Stephens</div>
+          <div class="pubmeta">SPIGM Workshop (Structured Probabilistic Inference &amp; Generative Modeling), ICML 2026</div>
+          <div class="publinks"><a class="ulink" href="certify_deterministic_center.pdf">PDF</a></div>
+          <p class="abstract">
+            We study when a structured low-rank Gaussian variational posterior can certify a deterministic
+            predictor in a Bayesian neural network with factorized layers
+            <strong>W<sub>i</sub> = A<sub>i</sub>B<sub>i</sub><sup>T</sup></strong>. The same model yields
+            three natural certification targets, the posterior Gibbs predictor, the posterior predictive mean,
+            and a deterministic center network; this paper focuses on the deterministic-center route.
+          </p>
+        </div>
+      </div>
+
+      <!-- PhD research -->
+      <div class="entry reveal">
+        <div class="meta"><div class="venue">PhD Research</div></div>
+        <div>
+          <span class="ptitle">Scalable Low-Rank Bayesian Neural Networks</span>
+          <div class="authors"><span class="me">Mame Diarra Toure</span></div>
+          <p class="abstract">
+            A variational inference framework that factorizes weight matrices to reduce parameter complexity
+            from O(n<sup>2</sup>) to O(n), enabling uncertainty quantification in large-scale models.
+          </p>
+        </div>
+      </div>
+
+      <!-- Natixis -->
+      <div class="entry reveal">
+        <div class="meta"><div class="venue">Natixis</div><div class="place">Master's Project</div></div>
+        <div>
+          <a class="ulink" href="https://github.com/arradiat/DNN-for-CVA/blob/main/Rapport_Cutting_Edge.pdf"><span class="ptitle">Combining Neural Networks and Model Diffusion for CVA Pricing</span></a>
+          <div class="authors"><span class="me">Mame Diarra Toure</span> et al.</div>
+          <p class="abstract">
+            Applied deep neural networks to solve high-dimensional PDEs for Credit Valuation Adjustment,
+            overcoming the curse of dimensionality faced by finite-difference methods.
+          </p>
+        </div>
+      </div>
+
+      <!-- LaMME -->
+      <div class="entry reveal">
+        <div class="meta"><div class="venue">LaMME</div><div class="place">Research Internship</div></div>
+        <div>
+          <a class="ulink" href="https://github.com/arradiat/Research-Internship-Rough-volatility-Model-kernel-estimation-for-volterra-processes"><span class="ptitle">Rough Volatility Modelling: Kernel Estimation</span></a>
+          <div class="authors"><span class="me">Mame Diarra Toure</span></div>
+          <p class="abstract">
+            Implemented statistical techniques to estimate the kernel of Volterra processes, validating the
+            rough-volatility hypothesis in financial time series.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= EXPERIENCE ================= -->
+    <section id="experience">
+      <h2 class="reveal"><span class="idx">02</span> Experience</h2>
+      <div class="rule reveal"></div>
+
+      <div class="entry reveal">
+        <div class="meta"><strong>McGill University</strong><br><span class="place">Fall 2025, Winter 2026</span></div>
+        <div>
+          <div class="role-title">Graduate Teaching Assistant</div>
+          <p>TA for <strong>MATH 139 (Calculus with Precalculus)</strong> and <strong>MATH 141 (Calculus 2)</strong>: leading problem-solving tutorials and strengthening students' conceptual grasp of limits, differentiation, integration, and series.</p>
+        </div>
+      </div>
+
+      <div class="entry reveal">
+        <div class="meta"><strong>Crédit Agricole S.A.</strong><br><span class="place">Sep 2024 to Jan 2025</span></div>
+        <div>
+          <div class="role-title">Quantitative Model Auditor, Inspection Générale</div>
+          <p>Designed and executed rigorous evaluation protocols for quantitative and machine learning models across the group, probing robustness, calibration, and governance beyond standard validation. Assessed model sensitivity to input perturbations and distributional shift, and translated findings into remediation recommendations for senior management and group risk committees.</p>
+        </div>
+      </div>
+
+      <div class="entry reveal">
+        <div class="meta"><strong>JACOBB (Center for Applied AI)</strong><br><span class="place">2022 to 2024</span></div>
+        <div>
+          <div class="role-title">Research Scientist</div>
+          <p>Applied R&amp;D in NLP and Reinforcement Learning. Built a reinforcement learning agent for advertising budget pacing and a collaborative-filtering matchmaking system for startups, and deployed models from prototype to production.</p>
+        </div>
+      </div>
+
+      <div class="entry reveal">
+        <div class="meta"><strong>J.P. Morgan</strong><br><span class="place">Summer 2023</span></div>
+        <div>
+          <div class="role-title">Quantitative Research Mentorship Participant</div>
+          <p>Selected for a competitive mentorship program with in-depth exposure to quantitative research methodologies, financial modeling, and career pathways in global markets.</p>
+        </div>
+      </div>
+
+      <div class="entry reveal">
+        <div class="meta"><strong>Société Générale</strong><br><span class="place">2021 to 2022</span></div>
+        <div>
+          <div class="role-title">Quantitative Analyst</div>
+          <p>Contributed to the <em>Haussmann Project</em>: developed and calibrated Probability of Default and Loss Given Default models for low-default portfolios.</p>
+        </div>
+      </div>
+
+      <div class="entry reveal">
+        <div class="meta"><strong>BNP Paribas</strong><br><span class="place">2021</span></div>
+        <div>
+          <div class="role-title">Quantitative Research Intern</div>
+          <p>Built mathematical models quantifying the bank's exposure to Central Counterparty Clearing Houses, modeling default-fund contributions with Monte Carlo simulation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MENTORSHIP ================= -->
+    <section id="mentorship">
+      <h2 class="reveal"><span class="idx">03</span> Community &amp; Mentorship</h2>
+      <div class="rule reveal"></div>
+      <p class="lead reveal">
+        I am an active member of <a class="ulink" href="https://www.womeninai.com/">Women in AI North America</a>
+        and the <a class="ulink" href="https://awm-math.org/">Association of Women in Mathematics</a>.
+        I mentor at <strong>Jiggen In STEM</strong>, supporting high school girls in Senegal, and served as
+        the former representative of <strong>AFSA Québec</strong> at McGill.
+      </p>
+    </section>
+
+    <footer>
+      <span>&copy; 2026 Mame Diarra Toure</span>
+      <a class="top" href="#about">Back to top &uarr;</a>
+    </footer>
+
+  </div>
+
+  <script>
+    // Nav shadow on scroll
+    const nav = document.getElementById('nav');
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Scroll-triggered reveals
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduce && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+          if (e.isIntersecting) {
+            e.target.style.transitionDelay = Math.min(i * 60, 180) + 'ms';
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+    }
+  </script>
+</body>
+</html>
