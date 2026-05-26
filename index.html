@@ -91,7 +91,7 @@
 
     /* ---------- Hero ---------- */
     header { padding: 64px 0 26px; }
-    .hero { display: grid; grid-template-columns: 1fr 168px; gap: 38px; align-items: start; }
+    .hero { display: grid; grid-template-columns: 1fr; gap: 38px; align-items: start; }
     @media (max-width: 680px) { .hero { grid-template-columns: 1fr; gap: 26px; } }
 
     .name {
@@ -148,16 +148,6 @@
       transform: translateY(-2px); box-shadow: 0 8px 18px -12px rgba(14,82,71,0.6);
     }
 
-    .portrait {
-      width: 168px; height: 196px; border-radius: 14px; object-fit: cover;
-      filter: grayscale(0.35) contrast(1.02);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      transition: filter 0.5s var(--ease), transform 0.5s var(--ease);
-    }
-    .portrait:hover { filter: grayscale(0); transform: translateY(-3px) rotate(-0.6deg); }
-    @media (max-width: 680px) { .portrait { width: 132px; height: 154px; } }
-
     /* ---------- Sections ---------- */
     section { padding: 30px 0; }
     h2 {
@@ -209,6 +199,15 @@
 
     .role-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17.5px; color: var(--ink); }
     .entry p { margin: 6px 0 0; font-size: 15.5px; color: #3a382f; }
+
+    /* ---------- Justified body text with hyphenation ---------- */
+    header p, .lead, .abstract, .entry p {
+      text-align: justify;
+      text-justify: inter-word;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      hyphens: auto;
+    }
 
     /* ---------- Footer ---------- */
     footer { padding: 40px 0 56px; color: var(--muted); font-size: 13.5px;
@@ -300,7 +299,8 @@
             <a href="https://scholar.google.com/citations?user=F6Cuhc8AAAAJ&hl=en&oi=ao">Scholar</a>
             <a href="PHOTO%20IDENTITE%202026.jpeg">Headshot</a>
           </div>
-   
+        </div>
+      </div>
     </header>
 
     <!-- ================= RESEARCH ================= -->
