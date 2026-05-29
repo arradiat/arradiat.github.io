@@ -28,7 +28,6 @@
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; scroll-padding-top: 88px; }
 
     body {
@@ -45,7 +44,6 @@
       text-rendering: optimizeLegibility;
     }
 
-    /* faint paper grain */
     body::before {
       content: "";
       position: fixed; inset: 0;
@@ -57,8 +55,6 @@
     .wrap { position: relative; z-index: 1; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
 
     a { color: var(--accent); text-decoration: none; }
-
-    /* animated underline on inline links */
     .ulink { position: relative; }
     .ulink::after {
       content: ""; position: absolute; left: 0; bottom: -1px;
@@ -79,48 +75,33 @@
     nav.scrolled { border-bottom-color: var(--line); background: rgba(251, 250, 246, 0.9); }
     .nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 14px 28px;
       display: flex; align-items: center; justify-content: space-between; }
-    .monogram {
-      font-family: 'Fraunces', serif; font-weight: 600; letter-spacing: 0.04em;
-      font-size: 18px; color: var(--ink);
-    }
+    .monogram { font-family: 'Fraunces', serif; font-weight: 600; letter-spacing: 0.04em; font-size: 18px; color: var(--ink); }
     .monogram .dot-i { color: var(--accent-2); }
     .nav-links { display: flex; gap: 26px; font-size: 14px; font-family: 'Newsreader', serif; }
     .nav-links a { color: var(--muted); letter-spacing: 0.02em; transition: color 0.25s ease; }
     .nav-links a:hover { color: var(--accent); }
-    @media (max-width: 620px) { .nav-links { gap: 16px; font-size: 13px; } .nav-links .hide-sm { display:none; } }
+    @media (max-width: 620px) { .nav-links { gap: 14px; font-size: 12px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; } .nav-links::-webkit-scrollbar { display: none; } }
 
     /* ---------- Hero ---------- */
     header { padding: 64px 0 26px; }
     .hero { display: grid; grid-template-columns: 1fr; gap: 38px; align-items: start; }
-    @media (max-width: 680px) { .hero { grid-template-columns: 1fr; gap: 26px; } }
 
     .name {
-      font-family: 'Fraunces', serif;
-      font-optical-sizing: auto;
-      font-weight: 600;
-      font-size: clamp(38px, 7vw, 58px);
-      line-height: 1.02;
-      letter-spacing: -0.015em;
-      margin: 0 0 6px;
+      font-family: 'Fraunces', serif; font-optical-sizing: auto; font-weight: 600;
+      font-size: clamp(38px, 7vw, 58px); line-height: 1.02;
+      letter-spacing: -0.015em; margin: 0 0 6px;
     }
     .name .accent-dot { color: var(--accent-2); }
-    .role {
-      font-size: 17px; color: var(--muted); font-style: italic;
-      margin: 0 0 18px;
-    }
+    .role { font-size: 17px; color: var(--muted); font-style: italic; margin: 0 0 18px; }
 
     .badge {
       display: inline-flex; align-items: center; gap: 9px;
       font-family: 'Newsreader', serif; font-size: 14.5px; font-style: normal;
       color: var(--accent); background: var(--accent-soft);
       border: 1px solid rgba(14,82,71,0.18);
-      padding: 7px 14px; border-radius: 999px;
-      margin-bottom: 22px;
+      padding: 7px 14px; border-radius: 999px; margin-bottom: 22px;
     }
-    .dot {
-      width: 9px; height: 9px; border-radius: 50%; background: var(--accent-2);
-      position: relative; flex: none;
-    }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent-2); position: relative; flex: none; }
     .dot::after {
       content: ""; position: absolute; inset: 0; border-radius: 50%;
       background: var(--accent-2); animation: pulse 2.2s var(--ease) infinite;
@@ -134,10 +115,7 @@
     header p { margin: 0 0 14px; }
     header p strong { color: var(--ink); font-weight: 600; }
 
-    .links {
-      margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px;
-      font-size: 15px;
-    }
+    .links { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; font-size: 15px; }
     .links a {
       border: 1px solid var(--line); border-radius: 8px;
       padding: 7px 15px; color: var(--ink);
@@ -157,11 +135,23 @@
     }
     h2 .idx { font-size: 13px; color: var(--accent-2); font-family: 'Newsreader', serif;
       font-weight: 500; letter-spacing: 0.08em; transform: translateY(-3px); }
-    .rule { height: 1px; background: var(--line); margin: 14px 0 22px; transform-origin: left;
-      animation: none; }
+    .rule { height: 1px; background: var(--line); margin: 14px 0 22px; }
     .lead { color: var(--muted); margin: 0 0 6px; }
     .lead strong { color: var(--ink); }
     .lead em { color: var(--accent); font-style: italic; }
+
+    /* ---------- News ---------- */
+    .news-list { list-style: none; margin: 0; padding: 0; }
+    .news-item {
+      display: grid; grid-template-columns: 110px 1fr; gap: 18px;
+      padding: 12px 16px; border-radius: 10px; border-left: 2px solid transparent;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .news-item:hover { background: rgba(255,255,255,0.55); border-left-color: var(--accent-2); transform: translateX(2px); }
+    .news-date { font-size: 13.5px; color: var(--muted); font-weight: 600; padding-top: 3px; white-space: nowrap; }
+    .news-text { font-size: 15.5px; color: #3a382f; line-height: 1.55; }
+    .news-text a { font-weight: 600; }
+    @media (max-width: 600px) { .news-item { grid-template-columns: 1fr; gap: 3px; } }
 
     /* ---------- Entry rows ---------- */
     .entry {
@@ -200,6 +190,19 @@
     .role-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17.5px; color: var(--ink); }
     .entry p { margin: 6px 0 0; font-size: 15.5px; color: #3a382f; }
 
+    /* ---------- Talks ---------- */
+    .talk-list { list-style: none; margin: 0; padding: 0; }
+    .talk-item {
+      display: grid; grid-template-columns: 110px 1fr; gap: 18px;
+      padding: 14px 16px; border-radius: 10px; border-left: 2px solid transparent;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .talk-item:hover { background: rgba(255,255,255,0.55); border-left-color: var(--accent-2); transform: translateX(2px); }
+    .talk-date { font-size: 13.5px; color: var(--muted); font-weight: 600; padding-top: 3px; white-space: nowrap; }
+    .talk-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 16.5px; color: var(--ink); line-height: 1.3; }
+    .talk-venue { font-size: 14px; color: var(--muted); font-style: italic; margin-top: 3px; }
+    @media (max-width: 600px) { .talk-item { grid-template-columns: 1fr; gap: 3px; } }
+
     /* ---------- Award entries ---------- */
     .award-entry {
       display: grid; grid-template-columns: 90px 1fr; gap: 22px;
@@ -215,18 +218,16 @@
     .award-entry:hover .award-title { color: var(--accent); }
     .award-body { font-size: 15px; color: #3a382f; margin-top: 4px; }
 
-    /* ---------- Justified body text with hyphenation ---------- */
-    header p, .lead, .abstract, .entry p, .award-body {
-      text-align: justify;
-      text-justify: inter-word;
-      -webkit-hyphens: auto;
-      -ms-hyphens: auto;
-      hyphens: auto;
+    /* ---------- Justified body text ---------- */
+    header p, .lead, .abstract, .entry p, .award-body, .news-text, .talk-venue {
+      text-align: justify; text-justify: inter-word;
+      -webkit-hyphens: auto; -ms-hyphens: auto; hyphens: auto;
     }
 
     /* ---------- Footer ---------- */
     footer { padding: 40px 0 56px; color: var(--muted); font-size: 13.5px;
-      display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); margin-top: 20px; }
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--line); margin-top: 20px; }
     footer .top { color: var(--muted); }
     footer .top:hover { color: var(--accent); }
     @media (max-width: 480px) { footer { flex-direction: column; gap: 10px; } }
@@ -234,7 +235,6 @@
     /* ---------- Reveal animations ---------- */
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
     .reveal.is-visible { opacity: 1; transform: none; }
-
     .load { opacity: 0; transform: translateY(16px); animation: rise 0.8s var(--ease) forwards; }
     @keyframes rise { to { opacity: 1; transform: none; } }
     .d1 { animation-delay: 0.05s; } .d2 { animation-delay: 0.16s; }
@@ -256,11 +256,12 @@
     <div class="nav-inner">
       <span class="monogram">Mame D<span class="dot-i">.</span> Toure</span>
       <div class="nav-links">
-        <a href="#about" class="hide-sm">About</a>
+        <a href="#about">About</a>
+        <a href="#news">News</a>
         <a href="#research">Research</a>
         <a href="#experience">Experience</a>
-        <a href="#awards" class="hide-sm">Awards</a>
-        <a href="#mentorship" class="hide-sm">Mentorship</a>
+        <a href="#awards">Awards</a>
+        <a href="#mentorship">Mentorship</a>
       </div>
     </div>
   </nav>
@@ -293,31 +294,27 @@
             practical deployment to build <strong>safe and trustworthy AI systems</strong>.
           </p>
           <p class="load d4">
-            I have been recognized with several competitive fellowships and awards for research
-            excellence. In 2026 I received the
-            <a class="ulink" href="https://ism.uqam.ca/scholarships/"><strong>ISM Scholarship for Outstanding PhD Candidates</strong></a>
-            from the Institut des sciences mathématiques, awarded across eight Québec universities to
-            doctoral students demonstrating <strong>exceptional research excellence</strong> in their
-            final year. In 2026 I was also awarded a
-            <a class="ulink" href="https://www.mitacs.ca/our-programs/accelerate/"><strong>Mitacs Accelerate Fellowship</strong></a>
-            supporting my work at Hydro-Québec (IREQ) on uncertainty-aware time-series foundation models.
-            In 2024 I received the
-            <a class="ulink" href="https://mila.quebec/en/news/a-fourth-edition-for-the-mila-edi-scholarship-program"><strong>Mila Women in AI Excellence Scholarship</strong></a>
-            from <a class="ulink" href="https://mila.quebec/en/">Mila (Quebec AI Institute)</a>,
-            recognizing <strong>outstanding research potential</strong> and commitment to safe,
-            trustworthy AI. My academic foundation was built in France: after the intensive
+            My academic foundation was built in France: after the intensive
             <strong>Classes Préparatoires aux Grandes Écoles</strong>, I earned an Engineering Degree
             from <strong>ENSIIE</strong> and an MSc in Quantitative Finance from
             <strong>Paris-Saclay University</strong>, where I graduated with First Class Honours and
             received the
-            <a class="ulink" href="https://fondation-hadamard.fr/en/our-programs/transversal-programs/graduate-program/"><strong>Sophie Germain Excellence Scholarship</strong></a>
+            <a class="ulink" href="https://fondation-hadamard.fr/en/our-programs/transversal-programs/graduate-program/">Sophie Germain Excellence Scholarship</a>
             from the Jacques Hadamard Mathematics Foundation (FMJH). Before my PhD, I worked across
             quantitative research and applied AI, with roles at <strong>BNP Paribas</strong>,
             <strong>Société Générale</strong>, and <strong>Crédit Agricole</strong>, and as a research
-            scientist at <strong>JACOBB</strong> (Centre for Applied AI). I am currently a
-            <strong>Research Scientist</strong> at
+            scientist at <strong>JACOBB</strong> (Centre for Applied AI). In 2024 I was awarded the
+            <a class="ulink" href="https://mila.quebec/en/news/a-fourth-edition-for-the-mila-edi-scholarship-program">Women in AI Excellence Scholarship</a>
+            from <a class="ulink" href="https://mila.quebec/en/">Mila (Quebec AI Institute)</a>,
+            recognizing outstanding research potential and commitment to safe, trustworthy AI. In 2026
+            I received the
+            <a class="ulink" href="https://ism.uqam.ca/scholarships/">ISM Scholarship for Outstanding PhD Candidates</a>
+            from the Institut des sciences mathématiques, awarded to exceptional doctoral students
+            across eight Québec universities in their final year. I am currently a fellow of the
+            <a class="ulink" href="https://www.mitacs.ca/our-programs/accelerate/">Mitacs Accelerate</a>
+            program, conducting doctoral research in collaboration with
             <a class="ulink" href="https://www.hydroquebec.com/innovation/">Hydro-Québec (IREQ)</a>
-            via a <strong>Mitacs Accelerate</strong> fellowship.
+            on uncertainty-aware Transformer pretraining for large-scale industrial time series.
           </p>
 
           <div class="links load d5">
@@ -331,9 +328,61 @@
       </div>
     </header>
 
+    <!-- ================= NEWS ================= -->
+    <section id="news">
+      <h2 class="reveal"><span class="idx">01</span> News</h2>
+      <div class="rule reveal"></div>
+      <ul class="news-list">
+
+        <li class="news-item reveal">
+          <div class="news-date">May 29, 2026</div>
+          <div class="news-text">
+            Invited to present at the <strong>Women in Machine Learning (WiML) Symposium &amp; Workshop</strong>,
+            co-located with ICML 2026 in Seoul. Talk: <em>Scalable Uncertainty Quantification for Safe and Trustworthy AI Systems</em>.
+          </div>
+        </li>
+
+        <li class="news-item reveal">
+          <div class="news-date">May 23, 2026</div>
+          <div class="news-text">
+            🎉 Paper accepted at the <strong>SPIGM Workshop at ICML 2026</strong>:
+            <a class="ulink" href="certify_deterministic_center.pdf"><em>When Does a Low-Rank Bayesian Neural Network Certify Its Deterministic Center?</em></a>
+          </div>
+        </li>
+
+        <li class="news-item reveal">
+          <div class="news-date">May 2026</div>
+          <div class="news-text">
+            Started as <strong>Research Scientist at Hydro-Québec (IREQ)</strong>, supported by a
+            <a class="ulink" href="https://www.mitacs.ca/our-programs/accelerate/">Mitacs Accelerate Fellowship</a>,
+            working on uncertainty-aware Transformer pretraining for large-scale industrial time series.
+          </div>
+        </li>
+
+        <li class="news-item reveal">
+          <div class="news-date">Apr 30, 2026</div>
+          <div class="news-text">
+            🎉 Paper accepted at <strong>ICML 2026</strong>:
+            <a class="ulink" href="https://arxiv.org/abs/2602.00387"><em>Singular Bayesian Neural Networks</em></a>.
+            Presenting in Seoul, July 2026.
+          </div>
+        </li>
+
+        <li class="news-item reveal">
+          <div class="news-date">Jun 2026</div>
+          <div class="news-text">
+            Awarded the <strong>ISM Scholarship for Outstanding PhD Candidates</strong> from the
+            Institut des sciences mathématiques, recognizing exceptional research excellence in the
+            final year of doctoral studies.
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
     <!-- ================= RESEARCH ================= -->
     <section id="research">
-      <h2 class="reveal"><span class="idx">01</span> Research &amp; Publications</h2>
+      <h2 class="reveal"><span class="idx">02</span> Research &amp; Publications</h2>
       <div class="rule reveal"></div>
       <p class="lead reveal">
         My primary research develops scalable <strong>low-rank variational inference</strong> methods
@@ -342,7 +391,6 @@
         networks automatically adapt their complexity to the data generating process (Occam's Razor).
       </p>
 
-      <!-- ICML -->
       <div class="entry reveal">
         <div class="meta">
           <div class="venue icml">ICML 2026</div>
@@ -370,7 +418,6 @@
         </div>
       </div>
 
-      <!-- Per-class -->
       <div class="entry reveal">
         <div class="meta"><div class="venue">Preprint</div><div class="place">2026</div></div>
         <div>
@@ -391,7 +438,6 @@
         </div>
       </div>
 
-      <!-- Certify -->
       <div class="entry reveal">
         <div class="meta"><div class="venue icml">SPIGM @ ICML 2026</div><div class="place">Workshop</div></div>
         <div>
@@ -404,13 +450,11 @@
             We study when a structured low-rank Gaussian variational posterior can certify a deterministic
             predictor in a Bayesian neural network with factorized layers
             <strong>W<sub>i</sub> = A<sub>i</sub>B<sub>i</sub><sup>T</sup></strong>. The same model yields
-            three natural certification targets, the posterior Gibbs predictor, the posterior predictive mean,
-            and a deterministic center network; this paper focuses on the deterministic-center route.
+            three natural certification targets; this paper focuses on the deterministic-center route.
           </p>
         </div>
       </div>
 
-      <!-- PhD research -->
       <div class="entry reveal">
         <div class="meta"><div class="venue">PhD Research</div></div>
         <div>
@@ -423,7 +467,6 @@
         </div>
       </div>
 
-      <!-- Natixis -->
       <div class="entry reveal">
         <div class="meta"><div class="venue">Natixis</div><div class="place">Master's Project</div></div>
         <div>
@@ -436,7 +479,6 @@
         </div>
       </div>
 
-      <!-- LaMME -->
       <div class="entry reveal">
         <div class="meta"><div class="venue">LaMME</div><div class="place">Research Internship</div></div>
         <div>
@@ -450,12 +492,52 @@
       </div>
     </section>
 
+    <!-- ================= TALKS ================= -->
+    <section id="talks">
+      <h2 class="reveal"><span class="idx">03</span> Talks &amp; Presentations</h2>
+      <div class="rule reveal"></div>
+      <ul class="talk-list">
+
+        <li class="talk-item reveal">
+          <div class="talk-date">Jul 2026</div>
+          <div>
+            <div class="talk-title">Singular Bayesian Neural Networks</div>
+            <div class="talk-venue">International Conference on Machine Learning (ICML 2026), Seoul, South Korea.</div>
+          </div>
+        </li>
+
+        <li class="talk-item reveal">
+          <div class="talk-date">Jul 2026</div>
+          <div>
+            <div class="talk-title">Scalable Uncertainty Quantification for Safe and Trustworthy AI Systems</div>
+            <div class="talk-venue">Women in Machine Learning (WiML) Symposium &amp; Workshop, co-located with ICML 2026, Seoul, South Korea.</div>
+          </div>
+        </li>
+
+        <li class="talk-item reveal">
+          <div class="talk-date">Jun 8, 2026</div>
+          <div>
+            <div class="talk-title">Not Just How Much, But Where: Decomposing Epistemic Uncertainty into Per-Class Contributions</div>
+            <div class="talk-venue">2nd Workshop on Uncertainty in AI, IVADO Thematic Semester — Statistical Foundations of AI, Montréal, Canada.</div>
+          </div>
+        </li>
+
+        <li class="talk-item reveal">
+          <div class="talk-date">Aug 2026</div>
+          <div>
+            <div class="talk-title">AFSA Québec Scientific Day</div>
+            <div class="talk-venue">Co-organizer and host, Association des Femmes Scientifiques Africaines du Québec, Montréal, Canada.</div>
+          </div>
+        </li>
+
+      </ul>
+    </section>
+
     <!-- ================= EXPERIENCE ================= -->
     <section id="experience">
-      <h2 class="reveal"><span class="idx">02</span> Experience</h2>
+      <h2 class="reveal"><span class="idx">04</span> Experience</h2>
       <div class="rule reveal"></div>
 
-      <!-- Hydro-Québec IREQ -->
       <div class="entry reveal">
         <div class="meta"><strong>Hydro-Québec (IREQ)</strong><br><span class="place">May to Dec 2026</span></div>
         <div>
@@ -464,7 +546,6 @@
         </div>
       </div>
 
-      <!-- McGill TA -->
       <div class="entry reveal">
         <div class="meta"><strong>McGill University</strong><br><span class="place">Fall 2025 to Summer 2026</span></div>
         <div>
@@ -516,14 +597,14 @@
 
     <!-- ================= AWARDS ================= -->
     <section id="awards">
-      <h2 class="reveal"><span class="idx">03</span> Awards &amp; Scholarships</h2>
+      <h2 class="reveal"><span class="idx">05</span> Awards &amp; Scholarships</h2>
       <div class="rule reveal"></div>
 
       <div class="award-entry reveal">
         <div class="award-year">2026</div>
         <div>
           <div class="award-title"><a class="ulink" href="https://ism.uqam.ca/scholarships/">ISM Scholarship for Outstanding PhD Candidates</a></div>
-          <div class="award-body">Institut des sciences mathématiques (ISM). Competitive scholarship awarded to <strong>outstanding</strong> doctoral students in their final year, selected across the consortium of eight Québec universities (McGill, Université de Montréal, UQAM, Concordia, Laval, and others), to support full-time concentration on thesis writing and defence preparation.</div>
+          <div class="award-body">Institut des sciences mathématiques (ISM). Competitive $7,500 scholarship awarded to <strong>outstanding</strong> doctoral students in their final year, selected across the consortium of eight Québec universities (McGill, Université de Montréal, UQAM, Concordia, Laval, and others), to support full-time concentration on thesis writing and defence preparation.</div>
         </div>
       </div>
 
@@ -555,7 +636,7 @@
 
     <!-- ================= MENTORSHIP ================= -->
     <section id="mentorship">
-      <h2 class="reveal"><span class="idx">04</span> Community &amp; Mentorship</h2>
+      <h2 class="reveal"><span class="idx">06</span> Community &amp; Mentorship</h2>
       <div class="rule reveal"></div>
       <p class="lead reveal">
         I am an active member of <a class="ulink" href="https://www.womeninai.com/">Women in AI North America</a>
@@ -573,13 +654,11 @@
   </div>
 
   <script>
-    // Nav shadow on scroll
     const nav = document.getElementById('nav');
     const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
-    // Scroll-triggered reveals
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (!reduce && 'IntersectionObserver' in window) {
       const io = new IntersectionObserver((entries) => {
