@@ -200,8 +200,23 @@
     .role-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17.5px; color: var(--ink); }
     .entry p { margin: 6px 0 0; font-size: 15.5px; color: #3a382f; }
 
+    /* ---------- Award entries ---------- */
+    .award-entry {
+      display: grid; grid-template-columns: 90px 1fr; gap: 22px;
+      padding: 16px 18px 16px 16px; border-radius: 12px;
+      border-left: 2px solid transparent;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .award-entry:hover { background: rgba(255,255,255,0.55); border-left-color: var(--accent-2); transform: translateX(2px); }
+    @media (max-width: 600px) { .award-entry { grid-template-columns: 1fr; gap: 4px; padding: 14px; } }
+    .award-year { color: var(--muted); font-size: 14.5px; font-weight: 600; padding-top: 2px; }
+    .award-title { font-family: 'Fraunces', serif; font-weight: 600; font-size: 17px; color: var(--ink); line-height: 1.25; }
+    .award-title a { color: var(--ink); }
+    .award-entry:hover .award-title { color: var(--accent); }
+    .award-body { font-size: 15px; color: #3a382f; margin-top: 4px; }
+
     /* ---------- Justified body text with hyphenation ---------- */
-    header p, .lead, .abstract, .entry p {
+    header p, .lead, .abstract, .entry p, .award-body {
       text-align: justify;
       text-justify: inter-word;
       -webkit-hyphens: auto;
@@ -244,6 +259,7 @@
         <a href="#about" class="hide-sm">About</a>
         <a href="#research">Research</a>
         <a href="#experience">Experience</a>
+        <a href="#awards" class="hide-sm">Awards</a>
         <a href="#mentorship" class="hide-sm">Mentorship</a>
       </div>
     </div>
@@ -277,15 +293,24 @@
             practical deployment to build <strong>safe and trustworthy AI systems</strong>.
           </p>
           <p class="load d4">
-            In 2024 I was awarded the
-            <a class="ulink" href="https://mila.quebec/en/news/for-a-third-consecutive-year-mila-is-launching-its-equity-diversity-and-inclusion-0">Women in AI Excellence Scholarship</a>
-            from <a class="ulink" href="https://mila.quebec/en/">Mila (Quebec AI Institute)</a>.
-            My academic foundation was built in France: after the intensive
+            I have been recognized with several competitive fellowships and awards for research
+            excellence. In 2026 I received the
+            <a class="ulink" href="https://ism.uqam.ca/scholarships/"><strong>ISM Scholarship for Outstanding PhD Candidates</strong></a>
+            from the Institut des sciences mathématiques, awarded across eight Québec universities to
+            doctoral students demonstrating <strong>exceptional research excellence</strong> in their
+            final year. In 2026 I was also awarded a
+            <a class="ulink" href="https://www.mitacs.ca/our-programs/accelerate/"><strong>Mitacs Accelerate Fellowship</strong></a>
+            supporting my work at Hydro-Québec (IREQ) on uncertainty-aware time-series foundation models.
+            In 2024 I received the
+            <a class="ulink" href="https://mila.quebec/en/news/a-fourth-edition-for-the-mila-edi-scholarship-program"><strong>Mila Women in AI Excellence Scholarship</strong></a>
+            from <a class="ulink" href="https://mila.quebec/en/">Mila (Quebec AI Institute)</a>,
+            recognizing <strong>outstanding research potential</strong> and commitment to safe,
+            trustworthy AI. My academic foundation was built in France: after the intensive
             <strong>Classes Préparatoires aux Grandes Écoles</strong>, I earned an Engineering Degree
             from <strong>ENSIIE</strong> and an MSc in Quantitative Finance from
             <strong>Paris-Saclay University</strong>, where I graduated with First Class Honours and
             received the
-            <a class="ulink" href="https://fondation-hadamard.fr/en/our-programs/transversal-programs/graduate-program/">Sophie Germain Excellence Scholarship</a>
+            <a class="ulink" href="https://fondation-hadamard.fr/en/our-programs/transversal-programs/graduate-program/"><strong>Sophie Germain Excellence Scholarship</strong></a>
             from the Jacques Hadamard Mathematics Foundation (FMJH). Before my PhD, I worked across
             quantitative research and applied AI, with roles at <strong>BNP Paribas</strong>,
             <strong>Société Générale</strong>, and <strong>Crédit Agricole</strong>, and as a research
@@ -489,9 +514,48 @@
       </div>
     </section>
 
+    <!-- ================= AWARDS ================= -->
+    <section id="awards">
+      <h2 class="reveal"><span class="idx">03</span> Awards &amp; Scholarships</h2>
+      <div class="rule reveal"></div>
+
+      <div class="award-entry reveal">
+        <div class="award-year">2026</div>
+        <div>
+          <div class="award-title"><a class="ulink" href="https://ism.uqam.ca/scholarships/">ISM Scholarship for Outstanding PhD Candidates</a></div>
+          <div class="award-body">Institut des sciences mathématiques (ISM). Competitive scholarship awarded to <strong>outstanding</strong> doctoral students in their final year, selected across the consortium of eight Québec universities (McGill, Université de Montréal, UQAM, Concordia, Laval, and others), to support full-time concentration on thesis writing and defence preparation.</div>
+        </div>
+      </div>
+
+      <div class="award-entry reveal">
+        <div class="award-year">2026</div>
+        <div>
+          <div class="award-title"><a class="ulink" href="https://www.mitacs.ca/our-programs/accelerate/">Mitacs Accelerate Fellowship</a></div>
+          <div class="award-body">Mitacs. Competitive industry-academic research fellowship supporting doctoral research in collaboration with Hydro-Québec (IREQ). Project focused on uncertainty-aware time-series foundation models for energy forecasting applications.</div>
+        </div>
+      </div>
+
+      <div class="award-entry reveal">
+        <div class="award-year">2024</div>
+        <div>
+          <div class="award-title"><a class="ulink" href="https://mila.quebec/en/news/a-fourth-edition-for-the-mila-edi-scholarship-program">Mila Women in AI Excellence Scholarship</a></div>
+          <div class="award-body">Mila — Quebec AI Institute (EDI Scholarships Program). Competitive award recognizing <strong>outstanding research potential</strong> and commitment to safe, trustworthy AI among women in AI at the graduate level. Provides financial support and integration within Mila's research community.</div>
+        </div>
+      </div>
+
+      <div class="award-entry reveal">
+        <div class="award-year">2020</div>
+        <div>
+          <div class="award-title"><a class="ulink" href="https://www.fondation-hadamard.fr/en/our-programs/transversal-programs/graduate-program/apply-for-a-sophie-germain-scholarship/">Sophie Germain Excellence Scholarship</a></div>
+          <div class="award-body">Jacques Hadamard Mathematics Foundation (FMJH). Competitive international scholarship supporting <strong>exceptional</strong> students in the Paris-Saclay "Mathematics and Applications" Master's programme, awarded on the basis of academic excellence and research potential.</div>
+        </div>
+      </div>
+
+    </section>
+
     <!-- ================= MENTORSHIP ================= -->
     <section id="mentorship">
-      <h2 class="reveal"><span class="idx">03</span> Community &amp; Mentorship</h2>
+      <h2 class="reveal"><span class="idx">04</span> Community &amp; Mentorship</h2>
       <div class="rule reveal"></div>
       <p class="lead reveal">
         I am an active member of <a class="ulink" href="https://www.womeninai.com/">Women in AI North America</a>
