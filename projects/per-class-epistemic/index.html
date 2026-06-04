@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2RN01R28V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag("js", new Date());
+    gtag("config", "G-S2RN01R28V");
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf0f6">
+  <meta
+    name="description"
+    content="Project page for Not Just How Much, But Where: Decomposing Epistemic Uncertainty into Per-Class Contributions (UAI 2026).">
+  <title>Not Just How Much, But Where | UAI 2026</title>
+
+  <link rel="stylesheet" href="./style.css?v=5">
+
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [["$", "$"]],
+        displayMath: [["$$", "$$"]]
+      }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="brand" href="/">Mame Diarra Tour&eacute;</a>
+    <nav aria-label="Project sections">
+      <a href="#method">Method</a>
+      <a href="#reliability">Reliability</a>
+      <a href="#evidence">Evidence</a>
+      <a href="#implications">Implications</a>
+      <a href="#resources">Resources</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="overview">
+      <div class="hero-scene" aria-hidden="true">
+        <div class="scalar-mi">
+          <span>scalar</span>
+          <strong>MI</strong>
+          <small>how much?</small>
+        </div>
+        <div class="decompose-line"></div>
+        <div class="class-contributions">
+          <div class="class-bar c1"><span>$C_1$</span></div>
+          <div class="class-bar c2"><span>$C_2$</span></div>
+          <div class="class-bar c3"><span>$C_3$</span></div>
+          <div class="class-bar c4"><span>$C_4$</span></div>
+          <div class="where-label">where?</div>
+        </div>
+      </div>
+
+      <div class="hero-copy">
+        <div class="conference-badge">UAI 2026</div>
+        <h1>Not Just How Much,<br><em>But Where</em></h1>
+        <p class="hero-subtitle">Decomposing Epistemic Uncertainty into Per-Class Contributions</p>
+        <p class="hero-thesis">
+          Mutual information says how uncertain a model is.
+          The per-class vector $\mathbf{C}(x)$ reveals which classes drive that uncertainty.
+        </p>
+        <p class="authors">
+          <strong>Mame Diarra Tour&eacute;</strong> and David A. Stephens<br>
+          Department of Mathematics and Statistics, McGill University
+        </p>
+        <div class="hero-actions">
+          <a class="button primary" href="./assets/docs/uai2026-poster.pdf" target="_blank" rel="noopener">Poster PDF</a>
+          <a class="button secondary" href="https://openreview.net/forum?id=cxuWscJmAr" target="_blank" rel="noopener">OpenReview</a>
+          <a class="button secondary" href="https://arxiv.org/abs/2602.21160" target="_blank" rel="noopener">arXiv</a>
+          <a class="button secondary" href="https://github.com/arradiat/per-class-epistemic-uncertainty" target="_blank" rel="noopener">Code</a>
+          <a class="button secondary" href="https://arradiat.github.io/" target="_blank" rel="noopener">Homepage</a>
+          <a class="button secondary" href="#method">Explore the method</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="headline-results" aria-label="Headline results">
+      <div class="result-stat reveal">
+        <strong>34.7%</strong>
+        <span>lower selective risk than MI on diabetic retinopathy</span>
+      </div>
+      <div class="result-stat reveal">
+        <strong>56.2%</strong>
+        <span>lower selective risk than the per-class variance baseline</span>
+      </div>
+      <div class="result-stat reveal">
+        <strong>2 / 2</strong>
+        <span>OoD benchmarks where $\sum_k C_k$ achieves the highest AUROC</span>
+      </div>
+    </section>
+
+    <section class="band introduction">
+      <div class="inner narrow">
+        <p class="eyebrow">The central problem</p>
+        <h2>A single uncertainty score can hide the failure mode that matters most.</h2>
+        <p class="section-lead">
+          In asymmetric classification, ignorance involving a benign class is not equivalent to
+          ignorance involving a safety-critical class. Scalar MI collapses both cases into the same number.
+        </p>
+        <div class="failure-comparison reveal">
+          <div>
+            <span class="case-label">Same scalar summary</span>
+            <b>MI = 0.024</b>
+            <p>Catastrophic miss: Grade 3 predicted as Grade 0</p>
+          </div>
+          <div class="versus">versus</div>
+          <div>
+            <span class="case-label">Nearly identical scalar summary</span>
+            <b>MI = 0.027</b>
+            <p>Severity underestimate: Grade 3 predicted as Grade 2</p>
+          </div>
+        </div>
+        <p class="closing-line">
+          Their scalar MI is nearly identical, but their per-class epistemic signatures are not.
+        </p>
+      </div>
+    </section>
+
+    <section class="band method" id="method">
+      <div class="inner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 / Method</p>
+            <h2>Decompose MI into class-level contributions.</h2>
+          </div>
+          <p>
+            From $S$ stochastic predictions, estimate each class mean $\mu_k$ and variance
+            $\operatorname{Var}[p_k]$. A second-order Taylor expansion of entropy gives a simple,
+            additive decomposition.
+          </p>
+        </div>
+
+        <div class="formula-stage reveal">
+          <div class="main-formula">
+            <span>Per-class epistemic contribution</span>
+            <div>$$C_k(x) = \frac{1}{2}\frac{\operatorname{Var}[p_k](x)}{\mu_k(x)}$$</div>
+          </div>
+          <div class="formula-bridge" aria-hidden="true">&rarr;</div>
+          <div class="sum-formula">
+            <span>Additive connection</span>
+            <div>$$\sum_{k=1}^{K} C_k(x) \approx \operatorname{MI}(y;\boldsymbol{\omega}\mid x)$$</div>
+          </div>
+        </div>
+
+        <div class="method-flow" aria-label="Computation flow">
+          <article class="flow-step reveal">
+            <span>1</span>
+            <h3>Sample predictions</h3>
+            <p>$S$ stochastic forward passes produce probability vectors on the simplex.</p>
+          </article>
+          <article class="flow-step reveal">
+            <span>2</span>
+            <h3>Estimate moments</h3>
+            <p>Compute the class-wise mean, variance, covariance, and third central moment.</p>
+          </article>
+          <article class="flow-step reveal">
+            <span>3</span>
+            <h3>Attribute uncertainty</h3>
+            <p>Each $C_k$ identifies the share of epistemic uncertainty associated with class $k$.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band boundary">
+      <div class="inner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Why the normalization matters</p>
+            <h2>Raw variance is suppressed exactly where rare classes live.</h2>
+          </div>
+          <p>
+            On the probability simplex, $\operatorname{Var}[p_k]\leq\mu_k(1-\mu_k)$.
+            As $\mu_k\rightarrow0$, raw variance must vanish even when posterior disagreement remains important.
+          </p>
+        </div>
+
+        <div class="boundary-visual reveal">
+          <div class="bound-track">
+            <div class="bound-axis">
+              <span>$\mu_k \rightarrow 0$</span>
+              <span>rare class</span>
+            </div>
+            <div class="bound-row variance-row">
+              <b>Raw variance</b>
+              <div class="track"><span></span></div>
+              <em>upper bound $\rightarrow 0$</em>
+            </div>
+            <div class="bound-row ck-row">
+              <b>$C_k$</b>
+              <div class="track"><span></span></div>
+              <em>upper bound $\rightarrow \tfrac{1}{2}$</em>
+            </div>
+          </div>
+          <div class="boundary-copy">
+            <h3>The $1/\mu_k$ term is not an ad hoc correction.</h3>
+            <p>
+              It arises from the entropy Hessian. A given amount of probability variance carries
+              more information-theoretic weight for a low-probability class.
+            </p>
+            <p class="paper-note">
+              This makes $C_k$ comparable across rare and common classes, while preserving
+              the additive connection to MI.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band reliability" id="reliability">
+      <div class="inner">
+        <div class="section-heading light-heading">
+          <div>
+            <p class="eyebrow">02 / Reliability</p>
+            <h2>The method says when its approximation should be trusted.</h2>
+          </div>
+          <p>
+            Boundary correction improves sensitivity to rare classes, but also makes the Taylor
+            approximation more sensitive to higher-order skewness. The paper pairs $C_k$ with a diagnostic.
+          </p>
+        </div>
+
+        <div class="reliability-layout">
+          <div class="rho-panel reveal">
+            <span class="panel-label">Skewness diagnostic</span>
+            <div class="rho-formula">
+              $$\rho_k(x)=\frac{|m_{3,k}|}{3\mu_k\operatorname{Var}[p_k]}$$
+            </div>
+            <div class="rho-scale">
+              <div class="rho-safe">
+                <b>$\rho_k \ll 1$</b>
+                <span>quadratic approximation is reliable</span>
+              </div>
+              <div class="rho-caution">
+                <b>$\rho_k > 0.3$</b>
+                <span>interpret $C_k$ with caution</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="fallback-panel reveal">
+            <span class="panel-label">Correlation-aware fallback</span>
+            <h3>CBEC detects active confusion across a safety boundary.</h3>
+            <div class="cbec-formula">
+              $$\operatorname{CBEC}(x)=\sum_{i\in\mathcal{S}}\sum_{j\in\mathcal{C}}
+              \sqrt{C_iC_j}\max(0,-\rho_{ij})$$
+            </div>
+            <p>
+              Use $C_{\text{crit\_max}}$ when critical-class $C_k$ values are reliable.
+              CBEC is the robust alternative when skewness degrades the Taylor approximation.
+            </p>
+          </div>
+        </div>
+
+        <div class="axioms reveal">
+          <span class="panel-label">Axiomatic profile of $\sum_k C_k$</span>
+          <div class="axiom-list">
+            <span class="pass">A0 non-negativity</span>
+            <span class="pass">A1 zero iff no disagreement</span>
+            <span class="pass">A3 increases under mean-preserving spread</span>
+            <span class="tradeoff">A2 and A5 inherited trade-offs</span>
+          </div>
+          <p>
+            The A5 violation is the mechanism that counteracts boundary suppression:
+            sensitivity to $\mu_k$ prevents rare-class contributions from being forced to zero.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band evidence" id="evidence">
+      <div class="inner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 / Evidence</p>
+            <h2>Class-aware uncertainty changes the decisions a model can support.</h2>
+          </div>
+          <p>
+            The paper evaluates selective prediction, OoD detection, and sensitivity to controlled label noise.
+          </p>
+        </div>
+
+        <article class="experiment-block">
+          <div class="experiment-title">
+            <div>
+              <span class="experiment-number">A</span>
+              <p class="eyebrow">Selective prediction / diabetic retinopathy</p>
+              <h3>Defer when uncertainty involves a clinically critical class.</h3>
+            </div>
+            <div class="experiment-summary">
+              <b>Lowest AUSC: 0.285</b>
+              <span>$C_{\text{crit\_max}}$ dominates across the full coverage range.</span>
+            </div>
+          </div>
+
+          <figure class="wide-figure reveal">
+            <img src="./assets/figures/selective-prediction.png" alt="Selective prediction results on diabetic retinopathy">
+            <figcaption>
+              Critical FNR across coverage levels and bootstrap AUSC distributions.
+              Lower AUSC means safer selective prediction.
+            </figcaption>
+          </figure>
+
+          <div class="table-wrap reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th>Family</th>
+                  <th>Policy</th>
+                  <th>AUSC &darr;</th>
+                  <th>Critical FNR @80% &darr;</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Scalar</td><td>Entropy</td><td>0.604 &plusmn; 0.022</td><td>0.401 &plusmn; 0.016</td></tr>
+                <tr><td>Scalar</td><td>MI</td><td>0.436 &plusmn; 0.019</td><td>0.339 &plusmn; 0.014</td></tr>
+                <tr><td>Per-class variance</td><td>Sale_EU_crit</td><td>0.650 &plusmn; 0.013</td><td>0.409 &plusmn; 0.016</td></tr>
+                <tr class="ours"><td>Per-class $C_k$</td><td>$C_{\text{crit\_sum}}$</td><td>0.327 &plusmn; 0.017</td><td>0.321 &plusmn; 0.014</td></tr>
+                <tr class="ours best-row"><td>Per-class $C_k$</td><td>$C_{\text{crit\_max}}$</td><td><b>0.285 &plusmn; 0.016</b></td><td><b>0.302 &plusmn; 0.013</b></td></tr>
+                <tr class="ours"><td>Correlation-aware</td><td>CBEC</td><td>0.416 &plusmn; 0.020</td><td>0.335 &plusmn; 0.014</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="result-explanation">
+            <p>
+              Grade 3 has mean probability near $0.06$. Raw variance is therefore heavily suppressed;
+              the entropy-derived $1/\mu_k$ weighting recovers the critical-class signal.
+            </p>
+            <p>
+              Across inference methods, the preferred policy follows the diagnostic:
+              direct $C_k$ targeting under reliable posteriors, CBEC when skewness is high.
+            </p>
+          </div>
+        </article>
+
+        <article class="experiment-block signature-block">
+          <div class="experiment-title">
+            <div>
+              <span class="experiment-number">B</span>
+              <p class="eyebrow">Interpretability / error signatures</p>
+              <h3>Nearly identical MI can conceal different confusion pathways.</h3>
+            </div>
+          </div>
+          <figure class="wide-figure reveal">
+            <img src="./assets/figures/error-signatures.png" alt="Per-class epistemic signatures for diabetic retinopathy errors">
+            <figcaption>
+              The per-class profiles distinguish a catastrophic miss from a severity underestimate,
+              despite nearly identical scalar MI.
+            </figcaption>
+          </figure>
+          <p class="experiment-punchline">
+            Cross-boundary epistemic confusion is <strong>2.7&times;</strong> stronger than within-group confusion.
+          </p>
+        </article>
+
+        <article class="experiment-block">
+          <div class="experiment-title">
+            <div>
+              <span class="experiment-number">C</span>
+              <p class="eyebrow">Out-of-distribution detection</p>
+              <h3>The per-class view shows where distributional shift concentrates.</h3>
+            </div>
+            <div class="experiment-summary">
+              <b>Best AUROC on both tasks</b>
+              <span>All-class aggregation captures shifts whose locus is not known in advance.</span>
+            </div>
+          </div>
+
+          <div class="table-wrap reveal">
+            <table>
+              <thead>
+                <tr>
+                  <th rowspan="2">Method</th>
+                  <th colspan="2">FashionMNIST &rarr; KMNIST</th>
+                  <th colspan="2">MIMIC-III ICU &rarr; Newborn</th>
+                </tr>
+                <tr>
+                  <th>AUROC &uarr;</th><th>OoD / ID ratio</th>
+                  <th>AUROC &uarr;</th><th>OoD / ID ratio</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Neg. MSP</td><td>0.665 &plusmn; 0.013</td><td>2.07</td><td>0.688 &plusmn; 0.030</td><td>1.24</td></tr>
+                <tr><td>MI</td><td>0.724 &plusmn; 0.009</td><td>5.92</td><td>0.802 &plusmn; 0.004</td><td>1.61</td></tr>
+                <tr><td>$EU_{\text{var}}$</td><td>0.710 &plusmn; 0.010</td><td>5.92</td><td>0.778 &plusmn; 0.015</td><td><b>1.71</b></td></tr>
+                <tr class="ours best-row"><td>$\sum_k C_k$</td><td><b>0.735 &plusmn; 0.009</b></td><td><b>6.43</b></td><td><b>0.815 &plusmn; 0.017</b></td><td>1.62</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="figure-pair">
+            <figure class="reveal">
+              <img src="./assets/figures/per-class-ood.png" alt="Per-class epistemic contributions on FashionMNIST and KMNIST">
+              <figcaption>FashionMNIST &rarr; KMNIST: the shift raises all ten class contributions.</figcaption>
+            </figure>
+            <figure class="reveal">
+              <img src="./assets/figures/mimic-score-distributions.png" alt="OOD uncertainty score distributions on MIMIC-III">
+              <figcaption>MIMIC-III: cleaner score separation matters more than the largest mean ratio.</figcaption>
+            </figure>
+          </div>
+
+          <div class="result-explanation">
+            <p>
+              On MIMIC-III, the OoD/ID contribution ratio is $2.15\times$ for survival but
+              $1.30\times$ for mortality. The larger shift signal resides in the non-critical class.
+            </p>
+            <p>
+              This is why critical-class targeting helps selective prediction, while all-class
+              aggregation is necessary for general OoD detection.
+            </p>
+          </div>
+        </article>
+
+        <article class="experiment-block">
+          <div class="experiment-title">
+            <div>
+              <span class="experiment-number">D</span>
+              <p class="eyebrow">Sensitivity to data quality</p>
+              <h3>Posterior and training regime shape uncertainty at least as strongly as the metric.</h3>
+            </div>
+            <div class="experiment-summary">
+              <b>19 / 20</b>
+              <span>End-to-end settings where $\sum_k C_k$ is less entangled than MI.</span>
+            </div>
+          </div>
+
+          <div class="disentangle-layout">
+            <figure class="reveal">
+              <img src="./assets/figures/disentanglement.png" alt="Disentanglement results under label noise">
+              <figcaption>
+                Relative disentanglement ratio under controlled label noise.
+                Values near zero indicate cleaner separation of epistemic and aleatoric uncertainty.
+              </figcaption>
+            </figure>
+            <div class="regime-contrast reveal">
+              <div>
+                <span>End-to-end Bayesian training</span>
+                <b>$|R_{\mathrm{rel}}| \ll 0.3$</b>
+                <p>Both metrics remain near-perfectly disentangled.</p>
+              </div>
+              <div>
+                <span>Frozen-backbone transfer learning</span>
+                <b>$0.74$ to $1.97$</b>
+                <p>Entanglement increases by over an order of magnitude.</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="band implications" id="implications">
+      <div class="inner narrow">
+        <p class="eyebrow">04 / What the paper changes</p>
+        <h2>The value of $\mathbf{C}(x)$ is not that it replaces MI as a scalar.</h2>
+        <p class="implication-lead">
+          It enables class-specific questions that scalar uncertainty cannot express:
+          which classes drive uncertainty, whether confusion crosses a safety boundary,
+          and where a distribution shift enters the label space.
+        </p>
+
+        <div class="takeaway-lines">
+          <div class="reveal"><span>Selective prediction</span><p>Target the uncertainty connected to the costly failure.</p></div>
+          <div class="reveal"><span>OoD diagnosis</span><p>Inspect whether shift is uniform or concentrated in particular classes.</p></div>
+          <div class="reveal"><span>Posterior scrutiny</span><p>Use $\rho_k$ and attribution behavior to examine the quality of uncertainty propagation.</p></div>
+        </div>
+
+        <blockquote>
+          Across all tasks, how uncertainty is propagated through the network matters as much as how it is measured.
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="band future">
+      <div class="inner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Limitations and next steps</p>
+            <h2>A diagnostic decomposition, with a clear frontier.</h2>
+          </div>
+          <p>
+            The paper is explicit about where the approximation loosens and what must be studied next.
+          </p>
+        </div>
+        <div class="future-grid">
+          <article class="reveal">
+            <h3>High skewness</h3>
+            <p>The additive approximation loosens for low-probability classes with high skewness. $\rho_k$ diagnoses this but does not correct it.</p>
+          </article>
+          <article class="reveal">
+            <h3>High-cardinality tasks</h3>
+            <p>The $1/\mu_k$ normalization introduces $O(K^2)$ aggregate scaling, motivating truncation or reweighting.</p>
+          </article>
+          <article class="reveal">
+            <h3>Broader posteriors</h3>
+            <p>Future evaluation should include Laplace approximations, SWAG, structured prediction, and low-rank ensembles.</p>
+          </article>
+          <article class="reveal">
+            <h3>Class-targeted decisions</h3>
+            <p>Per-class attribution can support active learning, structured deferral, and richer safety-aware uncertainty profiles.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band resources" id="resources">
+      <div class="inner">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Resources</p>
+            <h2>Paper materials</h2>
+          </div>
+          <p>Paper, poster, citation, implementation, and project links.</p>
+        </div>
+        <div class="resource-links">
+          <a href="https://openreview.net/forum?id=cxuWscJmAr" target="_blank" rel="noopener">
+            <strong>OpenReview</strong><span>Official UAI paper page</span>
+          </a>
+          <a href="https://arxiv.org/abs/2602.21160" target="_blank" rel="noopener">
+            <strong>arXiv</strong><span>Paper abstract and PDF</span>
+          </a>
+          <a href="./assets/docs/uai2026-poster.pdf" target="_blank" rel="noopener">
+            <strong>Poster PDF</strong><span>UAI 2026 conference poster</span>
+          </a>
+          <a href="https://github.com/arradiat/per-class-epistemic-uncertainty" target="_blank" rel="noopener">
+            <strong>Code</strong><span>Repository reserved for the official implementation</span>
+          </a>
+          <a href="https://arradiat.github.io/projects/per-class-epistemic/">
+            <strong>Project URL</strong><span>Permanent page for sharing and QR codes</span>
+          </a>
+          <a href="https://arradiat.github.io/">
+            <strong>Homepage</strong><span>Research and publications</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="citation" id="citation">
+      <div class="inner narrow">
+        <p class="eyebrow">Citation</p>
+        <pre><code id="bibtex">@inproceedings{
+Toure2026not,
+title={Not Just How Much, But Where: Decomposing Epistemic Uncertainty into Per-Class Contributions},
+author={Mame Diarra Toure, David A. Stephens},
+booktitle={Forty-Second Annual Conference on Uncertainty in Artificial Intelligence},
+year={2026},
+url={https://openreview.net/forum?id=cxuWscJmAr}
+}</code></pre>
+        <button id="copy-bibtex" type="button">Copy BibTeX</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>&copy; 2026 Mame Diarra Tour&eacute;</span>
+    <a href="#overview">Back to top</a>
+  </footer>
+
+  <script src="./script.js?v=2"></script>
+</body>
+</html>
