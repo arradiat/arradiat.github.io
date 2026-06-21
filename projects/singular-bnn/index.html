@@ -593,7 +593,7 @@
 </section>
 
   <!-- ════════════════════════════════════════════════
-       01 — WHAT THIS PAPER SHOWS  (unchanged)
+       01  WHAT THIS PAPER SHOWS  (unchanged)
   ═══════════════════════════════════════════════════ -->
   <section class="dark-section">
     <div class="section-header dark-header">
@@ -602,7 +602,7 @@
     </div>
     <div style="max-width:1200px; margin: 0 auto;">
       <p class="section-lead">
-        Low-rank variational BNNs do not merely save parameters —
+        Low-rank variational BNNs do not merely save parameters, 
         they change the geometry, covariance structure, and complexity of the posterior.
       </p>
 
@@ -634,7 +634,7 @@
       </div>
 
       <div class="core-thesis">
-        Core thesis: low-rank is not merely parameter economy — it changes posterior <em>support</em>,
+        Core thesis: low-rank is not just parameter economy, it also changes posterior <em>support</em>,
         <em>covariance</em>, and <em>capacity</em>.
       </div>
     </div>
@@ -752,7 +752,7 @@
           Although the factors themselves can be mean-field,
           the induced posterior over $W$ becomes highly structured,
           introducing correlations through shared latent factors.
-          Optimized via the reparameterization trick (Bayes by Backprop) with Adam —
+          Optimized via the reparameterization trick with Adam 
           implemented as drop-in Keras layer replacements for dense layers, LSTM gates,
           and Transformer projections.
         </p>
@@ -806,7 +806,7 @@
       <!-- Key insight callout -->
       <div class="interp-box" style="margin-top:1.25rem;">
         <strong>Key insight:</strong> Because $q(A,B) = q_A(A)\,q_B(B)$ factorizes, the KL term splits
-        into two <em>independent</em> pieces — one over $A$, one over $B$ — enabling efficient parallel
+        into two <em>independent</em> pieces: one over $A$, one over $B$ enabling efficient parallel
         computation. All three terms in the ELBO are estimated via Monte Carlo: sample
         $\varepsilon_A, \varepsilon_B \sim \mathcal{N}(0,I)$, form
         $A = \mu_A + \sigma_A \circ \varepsilon_A$ and $B = \mu_B + \sigma_B \circ \varepsilon_B$,
@@ -852,7 +852,7 @@
         <h4>Per-layer factorization</h4>
         <p>Each dense layer $W_\ell \in \mathbb{R}^{d_\ell \times d_{\ell+1}}$ uses
         $W_\ell = A_\ell B_\ell^\top$ with its own rank $r_\ell$, tunable independently.
-        No architecture-specific modifications needed — identical variational layers.</p>
+        No architecture-specific modifications needed, identical variational layers.</p>
         <div class="arch-detail">W_ℓ = A_ℓ Bℓᵀ · each layer has own rℓ</div>
       </div>
       <div class="arch-card reveal-card">
@@ -907,7 +907,7 @@
   <section class="efficiency-callout">
     <div class="eff-inner">
       <p class="eff-eyebrow">GPU Profiling · SST-2 · Controlled single-device benchmark</p>
-      <h3>Orders of magnitude more efficient — without sacrificing uncertainty quality.</h3>
+      <h3>Orders of magnitude more efficient without sacrificing uncertainty quality.</h3>
       <p class="eff-sub">All models trained for the same number of steps on the same GPU.</p>
 
       <div class="eff-grid">
@@ -970,7 +970,7 @@
       Throughout, $W^\star \in \mathbb{R}^{m \times n}$ denotes the optimal
       full-rank weight matrix (i.e. the population-risk minimiser), with singular values
       $\sigma_1(W^\star) \ge \sigma_2(W^\star) \ge \cdots$.
-      Its best rank-$r$ approximation — given by the truncated SVD — is
+      Its best rank-$r$ approximation, given by the truncated SVD, is
       $W_r^\star = \sum_{i=1}^{r} \sigma_i(W^\star)\, u_i v_i^\top$.
     </div>
 
@@ -1065,14 +1065,14 @@
             <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#1d4ed8; margin-bottom:5px;">Learning error  ‖W − W_r*‖_F</div>
             <p style="margin:0; font-size:13px; color:#5f5164; line-height:1.5;">
               How far the trained factorization is from the <em>optimal</em> rank-$r$ solution.
-              Reducible with better optimization — not a fundamental limitation.
+              Reducible with better optimization, not a fundamental limitation.
             </p>
           </div>
           <div style="background:rgba(245,158,11,0.07); border:1px solid rgba(245,158,11,0.2); border-radius:12px; padding:1rem 1.1rem;">
             <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color:#b45309; margin-bottom:5px;">Rank bias  √(Σ σᵢ²(W*))</div>
             <p style="margin:0; font-size:13px; color:#5f5164; line-height:1.5;">
               The unavoidable error from restricting to rank $r$.
-              Small when layer spectra decay quickly — which modern networks exhibit.
+              Small when layer spectra decay quickly which modern networks exhibit.
             </p>
           </div>
         </div>
@@ -1102,18 +1102,18 @@
         <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; margin-top:1rem;">
           <div style="background:rgba(122,30,58,0.06); border:1px solid rgba(122,30,58,0.15); border-radius:10px; padding:0.9rem 1rem; font-size:13px; color:#5f5164;">
             <div style="font-size:11px; font-weight:800; color:#7a1e3a; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:5px;">Row correlation</div>
-            When $i = i'$ (same row), weights are correlated through the shared $A$ factor rows —
+            When $i = i'$ (same row), weights are correlated through the shared $A$ factor rows thus
             updating one connection perturbs the whole row.
           </div>
           <div style="background:rgba(122,30,58,0.06); border:1px solid rgba(122,30,58,0.15); border-radius:10px; padding:0.9rem 1rem; font-size:13px; color:#5f5164;">
             <div style="font-size:11px; font-weight:800; color:#7a1e3a; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:5px;">Column correlation</div>
-            When $j = j'$ (same column), weights are correlated through the shared $B$ factor rows —
+            When $j = j'$ (same column), weights are correlated through the shared $B$ factor rows, 
             propagating uncertainty column-wise.
           </div>
           <div style="background:rgba(122,30,58,0.06); border:1px solid rgba(122,30,58,0.15); border-radius:10px; padding:0.9rem 1rem; font-size:13px; color:#5f5164;">
             <div style="font-size:11px; font-weight:800; color:#7a1e3a; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:5px;">Rank-modulated coupling</div>
-            All $r$ latent dimensions contribute to correlation strength —
-            higher rank allows richer correlation patterns.
+            All $r$ latent dimensions contribute to correlation strength. 
+            Higher rank allows richer correlation patterns.
           </div>
         </div>
       </article>
@@ -1225,7 +1225,7 @@
             Since Gaussian complexity is invariant under convex hull and closure,
             the deterministic low-rank complexity bound
             $\mathcal{G}(F^{\mathrm{Pinto}(C,r)})$ transfers directly to
-            the Bayesian predictive mean — linking frequentist generalization theory
+            the Bayesian predictive mean, linking frequentist generalization theory
             to the Bayesian low-rank posterior.
           </p>
         </div>
@@ -1233,17 +1233,17 @@
       </div>
 
       <!-- Singularity: what it actually means -->
-      <h3 style="margin-top:2.5rem; margin-bottom:0.5rem; color:#fff;">What singularity means — and why it matters</h3>
+      <h3 style="margin-top:2.5rem; margin-bottom:0.5rem; color:#fff;">What singularity means and why it matters</h3>
       <div class="dark-interp-box" style="margin-top:0;">
         Standard mean-field posteriors $q(W)=\prod_{ij}\mathcal{N}(w_{ij}|\mu_{ij},\sigma_{ij}^2)$
         are <em>absolutely continuous</em> with respect to Lebesgue measure: they have positive density
         everywhere in $\mathbb{R}^{m\times n}$.
-        Our induced $q_W$ is <strong>singular continuous</strong> — it has no point masses,
+        Our induced $q_W$ is <strong>singular continuous</strong>. It has no point masses,
         yet it cannot be represented by any density function.
         <br><br>
         <em>Proof intuition:</em> suppose $q_W$ had a density $f$ w.r.t. Lebesgue measure $\lambda$.
         Then $q_W(\mathcal{R}_r) = \int_{\mathcal{R}_r} f\,d\lambda = 0$
-        (since $\lambda(\mathcal{R}_r)=0$) — contradicting $q_W(\mathcal{R}_r)=1$.
+        (since $\lambda(\mathcal{R}_r)=0$) contradicting $q_W(\mathcal{R}_r)=1$.
         Therefore no such density exists.
         The posterior concentrates its entire mass on a set of <em>zero volume</em>.
       </div>
@@ -1258,7 +1258,7 @@
         <div class="bias-card independence">
           <h5>Mean-field: bias of independence</h5>
           <p style="color:#e8ddf0;">Treats each weight as a freely adjustable parameter.
-          Updating $w_{ij}$ only touches that entry — local memorization is possible.
+          Updating $w_{ij}$ only touches that entry: local memorization is possible.
           The posterior has positive density everywhere in $\mathbb{R}^{m\times n}$,
           imposing no structural constraint on which weight configurations are reached.</p>
         </div>
@@ -1278,12 +1278,11 @@
         Although Gaussian complexity is not the canonical Bayesian tool (PAC-Bayes is), it offers a complementary perspective:
         low-rank layers impose geometric constraints that reduce complexity <em>beyond</em> what parameter-count arguments capture.
         <br><br>
-        <strong>Honest caveat:</strong> empirically, the Gaussian complexity bounds are vacuous for both full-rank and low-rank models
-        — they exceed 1 and do not provide practical generalization certificates.
+        <strong>Honest caveat:</strong> empirically, the Gaussian complexity bounds are vacuous for both full-rank and low-rank models, they exceed 1 and do not provide practical generalization certificates.
         What they <em>do</em> formalize is how rank constraints and spectral norms <em>jointly</em> control model capacity,
         suggesting rank-induced restrictions contribute to the good generalization often observed in practice.
         The proof is also architecturally transparent: the BNN predictive mean belongs to the closed convex hull of the
-        support class, and Gaussian complexity is invariant under convex hull and closure —
+        support class, and Gaussian complexity is invariant under convex hull and closure
         so deterministic rank-sensitive bounds transfer to Bayesian predictive means without degradation.
       </div>
 
@@ -1352,7 +1351,7 @@
     </div>
 
     <p class="section-lead">
-      The rank-$r$ manifold is not an arbitrary bottleneck — it is a
+      The rank-$r$ manifold is not an arbitrary bottleneck, it is a
       structured approximation class supported by the empirical spectral
       structure of learned neural network weights.
     </p>
@@ -1662,7 +1661,7 @@
         </div>
         <p class="exp-table-note">
           Best coverage (PICP) among Bayesian methods. At 80% retention, Low-Rank BBB
-          achieves MAE 8.71 vs 9.21 for Deep Ensemble — structured correlations improve
+          achieves MAE 8.71 vs 9.21 for Deep Ensemble. Structured correlations improve
           selective prediction quality.
         </p>
         <div class="exp-chips">
@@ -1830,11 +1829,13 @@
 
       <!-- Calibration–OOD tradeoff -->
       <h3 style="color:#fff; margin-bottom:0.5rem;">Calibration — OOD detection tradeoff</h3>
-      <p style="opacity:0.6; font-size:0.9rem; max-width:720px; margin-bottom:1.5rem;">
-        A consistent pattern across all three tasks: the rank constraint trades predictive
-        sharpness (NLL) for broader epistemic uncertainty, benefiting OOD detection,
-        abstention, and coverage.
-      </p>
+
+  <p style="opacity:0.6; font-size:0.9rem; max-width:760px; margin-bottom:1.5rem;">
+    The three benchmarks do not exhibit a single calibration–OOD pattern.
+    Low-rank's advantages appear on different reliability metrics depending on
+    the task, architecture, distribution shift, and evaluation criterion.
+    What remains consistent is the substantial parameter-efficiency advantage.
+  </p>
 
       <div class="tradeoff-grid">
         <div class="tradeoff-card reveal-card">
@@ -1845,7 +1846,7 @@
         <div class="tradeoff-card reveal-card">
           <h4>SST-2</h4>
           <p>Deep Ensemble is stronger on NLL and OOD. Low-rank remains competitive
-          at 33× fewer parameters — an entirely different efficiency regime.</p>
+          at 33× fewer parameters, an entirely different efficiency regime.</p>
         </div>
         <div class="tradeoff-card reveal-card">
           <h4>Beijing PM₂.₅</h4>
@@ -1866,7 +1867,7 @@
       <!-- ── Ensembling — prominently highlighted ── -->
       <div class="ensemble-highlight">
         <p class="ens-eyebrow">Result · Low-Rank Ensembling</p>
-        <h3>Ensembling and low-rank are complementary — not competing.</h3>
+        <h3>Ensembling and low-rank are complementary not competing.</h3>
         <p>
           Ensembling five low-rank members further improves every uncertainty metric,
           demonstrating that the two techniques stack. This opens a practical design
@@ -1939,7 +1940,7 @@
       <div class="practical-card reveal-card">
         <div class="pc-num">1</div>
         <h4>Rank selection</h4>
-        <p>Run ablation studies with reduced budget first — fewer epochs and fewer MC samples during validation. This is the primary method; no pretrained weights needed.</p>
+        <p>Run ablation studies with reduced budget first with fewer epochs and fewer MC samples during validation. This is the primary method; no pretrained weights needed.</p>
         <p>When a deterministic baseline already exists, use its singular value decay (SVD of trained weight matrices) as optional validation: rapid decay justifies the chosen rank. For SST-2, the embedding layer (70% of parameters) shows particularly fast decay.</p>
         <p>Selected ranks in the paper: <code>r=15</code> for MIMIC-III MLP, <code>r=14/20</code> for Beijing LSTM, <code>r=16</code> for SST-2 Transformer.</p>
       </div>
@@ -1947,7 +1948,7 @@
         <div class="pc-num">2</div>
         <h4>KL weight β and annealing</h4>
         <p>Start with <code>β = 1/N_batches</code> or <code>β = 1/N_train</code>. Higher β pushes the posterior toward the prior, improving OOD detection but degrading in-distribution NLL — tune based on which matters more for your task.</p>
-        <p>Always use KL annealing: ramp β from 0 to full over the first ~20 epochs. This lets the model find a good likelihood basin before the regularization penalty engages — especially important for LSTMs and Transformers where early KL dominance prevents learning entirely.</p>
+        <p>Always use KL annealing: ramp β from 0 to full over the first ~20 epochs. This lets the model find a good likelihood basin before the regularization penalty engages which is especially important for LSTMs and Transformers where early KL dominance prevents learning entirely.</p>
       </div>
       <div class="practical-card reveal-card">
         <div class="pc-num">3</div>
@@ -1958,8 +1959,8 @@
       <div class="practical-card reveal-card">
         <div class="pc-num">4</div>
         <h4>Architecture notes</h4>
-        <p>All layers are drop-in Keras replacements — no other code changes needed. For LSTMs: forget gate bias = 1.0 and use weight caching (sample once per batch, reuse across time steps). For Transformers: the embedding layer alone is 70% of parameters; factorizing it with the sparsity trick gives the largest single efficiency gain.</p>
-        <p>At small scales (MLP, small LSTM), parameter reduction translates to memory savings, not wall-clock speedup — two matrix multiplications vs one. Efficiency gains emerge at transformer scale.</p>
+        <p>All layers are drop-in Keras replacements no other code changes needed. For LSTMs: forget gate bias = 1.0 and use weight caching (sample once per batch, reuse across time steps). For Transformers: the embedding layer alone is 70% of parameters; factorizing it with the sparsity trick gives the largest single efficiency gain.</p>
+        <p>At small scales (MLP, small LSTM), parameter reduction translates to memory savings, not wall-clock speedup: two matrix multiplications vs one. Efficiency gains emerge at transformer scale.</p>
       </div>
     </div>
   </section>
@@ -1999,7 +2000,7 @@
           </div>
         </div>
         <p style="margin-top:12px; font-size:13px; color:#5f5164;">
-          Calibration gap is only 0.002–0.0035 ECE in absolute terms across binning schemes —
+          Calibration gap is only 0.002–0.0035 ECE in absolute terms across binning schemes
           practically negligible for a 19.5× parameter reduction.
           Low-Rank Laplace achieves <strong>NLL 0.0607 vs 0.0795 for Full-Rank</strong>,
           suggesting heavier-tailed factor posteriors improve likelihood estimation.
@@ -2009,7 +2010,7 @@
       <div class="evidence-card reveal-card">
         <h3>Toy regression: conservative OOD uncertainty</h3>
         <p>MLP $1\to100\to100\to1$ (tanh). Train on $x\sim\text{Unif}[-0.1,\,0.6]$, evaluate on
-        $x\in[-0.5,\,1.5]$. Low-Rank uses $r=16$ for the hidden layer — 65% fewer parameters.</p>
+        $x\in[-0.5,\,1.5]$. Low-Rank uses $r=16$ for the hidden layer that is 65% fewer parameters.</p>
         <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
           <div style="text-align:center; padding:10px 14px; background:#fbeaf0; border-radius:12px; border:1px solid #e6ccd7; flex:1; min-width:80px;">
             <span style="display:block; font-size:1.3rem; font-weight:900; color:#7a1e3a; letter-spacing:-0.03em;">2.01×</span>
@@ -2028,7 +2029,7 @@
           Low-Rank maintains a <strong>wider absolute OOD uncertainty band</strong> (IQR 0.094 vs 0.048),
           providing more conservative credible intervals outside training support.
           The OOD/in-domain expansion ratio (2.01× vs 1.90×) confirms qualitative epistemic
-          sensitivity is preserved — uncertainty grows when leaving the training domain,
+          sensitivity is preserved. Uncertainty grows when leaving the training domain,
           even in-domain uncertainty is higher, reflecting the rank constraint's regularizing effect.
         </p>
       </div>
