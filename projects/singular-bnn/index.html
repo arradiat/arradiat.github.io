@@ -400,15 +400,14 @@
       .ens-bar { grid-template-columns: 1fr; }
     }
   </style>
-
   <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$']],
-        displayMath: [['$$', '$$']]
-      }
-    };
-  </script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']]
+    }
+  };
+</script>
 
   <script
     defer
