@@ -26,16 +26,128 @@
   <!-- ── Supplementary styles for new/changed elements only ──────────── -->
   <style>
 
-    /* ── Gradient bridges: smooth dark ↔ light transitions ──────────── */
+    /* ── Gradient bridges: vivid animated dark ↔ light transitions ──── */
     .bridge-dark-light {
-      height: 90px;
-      background: linear-gradient(to bottom, var(--bg-dark), var(--paper-bg));
+      position: relative;
+      height: 130px;
+      overflow: hidden;
       pointer-events: none;
+      background: linear-gradient(to bottom,
+        #100719 0%, #2a1330 30%, #8a5168 62%, var(--paper-bg) 100%);
+    }
+    .bridge-dark-light::before {
+      content: '';
+      position: absolute; left: 50%; top: -10%;
+      transform: translateX(-50%);
+      width: 80%; height: 120%;
+      background: radial-gradient(ellipse at center, rgba(96,230,242,0.28), transparent 60%);
+      filter: blur(14px);
+      animation: bridge-bloom 6s ease-in-out infinite;
+    }
+    .bridge-dark-light::after {
+      content: '';
+      position: absolute; left: 0; right: 0; top: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(96,230,242,0.8), rgba(233,185,107,0.6), transparent);
+      animation: bridge-sweep 7s linear infinite;
     }
     .bridge-light-dark {
-      height: 90px;
-      background: linear-gradient(to bottom, var(--paper-bg), var(--bg-dark));
+      position: relative;
+      height: 130px;
+      overflow: hidden;
       pointer-events: none;
+      background: linear-gradient(to bottom,
+        var(--paper-bg) 0%, #e9b9c8 36%, #7a3a52 68%, #160b22 100%);
+    }
+    .bridge-light-dark::before {
+      content: '';
+      position: absolute; left: 50%; bottom: -10%;
+      transform: translateX(-50%);
+      width: 80%; height: 120%;
+      background: radial-gradient(ellipse at center, rgba(185,58,91,0.32), transparent 60%);
+      filter: blur(14px);
+      animation: bridge-bloom 6s ease-in-out infinite;
+    }
+    .bridge-light-dark::after {
+      content: '';
+      position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+      background: linear-gradient(90deg, transparent, rgba(185,58,91,0.7), rgba(96,230,242,0.6), transparent);
+      animation: bridge-sweep 7s linear infinite;
+    }
+    @keyframes bridge-bloom {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(0.9); }
+      50%      { opacity: 1;   transform: translateX(-50%) scale(1.08); }
+    }
+    @keyframes bridge-sweep {
+      0%   { transform: translateX(-60%); }
+      100% { transform: translateX(60%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .bridge-dark-light::before, .bridge-dark-light::after,
+      .bridge-light-dark::before, .bridge-light-dark::after { animation: none; }
+    }
+
+    /* ── §06 Certifying the deterministic center ───────────────────── */
+    .center-objects {
+      max-width: 1200px; margin: 1.75rem auto 0;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+    }
+    .cobj-card {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px; padding: 24px 22px 22px; position: relative;
+    }
+    .cobj-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 3px; border-radius: 18px 18px 0 0;
+    }
+    .cobj-card:nth-child(1)::before { background: var(--accent, #60e6f2); }
+    .cobj-card:nth-child(2)::before { background: var(--gold, #e9b96b); }
+    .cobj-card:nth-child(3)::before { background: var(--accent-2, #b93a5b); }
+    .cobj-tag { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 800; margin-bottom: 8px; display: block; }
+    .cobj-card:nth-child(1) .cobj-tag { color: var(--accent, #60e6f2); }
+    .cobj-card:nth-child(2) .cobj-tag { color: var(--gold, #e9b96b); }
+    .cobj-card:nth-child(3) .cobj-tag { color: #f06e8a; }
+    .cobj-card h4 { margin: 0 0 8px; font-size: 1rem; color: #fff8ef; }
+    .cobj-card p { margin: 0; font-size: 13px; color: #cabbd6; line-height: 1.55; }
+    .cobj-card.certified { background: rgba(185,58,91,0.1); border-color: rgba(185,58,91,0.34); }
+    .cobj-badge {
+      display: inline-block; margin-top: 10px; font-size: 10px; font-weight: 800;
+      letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+      background: rgba(185,58,91,0.18); color: #f4a6b8; border: 1px solid rgba(185,58,91,0.4);
+    }
+    .gauge-flow {
+      max-width: 1200px; margin: 2.5rem auto 0;
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.1rem; align-items: stretch;
+    }
+    .gauge-step { border-radius: 16px; padding: 1.25rem 1.4rem; }
+    .gauge-step.problem { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.24); }
+    .gauge-step.repair  { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.24); }
+    .gauge-step h4 { margin: 0 0 0.5rem; font-size: 0.95rem; }
+    .gauge-step.problem h4 { color: #fca5a5; }
+    .gauge-step.repair  h4 { color: #6ee7b7; }
+    .gauge-step p { margin: 0; font-size: 13px; color: #e8ddf0; line-height: 1.6; }
+    .gauge-eq {
+      margin-top: 0.75rem; padding: 0.6rem 0.8rem; border-radius: 10px;
+      background: rgba(22,11,34,0.6); border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.85rem; text-align: center; color: #fff8ef; overflow-x: auto;
+    }
+    .gauge-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--accent, #60e6f2); font-weight: 800; }
+    .result-banner {
+      max-width: 1200px; margin: 2.5rem auto 0; padding: 1.6rem 2rem; border-radius: 20px;
+      background: linear-gradient(135deg, rgba(96,230,242,0.08), rgba(185,58,91,0.05));
+      border: 1px solid rgba(96,230,242,0.25); border-left: 4px solid var(--accent, #60e6f2);
+    }
+    .result-banner .rb-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, #60e6f2); font-weight: 800; margin-bottom: 0.4rem; }
+    .result-banner h3 { margin: 0 0 0.6rem; font-size: 1.25rem; letter-spacing: -0.02em; color: #fff8ef; }
+    .result-banner p { margin: 0; font-size: 0.9rem; color: #cabbd6; line-height: 1.6; max-width: 760px; }
+    .rb-props { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.1rem; }
+    .rb-prop {
+      font-size: 12px; font-weight: 700; padding: 6px 13px; border-radius: 999px;
+      background: rgba(96,230,242,0.1); color: #9cebf3; border: 1px solid rgba(96,230,242,0.28);
+    }
+    @media (max-width: 900px) {
+      .center-objects { grid-template-columns: 1fr; }
+      .gauge-flow { grid-template-columns: 1fr; }
+      .gauge-arrow { transform: rotate(90deg); }
     }
 
     /* ── Notation / definition callout ──────────────────────────────── */
@@ -418,7 +530,7 @@
 <body>
 
   <!-- ════════════════════════════════════════════════
-       NAV  (unchanged)
+       NAV
   ═══════════════════════════════════════════════════ -->
   <header class="navbar">
     <div class="nav-left">
@@ -428,6 +540,7 @@
       <a href="#lay-summary">Lay Summary</a>
       <a href="#overview">Overview</a>
       <a href="#theory">Theory</a>
+      <a href="#center-certificate">Certify</a>
       <a href="#experiments">Experiments</a>
       <a href="#results">Results</a>
       <a href="#insights">Insights</a>
@@ -437,12 +550,12 @@
 
 
   <!-- ════════════════════════════════════════════════
-       HERO  (unchanged)
+       HERO
   ═══════════════════════════════════════════════════ -->
   <section class="hero">
     <div class="hero-content">
       <div class="conference-badge">ICML 2026</div>
-      <h1>Singular Bayesian<br />Neural Networks</h1>
+     <h1>Singular <em>Bayesian</em><br />Neural Networks</h1>
       <p class="subtitle">
         Low-rank Bayesian neural networks with singular posterior geometry,
         reduced complexity scaling, and scalable uncertainty quantification.
@@ -452,27 +565,32 @@
         McGill University
       </div>
       <div class="hero-buttons">
-        <a class="primary-btn"   href="https://arxiv.org/abs/2602.00387"   target="_blank">arXiv</a>
-        <a class="secondary-btn" href="https://icml.cc/virtual/2026/poster/61323"   target="_blank">ICML</a>
-        <a class="secondary-btn" href="https://github.com/arradiat/SBNN"   target="_blank">GitHub</a>
-        <a class="secondary-btn" href="https://arradiat.github.io/projects/singular-bnn/slides/" target="_blank">Slides</a>
-      </div>
+  <a class="primary-btn"   href="https://arxiv.org/abs/2602.00387"   target="_blank">arXiv</a>
+  <a class="secondary-btn" href="https://icml.cc/virtual/2026/poster/61323"   target="_blank">ICML</a>
+  <a class="secondary-btn" href="https://github.com/arradiat/SingularBayesianNeuralNeworks-ICML2026"   target="_blank">GitHub</a>
+  <a class="secondary-btn" href="https://arradiat.github.io/projects/singular-bnn/slides/" target="_blank">Slides</a>
+  <a class="secondary-btn" href="ICML_2026_SBNN_poster_main_conference.pdf" target="_blank">ICML Poster</a>
+  <a class="secondary-btn" href="wiml_poster_official.pdf" target="_blank">WiML Poster</a>
+  <a class="secondary-btn" href="https://arradiat.github.io/" target="_blank">Homepage</a>
+
+</div>
     </div>
-    <div class="hero-visual">
-      <div class="orbital-container">
-        <div class="volume-cloud"></div>
-        <div class="manifold-surface"></div>
-      </div>
-      <div class="hero-formula">$W = AB^\top$</div>
-      <div class="hero-caption">
-        Low-rank Bayesian posteriors concentrate on rank-constrained manifolds.
-      </div>
-    </div>
+<div class="hero-visual">
+  <div class="fact-stage">
+    <div class="mtx"><div class="mtx-grid" id="mW" style="grid-template-columns:repeat(6,1fr);"></div><div class="mtx-label" style="color:#7a1e3a;">W</div><div class="mtx-dim">m &times; n</div></div>
+    <div class="fact-op">=</div>
+    <div class="mtx"><div class="mtx-grid" id="mA" style="grid-template-columns:repeat(2,1fr);"></div><div class="mtx-label" style="color:#1d9aa6;">A</div><div class="mtx-dim">m &times; r</div></div>
+    <div class="fact-op small">&times;</div>
+    <div class="mtx"><div class="mtx-grid" id="mB" style="grid-template-columns:repeat(7,1fr);"></div><div class="mtx-label" style="color:#c08a2a;">B<span class="sup">&#8868;</span></div><div class="mtx-dim">r &times; n</div></div>
+  </div>
+  <div class="hero-formula"><span class="w">W</span> = <span class="a">A</span><span class="b">B</span><span class="sup b">&#8868;</span></div>
+  <div class="hero-caption">Low-rank factorization concentrates the posterior on a rank-<em>r</em> manifold.</div>
+</div>
   </section>
 
 
   <!-- ════════════════════════════════════════════════
-       TL;DR  (unchanged)
+       TL;DR
   ═══════════════════════════════════════════════════ -->
   <section class="tldr-section">
     <div class="section-tag">TL;DR</div>
@@ -592,7 +710,7 @@
 </section>
 
   <!-- ════════════════════════════════════════════════
-       01  WHAT THIS PAPER SHOWS  (unchanged)
+       01  WHAT THIS PAPER SHOWS
   ═══════════════════════════════════════════════════ -->
   <section class="dark-section">
     <div class="section-header dark-header">
@@ -645,7 +763,7 @@
 
 
   <!-- ════════════════════════════════════════════════
-       02 — MOTIVATION  (unchanged)
+       02 — MOTIVATION
   ═══════════════════════════════════════════════════ -->
   <section id="overview" class="content-section">
     <div class="section-header">
@@ -726,7 +844,7 @@
 
 
   <!-- ════════════════════════════════════════════════
-       03 — CORE IDEA  (unchanged)
+       03 — CORE IDEA
   ═══════════════════════════════════════════════════ -->
   <section class="content-section">
     <div class="section-header">
@@ -877,7 +995,7 @@
 
 
   <!-- ════════════════════════════════════════════════
-       FIGURE — geometric distinction  (unchanged)
+       FIGURE — geometric distinction
   ═══════════════════════════════════════════════════ -->
   <section class="figure-section">
     <figure>
@@ -899,9 +1017,7 @@
 
 
   <!-- ════════════════════════════════════════════════
-       GPU EFFICIENCY CALLOUT  ← NEW, moved here
-       Practitioners care about this most; show it
-       right after the model is described.
+       GPU EFFICIENCY CALLOUT
   ═══════════════════════════════════════════════════ -->
   <section class="efficiency-callout">
     <div class="eff-inner">
@@ -949,8 +1065,6 @@
 
   <!-- ════════════════════════════════════════════════
        04 — MATHEMATICAL MECHANISM
-       FIX: added notation box; removed duplicate
-       PAC-Bayes scaling card (lives in §05 once)
   ═══════════════════════════════════════════════════ -->
   <section class="content-section formula-section">
     <div class="section-header">
@@ -963,7 +1077,7 @@
       then study the induced posterior measure over the full weight matrix.
     </p>
 
-    <!-- Notation definition — new -->
+    <!-- Notation definition -->
     <div class="def-box">
       <strong>Notation.</strong>
       Throughout, $W^\star \in \mathbb{R}^{m \times n}$ denotes the optimal
@@ -1022,10 +1136,6 @@
           set $\mathcal{R}_r$, which has Lebesgue measure zero in the ambient matrix space.
         </p>
       </article>
-
-      <!-- NOTE: PAC-Bayes scaling card removed here — it now appears
-           once and in full in §05 Theory, together with the
-           Gaussian Complexity Transfer guarantee. -->
 
       <article class="formula-card wide reveal-card">
         <h3>Rank-induced approximation bias (Eckart–Young–Mirsky)</h3>
@@ -1123,9 +1233,6 @@
 
   <!-- ════════════════════════════════════════════════
        05 — THEORY
-       FIX: PAC-Bayes appears once (full form).
-            Gaussian complexity now present with formula.
-            W* and W_r* already defined above in §04.
   ═══════════════════════════════════════════════════ -->
   <section id="theory" class="dark-section">
     <div class="section-header dark-header">
@@ -1285,7 +1392,7 @@
         so deterministic rank-sensitive bounds transfer to Bayesian predictive means without degradation.
       </div>
 
-      <!-- PAC-Bayes practical numbers — appears once, here -->
+      <!-- PAC-Bayes practical numbers -->
       <h3 style="margin-top:2.5rem; margin-bottom:0.5rem; color:#fff;">
         Complexity reduction in practice
       </h3>
@@ -1340,12 +1447,119 @@
   </div>
 
 
+  <!-- bridge: light → dark -->
+  <div class="bridge-light-dark"></div>
+
+
   <!-- ════════════════════════════════════════════════
-       06 — WHY RANK IS PLAUSIBLE  (unchanged)
+       06 — CERTIFYING THE DETERMINISTIC CENTER
+       Companion result (SPIGM @ ICML 2026), adjacent to
+       the main SBNN paper.
+  ═══════════════════════════════════════════════════ -->
+  <section id="center-certificate" class="dark-section">
+    <div class="section-header dark-header">
+      <span class="section-number">06</span>
+      <h2>Certifying the deterministic center</h2>
+    </div>
+
+    <div style="max-width:1200px; margin:0 auto;">
+      <p class="section-lead" style="color:inherit; opacity:0.82;">
+        A companion result (Touré &amp; Stephens, SPIGM @ ICML 2026) asks a sharper question
+        of the same low-rank model: not how the posterior generalizes, but whether it can
+        hand back a <em>single deterministic network</em> that carries its own guarantee.
+      </p>
+
+      <h3 style="margin-top:2rem; margin-bottom:0.5rem; color:#fff;">One model, three certifiable objects</h3>
+      <p style="opacity:0.6; font-size:0.9rem; max-width:780px; margin:0 0 0.25rem;">
+        A low-rank Bayesian network with layers $W_i = A_i B_i^\top$ induces three predictors,
+        each needing a different theorem. This result isolates the third.
+      </p>
+      <div class="center-objects">
+        <div class="cobj-card reveal-card">
+          <span class="cobj-tag">Object 1</span>
+          <h4>Gibbs posterior</h4>
+          <p>Sample factors $(A,B)\sim Q$ and evaluate. Certified by classical posterior PAC-Bayes.</p>
+        </div>
+        <div class="cobj-card reveal-card">
+          <span class="cobj-tag">Object 2</span>
+          <h4>Predictive mean</h4>
+          <p>Average predictions over the posterior. Controlled via deterministic low-rank complexity envelopes.</p>
+        </div>
+        <div class="cobj-card certified reveal-card">
+          <span class="cobj-tag">Object 3</span>
+          <h4>Deterministic center</h4>
+          <p>A single network read off the posterior means. This is the object certified here.</p>
+          <span class="cobj-badge">★ certified in this work</span>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2.5rem; margin-bottom:0.5rem; color:#fff;">The obstruction, and the repair</h3>
+      <div class="gauge-flow">
+        <div class="gauge-step problem">
+          <h4>Factor gauge ambiguity</h4>
+          <p>For any $c>0$, the factors $(A_i,B_i)$ and $(cA_i,\,c^{-1}B_i)$ build the
+          <em>same</em> weight matrix but carry different norms. A naive certificate written in
+          factor coordinates is representation-dependent — the same center can be assigned
+          very different complexities.</p>
+          <div class="gauge-eq">$A_iB_i^\top = (cA_i)(c^{-1}B_i)^\top$</div>
+        </div>
+        <div class="gauge-arrow">&rarr;</div>
+        <div class="gauge-step repair">
+          <h4>Balanced SVD factors</h4>
+          <p>Pass to balanced factors from the SVD of the center weights, fixing
+          $\|\bar A_i\|_2=\|\bar B_i\|_2=\|\bar W_i\|_2^{1/2}$. The certificate now depends
+          only on intrinsic quantities of the realized weights — the gauge freedom is removed.</p>
+          <div class="gauge-eq">$\bar W_i = U_i\Sigma_i V_i^\top,\quad \bar A_i=U_i\Sigma_i^{1/2}$</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2.5rem; margin-bottom:0.5rem; color:#fff;">The certificate</h3>
+      <p style="opacity:0.6; font-size:0.9rem; max-width:780px; margin:0 0 1rem;">
+        On balanced factors, Gaussian posterior noise becomes an admissible perturbation
+        (Neyshabur's margin framework with rectangular Gaussian operator-norm control). The
+        learned posterior scales $\sigma_{A_i},\sigma_{B_i}$ supply explicit per-layer budgets.
+      </p>
+      <div class="equation-box dark-eq">
+        $$L_0(f_{\bar w}) \;\le\; \hat L_{\gamma,S}(f_{\bar w}) \;+\; 4\sqrt{\frac{\mathrm{KL}(Q\|P)+\log(6m/\delta)}{m-1}}$$
+      </div>
+
+      <div class="result-banner">
+        <div class="rb-eyebrow">Result</div>
+        <h3>The posterior certifies its own center.</h3>
+        <p>Under explicit conditions on the learned scales $\sigma_{A_i},\sigma_{B_i}$, the
+        variational posterior <em>itself</em> is the certifying perturbation law — no auxiliary
+        perturbation introduced for the analysis. The bound is a margin certificate for the
+        deterministic center network, read directly off the learned geometry.</p>
+        <div class="rb-props">
+          <span class="rb-prop">Representation-invariant</span>
+          <span class="rb-prop">Rank-aware via balanced geometry</span>
+          <span class="rb-prop">Post-hoc checkable after training</span>
+        </div>
+      </div>
+
+      <div class="dark-interp-box">
+        <strong>Honest caveat.</strong> The sufficient conditions can be stringent: control
+        scales with the product of layer spectral norms, so for deep or poorly-conditioned
+        networks the certificate can become vacuous. The contribution is a rigorous,
+        gauge-free <em>route</em> to certifying the center — not a claim that the bound is
+        tight at modern scale. A theorem-aligned synthetic study confirms the layerwise
+        condition holds at the learned posterior, with the global summed-margin term as the
+        remaining bottleneck.
+      </div>
+    </div>
+  </section>
+
+
+  <!-- bridge: dark → light -->
+  <div class="bridge-dark-light"></div>
+
+
+  <!-- ════════════════════════════════════════════════
+       07 — WHY RANK IS PLAUSIBLE
   ═══════════════════════════════════════════════════ -->
   <section class="content-section">
     <div class="section-header">
-      <span class="section-number">06</span>
+      <span class="section-number">07</span>
       <h2>Why rank is plausible</h2>
     </div>
 
@@ -1395,7 +1609,7 @@
 
 
   <!-- ════════════════════════════════════════════════
-       INTERACTIVE SLIDER  (unchanged — JS in script.js)
+       INTERACTIVE SLIDER
   ═══════════════════════════════════════════════════ -->
   <section class="interactive-section">
     <div>
@@ -1438,11 +1652,11 @@
 
 
   <!-- ════════════════════════════════════════════════
-       07 — EXPERIMENTAL DESIGN  (unchanged)
+       08 — EXPERIMENTAL DESIGN
   ═══════════════════════════════════════════════════ -->
   <section id="experiments" class="dark-section">
     <div class="section-header dark-header">
-      <span class="section-number">07</span>
+      <span class="section-number">08</span>
       <h2>Experimental design</h2>
     </div>
 
@@ -1525,9 +1739,7 @@
 
 
   <!-- ════════════════════════════════════════════════
-       08 — EXPERIMENTAL RESULTS  (redesigned)
-       Each experiment: animated table LEFT, radar RIGHT.
-       No more dumped figure-grid at the bottom.
+       09 — EXPERIMENTAL RESULTS
   ═══════════════════════════════════════════════════ -->
 
   <!-- ── Experiment 1: MIMIC-III ────────────────── -->
@@ -1815,12 +2027,11 @@
 
 
   <!-- ════════════════════════════════════════════════
-       09 — KEY INSIGHTS
-       FIX: ensembling now a proper highlighted block.
+       10 — KEY INSIGHTS
   ═══════════════════════════════════════════════════ -->
   <section id="insights" class="dark-section">
     <div class="section-header dark-header">
-      <span class="section-number">09</span>
+      <span class="section-number">10</span>
       <h2>Key insights</h2>
     </div>
 
@@ -1925,11 +2136,11 @@
 
 
   <!-- ════════════════════════════════════════════════
-       PRACTICAL GUIDANCE
+       11 — PRACTICAL GUIDANCE
   ═══════════════════════════════════════════════════ -->
   <section class="content-section">
     <div class="section-header">
-      <span class="section-number">10</span>
+      <span class="section-number">11</span>
       <h2>Practical guidance</h2>
     </div>
     <p class="section-lead">
@@ -1966,11 +2177,11 @@
 
 
   <!-- ════════════════════════════════════════════════
-       ADDITIONAL EVIDENCE (MNIST + Toy Regression)
+       12 — ADDITIONAL EVIDENCE (MNIST + Toy Regression)
   ═══════════════════════════════════════════════════ -->
   <section class="content-section" style="padding-top:0;">
     <div class="section-header">
-      <span class="section-number">11</span>
+      <span class="section-number">12</span>
       <h2>Additional evidence</h2>
     </div>
     <p class="section-lead">
@@ -2038,11 +2249,11 @@
 
 
   <!-- ════════════════════════════════════════════════
-       12 — FUTURE DIRECTIONS
+       13 — FUTURE DIRECTIONS
   ═══════════════════════════════════════════════════ -->
   <section class="content-section">
     <div class="section-header">
-      <span class="section-number">12</span>
+      <span class="section-number">13</span>
       <h2>Future directions</h2>
     </div>
 
@@ -2076,11 +2287,11 @@
 
 
   <!-- ════════════════════════════════════════════════
-       13 — RESOURCES
+       14 — RESOURCES
   ═══════════════════════════════════════════════════ -->
   <section id="resources" class="content-section">
     <div class="section-header">
-      <span class="section-number">13</span>
+      <span class="section-number">14</span>
       <h2>Resources</h2>
     </div>
 
@@ -2110,7 +2321,7 @@
 
 
   <!-- ════════════════════════════════════════════════
-       CITATION  (unchanged)
+       CITATION
   ═══════════════════════════════════════════════════ -->
   <section class="citation-section">
     <h2>Citation</h2>
@@ -2174,6 +2385,21 @@
       el.style.transitionDelay = (idx * 0.08) + 's';
       revealIO.observe(el);
     });
+
+    /* ── Hero factorization diagram (builds matrix cells) ──────────── */
+    (function () {
+      function fill(id, rows, cols) {
+        var g = document.getElementById(id);
+        if (!g) return;
+        for (var i = 0; i < rows * cols; i++) {
+          var d = document.createElement('div');
+          d.className = 'cell';
+          d.style.animationDelay = ((i % cols + Math.floor(i / cols)) * 0.07) + 's';
+          g.appendChild(d);
+        }
+      }
+      fill('mW', 6, 6); fill('mA', 6, 2); fill('mB', 2, 7);
+    })();
   </script>
 
 </body>
