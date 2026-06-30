@@ -89,3 +89,17 @@ function animateTableRows(table) {
 }
 
 document.querySelectorAll(".table-card table, .profiling-table").forEach(animateTableRows);
+/* Hero factorization diagram */
+(function () {
+  function fill(id, rows, cols) {
+    const g = document.getElementById(id);
+    if (!g) return;
+    for (let i = 0; i < rows * cols; i++) {
+      const d = document.createElement("div");
+      d.className = "cell";
+      d.style.animationDelay = ((i % cols + Math.floor(i / cols)) * 0.07) + "s";
+      g.appendChild(d);
+    }
+  }
+  fill("mW", 6, 6); fill("mA", 6, 2); fill("mB", 2, 7);
+})();
