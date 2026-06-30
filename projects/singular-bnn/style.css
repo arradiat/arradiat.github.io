@@ -558,3 +558,77 @@ body { background: radial-gradient(circle at 88% 8%, rgba(246,215,223,0.55), tra
     padding: 58px 6vw;
   }
 }
+/* ═══════════════════════════════════════════════════════════════════════════
+   §06 — CERTIFYING THE DETERMINISTIC CENTER
+   Append to the end of style.css. Reuses existing dark-section / dark-eq /
+   dark-interp-box / reveal-card styles; only adds the section-specific pieces.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/* Three-object cards (color-coded, third = certified) */
+.center-objects {
+  max-width: 1200px; margin: 1.75rem auto 0;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem;
+}
+.cobj-card {
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 18px; padding: 22px 22px; position: relative; padding-top: 24px;
+}
+.cobj-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 3px; border-radius: 18px 18px 0 0;
+}
+.cobj-card:nth-child(1)::before { background: var(--accent, #60e6f2); }
+.cobj-card:nth-child(2)::before { background: var(--gold, #e9b96b); }
+.cobj-card:nth-child(3)::before { background: var(--accent-2, #b93a5b); }
+.cobj-tag { font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 800; margin-bottom: 8px; display: block; }
+.cobj-card:nth-child(1) .cobj-tag { color: var(--accent, #60e6f2); }
+.cobj-card:nth-child(2) .cobj-tag { color: var(--gold, #e9b96b); }
+.cobj-card:nth-child(3) .cobj-tag { color: #f06e8a; }
+.cobj-card h4 { margin: 0 0 8px; font-size: 1rem; color: #fff8ef; }
+.cobj-card p { margin: 0; font-size: 13px; color: #cabbd6; line-height: 1.55; }
+.cobj-card.certified { background: rgba(185,58,91,0.1); border-color: rgba(185,58,91,0.34); }
+.cobj-badge {
+  display: inline-block; margin-top: 10px; font-size: 10px; font-weight: 800;
+  letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px;
+  background: rgba(185,58,91,0.18); color: #f4a6b8; border: 1px solid rgba(185,58,91,0.4);
+}
+
+/* Problem → repair flow */
+.gauge-flow {
+  max-width: 1200px; margin: 2.5rem auto 0;
+  display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.1rem; align-items: stretch;
+}
+.gauge-step { border-radius: 16px; padding: 1.25rem 1.4rem; }
+.gauge-step.problem { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.24); }
+.gauge-step.repair  { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.24); }
+.gauge-step h4 { margin: 0 0 0.5rem; font-size: 0.95rem; }
+.gauge-step.problem h4 { color: #fca5a5; }
+.gauge-step.repair  h4 { color: #6ee7b7; }
+.gauge-step p { margin: 0; font-size: 13px; color: #e8ddf0; line-height: 1.6; }
+.gauge-eq {
+  margin-top: 0.75rem; padding: 0.6rem 0.8rem; border-radius: 10px;
+  background: rgba(22,11,34,0.6); border: 1px solid rgba(255,255,255,0.12);
+  font-size: 0.85rem; text-align: center; color: #fff8ef; overflow-x: auto;
+}
+.gauge-arrow { display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--accent, #60e6f2); font-weight: 800; }
+
+/* Result banner */
+.result-banner {
+  max-width: 1200px; margin: 2.5rem auto 0; padding: 1.6rem 2rem; border-radius: 20px;
+  background: linear-gradient(135deg, rgba(96,230,242,0.08), rgba(185,58,91,0.05));
+  border: 1px solid rgba(96,230,242,0.25); border-left: 4px solid var(--accent, #60e6f2);
+}
+.result-banner .rb-eyebrow { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, #60e6f2); font-weight: 800; margin-bottom: 0.4rem; }
+.result-banner h3 { margin: 0 0 0.6rem; font-size: 1.25rem; letter-spacing: -0.02em; color: #fff8ef; }
+.result-banner p { margin: 0; font-size: 0.9rem; color: #cabbd6; line-height: 1.6; max-width: 760px; }
+.rb-props { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.1rem; }
+.rb-prop {
+  font-size: 12px; font-weight: 700; padding: 6px 13px; border-radius: 999px;
+  background: rgba(96,230,242,0.1); color: #9cebf3; border: 1px solid rgba(96,230,242,0.28);
+}
+
+@media (max-width: 900px) {
+  .center-objects { grid-template-columns: 1fr; }
+  .gauge-flow { grid-template-columns: 1fr; }
+  .gauge-arrow { transform: rotate(90deg); }
+}
