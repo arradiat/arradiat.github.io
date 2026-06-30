@@ -26,6 +26,78 @@
   <!-- ── Supplementary styles for new/changed elements only ──────────── -->
   <style>
 
+    /* ═══════════════════════════════════════════════════════════════
+       HERO — light/blush theme + animated W = ABᵀ factorization diagram
+       (self-contained; overrides the dark hero from style.css)
+    ═══════════════════════════════════════════════════════════════ */
+    .hero {
+      background:
+        radial-gradient(circle at 88% 6%, rgba(96, 230, 242, 0.16), transparent 30%),
+        radial-gradient(circle at 4% 96%, rgba(246, 215, 223, 0.55), transparent 32%),
+        linear-gradient(150deg, #fff8ef 0%, #fdeef3 60%, #fbe7ef 100%);
+      color: #2a102a;
+      border-bottom: 1px solid #efd5e0;
+      padding: 96px 6vw 76px;
+      gap: 56px;
+    }
+    .hero .conference-badge {
+      padding: 7px 16px; border-radius: 999px;
+      background: rgba(122, 30, 58, 0.07);
+      color: var(--burgundy, #7a1e3a);
+      border: 1px solid rgba(122, 30, 58, 0.22);
+      font-weight: 800; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .hero h1 { color: #25091f; letter-spacing: -0.055em; margin: 24px 0 20px; }
+    .hero h1 em { font-style: normal; color: var(--burgundy, #7a1e3a); }
+    .hero .subtitle { color: #6a5466; font-size: clamp(18px, 2vw, 22px); }
+    .hero .authors { color: #8a4763; margin-top: 26px; font-size: 15px; }
+    .hero .authors strong { color: #2a102a; }
+    .hero .hero-buttons { margin-top: 30px; gap: 10px; }
+    .hero .primary-btn {
+      background: linear-gradient(135deg, var(--burgundy, #7a1e3a), #b93a5b);
+      color: #fff8ef; font-weight: 800; border: 1px solid transparent;
+      box-shadow: 0 10px 26px rgba(122, 30, 58, 0.22);
+    }
+    .hero .primary-btn:hover { filter: brightness(1.06); }
+    .hero .secondary-btn {
+      background: rgba(255, 255, 255, 0.6); border: 1px solid #e3c3d0;
+      color: #5d2740; font-weight: 700; backdrop-filter: blur(4px);
+    }
+    .hero .secondary-btn:hover { background: #fff; border-color: var(--burgundy, #7a1e3a); color: var(--burgundy, #7a1e3a); }
+
+    /* Visual panel + animated factorization diagram */
+    .hero .hero-visual {
+      background: rgba(255, 255, 255, 0.55); border: 1px solid #efd5e0;
+      border-radius: 24px; box-shadow: 0 24px 70px rgba(122, 30, 58, 0.10);
+      padding: 34px 28px 24px; backdrop-filter: blur(6px); min-height: 0;
+    }
+    .fact-stage { display: flex; align-items: center; justify-content: center; gap: 13px; height: 210px; }
+    .mtx { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .mtx-grid { display: grid; gap: 1.5px; padding: 3px; border-radius: 9px; background: rgba(42,16,42,.06); box-shadow: 0 8px 22px rgba(42,16,42,.13); }
+    .fact-stage .cell { width: 15px; height: 15px; border-radius: 2px; }
+    .mtx-label { font-size: 14px; font-weight: 800; }
+    .mtx-dim { font-size: 10px; color: #9a8290; letter-spacing: .05em; }
+    .fact-op { font-size: 26px; font-weight: 800; color: var(--burgundy, #7a1e3a); }
+    .fact-op.small { font-size: 19px; }
+    .sup { font-size: .62em; vertical-align: super; }
+    #mW .cell { background: linear-gradient(135deg, #7a1e3a, #b93a5b); animation: sbnn-wpulse 4.4s ease-in-out infinite; }
+    @keyframes sbnn-wpulse { 0%,100%{opacity:1;} 42%,58%{opacity:.28;} }
+    #mA .cell { background: linear-gradient(135deg, #60e6f2, #2bbccb); animation: sbnn-fglow 4.4s ease-in-out infinite; }
+    #mB .cell { background: linear-gradient(135deg, #e9b96b, #d99a3e); animation: sbnn-fglow 4.4s ease-in-out infinite; }
+    @keyframes sbnn-fglow { 0%,100%{opacity:.38; transform:scale(.96);} 50%{opacity:1; transform:scale(1);} }
+    .hero .hero-formula { text-align: center; font-size: 24px; margin-top: 16px; font-weight: 800; color: #2a102a; }
+    .hero .hero-formula .a { color: #1d9aa6; } .hero .hero-formula .b { color: #c08a2a; } .hero .hero-formula .w { color: #7a1e3a; }
+    .hero .hero-caption { margin-top: 8px; text-align: center; color: #7e6e82; font-size: 13px; }
+    .hero .hero-caption em { color: #7a1e3a; font-style: italic; }
+    @media (prefers-reduced-motion: reduce) {
+      #mW .cell, #mA .cell, #mB .cell { animation: none; opacity: 1; }
+    }
+    @media (max-width: 900px) {
+      .hero { padding: 64px 6vw 56px; }
+      .fact-stage { gap: 9px; }
+      .fact-stage .cell { width: 12px; height: 12px; }
+    }
+
     /* ── Gradient bridges: vivid animated dark ↔ light transitions ──── */
     .bridge-dark-light {
       position: relative;
@@ -567,12 +639,11 @@
       <div class="hero-buttons">
   <a class="primary-btn"   href="https://arxiv.org/abs/2602.00387"   target="_blank">arXiv</a>
   <a class="secondary-btn" href="https://icml.cc/virtual/2026/poster/61323"   target="_blank">ICML</a>
-  <a class="secondary-btn" href="https://github.com/arradiat/SingularBayesianNeuralNeworks-ICML2026"   target="_blank">GitHub</a>
+  <a class="secondary-btn" href="https://github.com/arradiat/SBNN"   target="_blank">GitHub</a>
   <a class="secondary-btn" href="https://arradiat.github.io/projects/singular-bnn/slides/" target="_blank">Slides</a>
   <a class="secondary-btn" href="ICML_2026_SBNN_poster_main_conference.pdf" target="_blank">ICML Poster</a>
   <a class="secondary-btn" href="wiml_poster_official.pdf" target="_blank">WiML Poster</a>
   <a class="secondary-btn" href="https://arradiat.github.io/" target="_blank">Homepage</a>
-
 </div>
     </div>
 <div class="hero-visual">
