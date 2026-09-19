@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2RN01R28V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S2RN01R28V');
+  </script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#102a43">
+  <title>Rare Disease, Real Kid | From a Genome to a Ranked Answer</title>
+  <meta name="description" content="A plain-language tour of our uncertainty-aware AI system for the 2026 MVA Rare Disease, Real Kid hackathon—from millions of genetic clues to a transparent ranked answer.">
+  <meta name="author" content="Mame Diarra Toure and Bonaventure F. P. Dossou">
+  <meta property="og:title" content="Rare Disease, Real Kid">
+  <meta property="og:description" content="How we combined biology, symptoms and uncertainty-aware AI to find a rare-disease clue—and tested it far beyond one child.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧬</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to the story</a>
+
+  <nav class="site-nav" aria-label="Project navigation">
+    <div class="nav-inner">
+      <a class="brand" href="/" aria-label="Mame Diarra Toure home">
+        <span class="brand-mark" aria-hidden="true">R<span>•</span>K</span>
+        <span class="brand-name">Rare Disease, Real Kid</span>
+      </a>
+      <div class="nav-links">
+        <a href="#story">The story</a>
+        <a href="#approach">Our approach</a>
+        <a href="#results">Results</a>
+        <a href="#beyond">Beyond one child</a>
+      </div>
+      <a class="nav-code" href="https://github.com/arradiat/Rare-Disease--Real-Kid">View code <span aria-hidden="true">↗</span></a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-noise" aria-hidden="true"></div>
+    <div class="hero-dna" aria-hidden="true">
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="hero-grid shell">
+      <div class="hero-copy reveal is-visible">
+        <div class="eyebrow"><span></span> MVA Rare Disease Hackathon · 2026</div>
+        <h1>Finding one meaningful clue in an entire genome.</h1>
+        <p class="hero-lead">
+          A genome is a three-billion-letter instruction book. We built an AI-assisted system that
+          filters millions of spelling differences, connects them to a child’s symptoms, and ranks
+          the explanations a specialist should inspect first.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#story">See how it works <span aria-hidden="true">↓</span></a>
+          <a class="button button-ghost" href="https://github.com/arradiat/Rare-Disease--Real-Kid">Explore the repository <span aria-hidden="true">↗</span></a>
+        </div>
+        <p class="hero-byline">By <strong>Mame Diarra Toure</strong> and <strong>Bonaventure F. P. Dossou</strong></p>
+      </div>
+
+      <div class="hero-visual reveal is-visible" aria-label="A visual funnel from a whole genome to one top-ranked variant pair">
+        <div class="visual-label">From noise to a testable lead</div>
+        <div class="funnel-stage stage-genome">
+          <div class="genome-dots" aria-hidden="true"></div>
+          <div><strong>3 billion</strong><span>DNA letters</span></div>
+        </div>
+        <div class="funnel-arrow" aria-hidden="true">↓</div>
+        <div class="funnel-stage stage-variants">
+          <div class="variant-specks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div><strong>Millions</strong><span>of differences</span></div>
+        </div>
+        <div class="funnel-arrow" aria-hidden="true">↓</div>
+        <div class="funnel-stage stage-shortlist">
+          <div class="shortlist-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div><strong>A shortlist</strong><span>worth reviewing</span></div>
+        </div>
+        <div class="funnel-arrow" aria-hidden="true">↓</div>
+        <div class="answer-chip">
+          <span class="answer-rank">#1</span>
+          <span><strong>BUB1B</strong><small>accepted variant pair</small></span>
+          <span class="answer-check" aria-hidden="true">✓</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-proof shell" aria-label="Key project results">
+      <div><strong>100</strong><span>Rank Points</span></div>
+      <div><strong>1.000</strong><span>F-max score</span></div>
+      <div><strong>9</strong><span>models compared</span></div>
+      <div><strong>275,739</strong><span>stress-test trials</span></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section intro" id="story">
+      <div class="shell narrow">
+        <div class="section-kicker reveal">The challenge, without the jargon</div>
+        <h2 class="section-title reveal">Think of it as a medical detective story.</h2>
+        <p class="section-intro reveal">
+          The child’s DNA contains many differences that are completely harmless. The difficult part
+          is deciding which few deserve attention—and doing so in a way that is fast, traceable and
+          honest about uncertainty.
+        </p>
+      </div>
+
+      <div class="shell analogy-grid">
+        <article class="analogy-card reveal">
+          <div class="analogy-number">01</div>
+          <div class="analogy-icon book-icon" aria-hidden="true"><span></span></div>
+          <h3>Read the enormous book</h3>
+          <p>Sequencing turns DNA into data. We check its quality and line it up against a reference genome so each difference has an address.</p>
+        </article>
+        <article class="analogy-card reveal">
+          <div class="analogy-number">02</div>
+          <div class="analogy-icon sieve-icon" aria-hidden="true"><span></span><i></i><i></i><i></i></div>
+          <h3>Remove ordinary spelling changes</h3>
+          <p>Most variants are common or biologically unlikely to explain the disease. Evidence-based filters remove this background noise.</p>
+        </article>
+        <article class="analogy-card reveal">
+          <div class="analogy-number">03</div>
+          <div class="analogy-icon compass-icon" aria-hidden="true"><span></span></div>
+          <h3>Match DNA clues to symptoms</h3>
+          <p>The remaining candidates are compared with the child’s clinical features, then several models rank the most coherent explanations.</p>
+        </article>
+      </div>
+
+      <div class="shell answer-spotlight reveal">
+        <div class="spotlight-copy">
+          <span class="mini-label">The challenge outcome</span>
+          <h3>The accepted <em>BUB1B</em> pair rose to the very top.</h3>
+          <p>
+            The system ranked two changes in the same gene as the strongest candidate pair. This is
+            the type of pattern known as <strong>compound heterozygosity</strong>: two different variants
+            may jointly disrupt the two copies of one gene.
+          </p>
+          <p class="spotlight-note">This is a research ranking result—not a clinical diagnosis. Laboratory and family-based confirmation remain essential.</p>
+        </div>
+        <div class="score-orbit" aria-label="Maximum challenge score">
+          <div class="orbit-ring ring-one"></div>
+          <div class="orbit-ring ring-two"></div>
+          <div class="orbit-core"><strong>100</strong><span>Rank<br>Points</span></div>
+          <div class="orbit-tag tag-one">Rank #1</div>
+          <div class="orbit-tag tag-two">F-max 1.000</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section approach" id="approach">
+      <div class="shell narrow">
+        <div class="section-kicker reveal">Our approach</div>
+        <h2 class="section-title reveal">A chain of evidence, not a black box.</h2>
+        <p class="section-intro reveal">Each stage has one job. A candidate can be traced from raw genome data to its final position in the ranked list.</p>
+      </div>
+
+      <div class="shell pipeline" role="list" aria-label="Five-stage genome analysis pipeline">
+        <article class="pipeline-step reveal" role="listitem">
+          <span class="step-index">1</span>
+          <div class="step-symbol" aria-hidden="true">⌁</div>
+          <h3>Map</h3>
+          <p>Place each DNA read at the right location in the reference genome.</p>
+        </article>
+        <div class="pipeline-link" aria-hidden="true"></div>
+        <article class="pipeline-step reveal" role="listitem">
+          <span class="step-index">2</span>
+          <div class="step-symbol" aria-hidden="true">◇</div>
+          <h3>Filter</h3>
+          <p>Keep rare, high-quality changes with plausible biological effects.</p>
+        </article>
+        <div class="pipeline-link" aria-hidden="true"></div>
+        <article class="pipeline-step reveal" role="listitem">
+          <span class="step-index">3</span>
+          <div class="step-symbol" aria-hidden="true">⌘</div>
+          <h3>Connect</h3>
+          <p>Form candidate pairs and compare their genes with the child’s symptoms.</p>
+        </article>
+        <div class="pipeline-link" aria-hidden="true"></div>
+        <article class="pipeline-step reveal" role="listitem">
+          <span class="step-index">4</span>
+          <div class="step-symbol" aria-hidden="true">∿</div>
+          <h3>Question</h3>
+          <p>Ask multiple AI models—and measure when their answers are uncertain.</p>
+        </article>
+        <div class="pipeline-link" aria-hidden="true"></div>
+        <article class="pipeline-step reveal" role="listitem">
+          <span class="step-index">5</span>
+          <div class="step-symbol" aria-hidden="true">#1</div>
+          <h3>Rank</h3>
+          <p>Deliver a short, auditable list for expert review.</p>
+        </article>
+      </div>
+
+      <div class="shell model-panel reveal">
+        <div class="model-panel-copy">
+          <span class="mini-label">Why nine models?</span>
+          <h3>We treated the models like a panel of specialists.</h3>
+          <p>
+            One model can be confidently wrong. We therefore built different kinds of learners and
+            tested them under the same rules. Some are fast pattern finders, some act like a committee,
+            and Bayesian models keep a distribution of plausible answers instead of pretending one set
+            of parameters is certainly correct.
+          </p>
+          <button class="text-button" type="button" data-toggle-models aria-expanded="false" aria-controls="model-grid">
+            Meet all nine models <span aria-hidden="true">+</span>
+          </button>
+        </div>
+        <div class="panel-illustration" aria-hidden="true">
+          <div class="expert expert-tree"><span>Tree</span></div>
+          <div class="expert expert-net"><span>Net</span></div>
+          <div class="expert expert-bayes"><span>Bayes</span></div>
+          <div class="expert expert-sbnn"><span>SBNN</span></div>
+          <div class="consensus-center">ranked<br>evidence</div>
+          <svg viewBox="0 0 420 260" preserveAspectRatio="none">
+            <path d="M95 55 C160 55 160 120 205 128" />
+            <path d="M325 55 C260 55 260 120 215 128" />
+            <path d="M95 205 C160 205 160 145 205 136" />
+            <path d="M325 205 C260 205 260 145 215 136" />
+          </svg>
+        </div>
+      </div>
+
+      <div class="shell model-grid" id="model-grid" hidden>
+        <article><span>Fast pattern finder</span><h3>Gradient boosting</h3><p>Builds many small decision trees and combines their votes.</p></article>
+        <article><span>Neural baseline</span><h3>Dense MLP</h3><p>Learns layered nonlinear patterns from variant features.</p></article>
+        <article><span>Committee view</span><h3>Deep ensemble</h3><p>Uses disagreement among five networks as a warning signal.</p></article>
+        <article><span>Compact Bayesian</span><h3>Small SBNN</h3><p>Learns uncertainty with efficient low-rank weight structure.</p></article>
+        <article><span>Full Bayesian</span><h3>Dense BBB</h3><p>Places uncertainty over every neural-network weight.</p></article>
+        <article class="selected-model"><span>Submitted model</span><h3>Wide rank-50 SBNN</h3><p>The strongest temporal ranker and our selected challenge model.</p></article>
+        <article><span>Matched comparison</span><h3>Wide dense BBB</h3><p>Tests whether low-rank structure helps at the same width.</p></article>
+        <article><span>Combined judgement</span><h3>Temporal consensus</h3><p>Blends complementary tree, ensemble and SBNN signals.</p></article>
+        <article class="augmented-model"><span>Beyond the challenge</span><h3>Augmented pairwise SBNN</h3><p>Integrates protein predictors for realistic genome-scale ranking.</p></article>
+      </div>
+    </section>
+
+    <section class="section results" id="results">
+      <div class="shell narrow">
+        <div class="section-kicker light reveal">What we found</div>
+        <h2 class="section-title light reveal">The challenge score was perfect. The stronger story is what happened next.</h2>
+        <p class="section-intro light reveal">
+          We froze the key choices, moved forward in time, tried independent solved cases and finally
+          searched realistic whole-genome backgrounds. Each test asks a harder question.
+        </p>
+      </div>
+
+      <div class="shell result-ladder">
+        <article class="result-card reveal">
+          <div class="result-level">Challenge child</div>
+          <strong class="result-number" data-count="1">1</strong>
+          <h3>accepted pair rank</h3>
+          <p>The <em>BUB1B</em> pair was placed first. All eight submission-era learned models agreed.</p>
+          <div class="result-proof">100 Rank Points · F-max 1.000</div>
+        </article>
+        <article class="result-card reveal">
+          <div class="result-level">Later variants</div>
+          <strong class="result-number">84.35<span>%</span></strong>
+          <h3>Top-1 accuracy</h3>
+          <p>The selected SBNN found the correct item first when ranking later ClinVar variants among 100 candidates.</p>
+          <div class="result-proof">PR-AUC 0.9736 · F-max 0.9235</div>
+        </article>
+        <article class="result-card reveal">
+          <div class="result-level">Independent solved cases</div>
+          <strong class="result-number">719</strong>
+          <h3>post-2023 cases</h3>
+          <p>We tested symptom-aware reranking over five independently resampled candidate cohorts.</p>
+          <div class="result-proof">Includes 64 two-variant cases</div>
+        </article>
+        <article class="result-card featured reveal">
+          <div class="result-level">Full-genome backgrounds</div>
+          <strong class="result-number">86.63<span>%</span></strong>
+          <h3>Top-100 recall</h3>
+          <p>The augmented SBNN recovered the causal variant in its first 100 suggestions across 275,739 trials.</p>
+          <div class="result-proof">Median causal rank: 14</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section beyond" id="beyond">
+      <div class="shell split-heading">
+        <div>
+          <div class="section-kicker reveal">Beyond one child</div>
+          <h2 class="section-title reveal">Would the idea survive outside the hackathon?</h2>
+        </div>
+        <p class="section-intro reveal">
+          A perfect score on one known case is encouraging, but it is not enough. We deliberately
+          tested whether the models could face newer records, different patients and far larger search spaces.
+        </p>
+      </div>
+
+      <div class="shell evidence-road">
+        <article class="evidence-stop reveal">
+          <div class="evidence-dot">A</div>
+          <div><span>Time shift</span><h3>Train on the past, test on the future</h3><p>Models learned from the December 2023 ClinVar release and were tested only on later, unseen identifiers.</p></div>
+        </article>
+        <article class="evidence-stop reveal">
+          <div class="evidence-dot">B</div>
+          <div><span>Patient shift</span><h3>Move from variants to solved cases</h3><p>Phenotype information improved ranking across every evaluated model in repeated post-2023 case cohorts.</p></div>
+        </article>
+        <article class="evidence-stop reveal">
+          <div class="evidence-dot">C</div>
+          <div><span>Scale shift</span><h3>Put the signal back into genome-scale noise</h3><p>2,577 causal variants were crossed with 107 real backgrounds to create 275,739 locked trials.</p></div>
+        </article>
+      </div>
+
+      <div class="shell benchmark-card reveal">
+        <div class="benchmark-copy">
+          <span class="mini-label">The hardest stress test</span>
+          <h3>Competitive with widely used protein-effect predictors.</h3>
+          <p>
+            On the full-background VarPB benchmark, our predictor-augmented SBNN nearly matched
+            <strong>REVEL</strong> at Top-20 and surpassed it at Top-100. It also substantially outperformed
+            <strong>AlphaMissense</strong> at both shortlist sizes.
+          </p>
+          <p class="benchmark-context">Higher is better. “Top-100” asks whether the causal variant appears anywhere in the first 100 candidates sent for review.</p>
+        </div>
+        <div class="bar-chart" role="img" aria-label="Top-20 and Top-100 recall comparison: augmented SBNN 65.70 and 86.63 percent; REVEL 65.90 and 84.82 percent; AlphaMissense 44.24 and 69.72 percent.">
+          <div class="chart-head"><span>Top-20</span><span>Top-100</span></div>
+          <div class="chart-row">
+            <div class="chart-name"><strong>Our SBNN</strong><small>uncertainty-aware</small></div>
+            <div class="bar-track"><i class="bar sbnn" style="--value:65.7%"></i><span>65.70%</span></div>
+            <div class="bar-track"><i class="bar sbnn" style="--value:86.63%"></i><span>86.63%</span></div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-name"><strong>REVEL</strong><small>external predictor</small></div>
+            <div class="bar-track"><i class="bar revel" style="--value:65.9%"></i><span>65.90%</span></div>
+            <div class="bar-track"><i class="bar revel" style="--value:84.82%"></i><span>84.82%</span></div>
+          </div>
+          <div class="chart-row">
+            <div class="chart-name"><strong>AlphaMissense</strong><small>external predictor</small></div>
+            <div class="bar-track"><i class="bar alpha" style="--value:44.24%"></i><span>44.24%</span></div>
+            <div class="bar-track"><i class="bar alpha" style="--value:69.72%"></i><span>69.72%</span></div>
+          </div>
+          <div class="chart-axis"><span>0%</span><span>50%</span><span>100%</span></div>
+        </div>
+      </div>
+
+      <div class="shell uncertainty-callout reveal">
+        <div class="uncertainty-rings" aria-hidden="true"><span></span><span></span><span></span><i>?</i></div>
+        <div>
+          <span class="mini-label">Why Bayesian models?</span>
+          <h3>A useful system should know when it might be wrong.</h3>
+          <p>
+            Traditional models often return one confident-looking score. Our Bayesian models can
+            generate many plausible predictions, revealing where the answer is stable and where more
+            evidence or human review is needed. That uncertainty is part of the output—not an afterthought.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section transparency" id="transparency">
+      <div class="shell transparency-grid">
+        <div class="transparency-copy reveal">
+          <div class="section-kicker">Scientific transparency</div>
+          <h2 class="section-title">Strong evidence, clearly bounded.</h2>
+          <p>
+            The repository contains the models, ranked outputs, evaluation tables, integrity hashes,
+            tests and a full technical report. It intentionally excludes the private 85 GB patient
+            bundle and all personally sensitive source data.
+          </p>
+          <div class="transparency-actions">
+            <a class="button button-dark" href="https://github.com/arradiat/Rare-Disease--Real-Kid">Browse the complete code <span aria-hidden="true">↗</span></a>
+            <a class="report-link" href="https://github.com/arradiat/Rare-Disease--Real-Kid/blob/main/artifacts/reports/bonamame_track1_report.pdf">Read the 33-page report <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="honesty-card reveal">
+          <span class="mini-label">What this work does not claim</span>
+          <ul>
+            <li>It is a research prioritization system, not a clinical diagnostic device.</li>
+            <li>Constructed case cohorts do not replace prospective hospital validation.</li>
+            <li>The two child variants still require direct phase and functional confirmation.</li>
+            <li>REVEL and AlphaMissense are inputs to the augmented model, so that model is an evidence integrator—not an independent replacement.</li>
+          </ul>
+          <p>Next: broader clinical cohorts, additional ancestries and sequencing platforms, long-read or family phasing, and prospective calibration studies.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section team" id="team">
+      <div class="shell team-card reveal">
+        <div>
+          <div class="section-kicker">The team</div>
+          <h2>Built across machine learning and computational genomics.</h2>
+        </div>
+        <div class="team-members">
+          <article><span class="avatar avatar-m">MT</span><div><strong>Mame Diarra Toure</strong><small>Bayesian deep learning · uncertainty · evaluation</small></div></article>
+          <article><span class="avatar avatar-b">BD</span><div><strong>Bonaventure F. P. Dossou</strong><small>Genome processing · annotation · biological pipeline</small></div></article>
+        </div>
+        <div class="team-links">
+          <a href="https://github.com/arradiat/Rare-Disease--Real-Kid">GitHub repository <span aria-hidden="true">↗</span></a>
+          <a href="/">Mame’s research homepage <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div><strong>Rare Disease, Real Kid</strong><span>Research prototype · 2026</span></div>
+      <p>Made to make a complex project understandable.</p>
+      <a href="#top" data-back-top>Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+</html>
