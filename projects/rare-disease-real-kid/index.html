@@ -12,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#102a43">
   <title>Rare Disease, Real Kid | From a Genome to a Ranked Answer</title>
-  <meta name="description" content="A plain-language tour of our uncertainty-aware AI system for the 2026 MVA Rare Disease, Real Kid hackathon—from millions of genetic clues to a transparent ranked answer.">
+  <meta name="description" content="A plain-language and technical tour of our genome-wide rare-disease decision-support system, Bayesian ranking models, uncertainty analysis, and evaluation across temporal, patient, and genome-background shifts.">
   <meta name="author" content="Mame Diarra Toure and Bonaventure F. P. Dossou">
   <meta property="og:title" content="Rare Disease, Real Kid">
   <meta property="og:description" content="How we combined biology, symptoms and uncertainty-aware AI to find a rare-disease clue—and tested it far beyond one child.">
@@ -34,9 +34,10 @@
       </a>
       <div class="nav-links">
         <a href="#story">The story</a>
-        <a href="#approach">Our approach</a>
+        <a href="#approach">System</a>
         <a href="#results">Results</a>
-        <a href="#beyond">Beyond one child</a>
+        <a href="#beyond">Generalization</a>
+        <a href="#paper">Paper</a>
       </div>
       <a class="nav-code" href="https://github.com/arradiat/Rare-Disease--Real-Kid">View code <span aria-hidden="true">↗</span></a>
     </div>
@@ -58,6 +59,7 @@
         </p>
         <div class="hero-actions">
           <a class="button button-primary" href="#story">See how it works <span aria-hidden="true">↓</span></a>
+          <a class="button button-paper" href="./assets/evaluating-ranking-layer-rare-disease.pdf">Read the paper <span aria-hidden="true">↗</span></a>
           <a class="button button-ghost" href="https://github.com/arradiat/Rare-Disease--Real-Kid">Explore the repository <span aria-hidden="true">↗</span></a>
         </div>
         <p class="hero-byline">By <strong>Mame Diarra Toure</strong> and <strong>Bonaventure F. P. Dossou</strong></p>
@@ -88,14 +90,53 @@
       </div>
     </div>
     <div class="hero-proof shell" aria-label="Key project results">
-      <div><strong>100</strong><span>Rank Points</span></div>
-      <div><strong>1.000</strong><span>F-max score</span></div>
-      <div><strong>9</strong><span>models compared</span></div>
-      <div><strong>275,739</strong><span>stress-test trials</span></div>
+      <div><strong>5.08M</strong><span>variants screened</span></div>
+      <div><strong>#1</strong><span>accepted pair rank</span></div>
+      <div><strong>313,171</strong><span>temporal test records</span></div>
+      <div><strong>275,739</strong><span>full-background trials</span></div>
     </div>
   </header>
 
   <main id="main">
+    <section class="paper-feature section" id="paper">
+      <div class="shell paper-feature-grid">
+        <div class="paper-cover reveal">
+          <div class="paper-cover-top">
+            <span>Research paper</span>
+            <span>2026</span>
+          </div>
+          <h2>Evaluating the Ranking Layer of Rare-Disease Decision Support</h2>
+          <p>Bayesian Uncertainty Under Temporal and Patient Shift</p>
+          <div class="paper-cover-rule"></div>
+          <small>GenAI for Health Workshop @ NeurIPS 2026 · Sydney</small>
+          <div class="paper-cover-authors">Bonaventure F. P. Dossou<br>Mame Diarra Toure</div>
+        </div>
+        <div class="paper-feature-copy reveal">
+          <div class="section-kicker">The complete study</div>
+          <h2 class="section-title">The project is more than the winning answer.</h2>
+          <p>
+            Finding the accepted variant pair in one child was the starting point. The paper asks a
+            more demanding question: <strong>which parts of a rare-disease ranking system can be trusted
+            when the data, the patient, or the search space changes?</strong>
+          </p>
+          <p>
+            Across 43 pages, we separate candidate generation, molecular ranking, phenotype evidence,
+            and uncertainty. We compare deterministic baselines, deep ensembles, singular Bayesian
+            neural networks, Bayes-by-Backprop, wider architectures, and a predictor-augmented pairwise SBNN.
+          </p>
+          <div class="paper-facts" aria-label="Paper facts">
+            <div><strong>43</strong><span>pages</span></div>
+            <div><strong>3</strong><span>distribution shifts</span></div>
+            <div><strong>9</strong><span>model families</span></div>
+          </div>
+          <div class="paper-actions">
+            <a class="button button-primary" href="./assets/evaluating-ranking-layer-rare-disease.pdf">Open the full paper <span aria-hidden="true">↗</span></a>
+            <a class="paper-download" href="./assets/evaluating-ranking-layer-rare-disease.pdf" download>Download PDF · 2.9 MB</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="section intro" id="story">
       <div class="shell narrow">
         <div class="section-kicker reveal">The challenge, without the jargon</div>
@@ -147,6 +188,28 @@
           <div class="orbit-tag tag-two">F-max 1.000</div>
         </div>
       </div>
+
+      <div class="shell variant-evidence reveal" aria-label="Evidence for the leading BUB1B hypothesis">
+        <div class="variant-evidence-head">
+          <span class="mini-label">The leading biological hypothesis</span>
+          <h3>Two variants in <em>BUB1B</em>, interpreted together.</h3>
+          <p><em>BUB1B</em> encodes BUBR1, a protein central to the checkpoint that helps cells distribute chromosomes correctly during division.</p>
+        </div>
+        <div class="variant-pair">
+          <article>
+            <span class="variant-tag">Pathogenic anchor</span>
+            <h4>p.Leu737Ter</h4>
+            <p>A stop-gain variant with strong clinical evidence, high predicted impact, and no observed homozygotes in the population reference used.</p>
+          </article>
+          <div class="pair-join" aria-hidden="true"><span>+</span></div>
+          <article>
+            <span class="variant-tag uncertain">Key uncertainty</span>
+            <h4>p.Asn1002Lys</h4>
+            <p>An ultra-rare missense variant with computational support, but without independent proof of pathogenicity or confirmed phase with the first allele.</p>
+          </article>
+        </div>
+        <p class="variant-caveat">Together they form the strongest causal hypothesis for the MVA phenotype. The paper is explicit that parental or long-range phasing and functional validation are still needed.</p>
+      </div>
     </section>
 
     <section class="section approach" id="approach">
@@ -192,6 +255,15 @@
           <p>Deliver a short, auditable list for expert review.</p>
         </article>
       </div>
+
+      <figure class="shell research-figure system-figure reveal">
+        <div class="system-figure-canvas">
+          <img src="./assets/system-pipeline.png" alt="Six-stage system diagram showing candidate generation, clinical filtering, molecular ranking, out-of-distribution warning, patient reasoning, and the Track 1 decision." loading="lazy">
+          <span class="system-label-mask system-label-mask-one" aria-hidden="true"></span>
+          <span class="system-label-mask system-label-mask-two" aria-hidden="true"></span>
+        </div>
+        <figcaption><strong>The complete system boundary.</strong> Deterministic validity checks remain separate from learned pathogenicity scores and uncertainty estimates.</figcaption>
+      </figure>
 
       <div class="shell model-panel reveal">
         <div class="model-panel-copy">
@@ -275,6 +347,17 @@
           <div class="result-proof">Median causal rank: 14</div>
         </article>
       </div>
+
+      <div class="shell result-interpretation reveal">
+        <span class="mini-label">Why this matters</span>
+        <h3>Success on one solved child cannot select the best model.</h3>
+        <p>
+          Every compatible learned adapter placed the accepted pair first once the biologically constrained
+          six-pair shortlist existed. We therefore evaluated the ranking layer on separate data where models
+          could meaningfully disagree. That distinction—between producing valid candidates and ranking them—is
+          central to the paper.
+        </p>
+      </div>
     </section>
 
     <section class="section beyond" id="beyond">
@@ -302,6 +385,59 @@
           <div class="evidence-dot">C</div>
           <div><span>Scale shift</span><h3>Put the signal back into genome-scale noise</h3><p>2,577 causal variants were crossed with 107 real backgrounds to create 275,739 locked trials.</p></div>
         </article>
+      </div>
+
+      <div class="shell shift-grid">
+        <article class="shift-study reveal">
+          <div class="study-index">01</div>
+          <span class="mini-label">Temporal shift</span>
+          <h3>Can a model recognize evidence that appeared later?</h3>
+          <p>Models learned from a December 2023 ClinVar snapshot. The untouched evaluation contains 313,171 odd-ID records absent in that snapshot and present by August 2026.</p>
+          <dl>
+            <div><dt>Best Top-1</dt><dd>84.35%</dd></div>
+            <div><dt>Best F-max</dt><dd>0.9235</dd></div>
+            <div><dt>Best unseen-gene OOD AUROC</dt><dd>0.7485</dd></div>
+          </dl>
+          <p class="study-takeaway"><strong>Takeaway:</strong> the wide rank-50 SBNN ranked best, while the deep ensemble detected unfamiliar genes best. Ranking and uncertainty are different capabilities.</p>
+        </article>
+        <figure class="shift-figure reveal">
+          <img src="./assets/temporal-model-comparison.png" alt="Three-panel comparison of Top-1 ranking, F-max, and unseen-gene out-of-distribution AUROC across seven model families." loading="lazy">
+          <figcaption>Temporal ranking and unseen-gene detection select different models.</figcaption>
+        </figure>
+
+        <article class="shift-study reveal">
+          <div class="study-index">02</div>
+          <span class="mini-label">Patient and phenotype shift</span>
+          <h3>Do molecular scores improve when symptoms are added?</h3>
+          <p>We evaluated 719 deduplicated solved Phenopacket cases whose causal variants were absent from ClinVar 2023, including 64 two-variant cases closest to the hackathon setting.</p>
+          <dl>
+            <div><dt>Molecular-only Top-1</dt><dd>29.2–34.2%</dd></div>
+            <div><dt>Gain from HPO</dt><dd>+23.1–26.6 pts</dd></div>
+            <div><dt>Best overall Top-1</dt><dd>58.9 ± 1.0%</dd></div>
+          </dl>
+          <p class="study-takeaway"><strong>Takeaway:</strong> phenotype evidence helped strongly when historical gene–phenotype knowledge existed, but provided almost no aggregate improvement for unseen genes.</p>
+        </article>
+        <figure class="shift-figure reveal">
+          <img src="./assets/patient-generalization.png" alt="Molecular-only and molecular plus HPO Top-1 accuracy across eight models for 719 solved cases and 64 two-variant cases." loading="lazy">
+          <figcaption>Adding HPO information improves patient-level ranking across every evaluated model.</figcaption>
+        </figure>
+
+        <article class="shift-study reveal">
+          <div class="study-index">03</div>
+          <span class="mini-label">Search-space shift</span>
+          <h3>Can the method work against realistic genome backgrounds?</h3>
+          <p>VarPB crossed 2,577 causal variants with exonic candidates from 107 real genomes, creating 275,739 locked spike-in trials with complete score-file coverage.</p>
+          <dl>
+            <div><dt>Augmented SBNN Top-20</dt><dd>65.70%</dd></div>
+            <div><dt>Augmented SBNN Top-100</dt><dd>86.63%</dd></div>
+            <div><dt>Median causal rank</dt><dd>14</dd></div>
+          </dl>
+          <p class="study-takeaway"><strong>Takeaway:</strong> the augmented SBNN matched REVEL within 0.20 point at Top-20 and exceeded it by 1.81 points at Top-100; REVEL remained stronger at Top-1 and MRR.</p>
+        </article>
+        <figure class="shift-figure reveal">
+          <img src="./assets/full-background-ranking.png" alt="Median causal rank and Top-20 recall across original models, the augmented pairwise SBNN, REVEL, and AlphaMissense." loading="lazy">
+          <figcaption>Compact-shortlist success does not automatically transfer to full-background prioritization.</figcaption>
+        </figure>
       </div>
 
       <div class="shell benchmark-card reveal">
@@ -348,6 +484,20 @@
           </p>
         </div>
       </div>
+
+      <div class="shell core-lesson reveal">
+        <div class="core-lesson-title">
+          <span class="mini-label">The central result</span>
+          <h3>One confidence score cannot represent every kind of uncertainty.</h3>
+        </div>
+        <div class="signal-grid">
+          <article><span>01</span><h4>Molecular ranking</h4><p>How strongly do the observed variant features resemble pathogenic evidence?</p></article>
+          <article><span>02</span><h4>Model uncertainty</h4><p>How stable is the prediction across posterior samples or independently trained networks?</p></article>
+          <article><span>03</span><h4>Phenotype coverage</h4><p>Does the reference knowledge actually contain the candidate gene–disease relationship?</p></article>
+          <article><span>04</span><h4>Biological validity</h4><p>Are the variants real, rare, inheritance-compatible, correctly represented, and plausibly in trans?</p></article>
+        </div>
+        <p class="core-lesson-note">The paper argues that decision-support systems should report these signals separately so that a fluent explanation cannot hide an unsupported ranking.</p>
+      </div>
     </section>
 
     <section class="section transparency" id="transparency">
@@ -357,12 +507,12 @@
           <h2 class="section-title">Strong evidence, clearly bounded.</h2>
           <p>
             The repository contains the models, ranked outputs, evaluation tables, integrity hashes,
-            tests and a full technical report. It intentionally excludes the private 85 GB patient
+            tests, the full paper, and supporting technical material. It intentionally excludes the private 85 GB patient
             bundle and all personally sensitive source data.
           </p>
           <div class="transparency-actions">
             <a class="button button-dark" href="https://github.com/arradiat/Rare-Disease--Real-Kid">Browse the complete code <span aria-hidden="true">↗</span></a>
-            <a class="report-link" href="https://github.com/arradiat/Rare-Disease--Real-Kid/blob/main/artifacts/reports/bonamame_track1_report.pdf">Read the 33-page report <span aria-hidden="true">↗</span></a>
+            <a class="report-link" href="./assets/evaluating-ranking-layer-rare-disease.pdf">Read the 43-page paper <span aria-hidden="true">↗</span></a>
           </div>
         </div>
         <div class="honesty-card reveal">
@@ -386,6 +536,7 @@
         </div>
         <div class="team-links">
           <a href="https://github.com/arradiat/Rare-Disease--Real-Kid">GitHub repository <span aria-hidden="true">↗</span></a>
+          <a href="./assets/evaluating-ranking-layer-rare-disease.pdf">Full paper <span aria-hidden="true">↗</span></a>
           <a href="/">Mame’s research homepage <span aria-hidden="true">→</span></a>
         </div>
       </div>
