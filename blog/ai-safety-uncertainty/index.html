@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="AI safety through the lens of uncertainty quantification, by Mame Diarra Toure.">
+  <title>AI safety through the lens of uncertainty quantification | Mame Diarra Toure</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <nav class="shell site-nav" aria-label="Main navigation">
+    <a class="brand" href="/">Mame D<span>.</span> Toure</a>
+    <a class="back" href="../">← All writing</a>
+  </nav>
+
+  <main class="post shell">
+    <header class="post-header">
+      <div class="eyebrow">AI safety · Uncertainty quantification</div>
+      <h1>AI safety through the lens of uncertainty quantification (UQ).</h1>
+      <div class="post-meta"><span>Aug 26, 2026</span><span class="dot">•</span><span>Originally published on LessWrong</span></div>
+    </header>
+
+    <article class="post-body">
+      <p>I have been reading a lot more about AI safety lately. Funny thing is, up to a few weeks ago, I believed I was working on AI safety. I am a <a href="https://arradiat.github.io/">PhD candidate</a> in the department of Mathematics and Statistics at McGill university and the motivation behind my PhD research (Scalable Bayesian Deep Learning for uncertainty quantification) was to build safe and trustworthy AI systems by making end to end bayesian learning affordable since scaling cost is the biggest barrier to the adoption of bayesian methods. So for me safety meant to make AI systems recognise when they are uncertain, rather than giving confident answers in situations where they may be wrong. It started from the position paper “Position: Bayesian deep learning is needed in the age of large-scale AI” by <a href="https://www.theopapamarkou.com/">Theodore Papamarkou</a> where the author displayed an example of large language models giving incorrect factual answers with high stated confidence.</p>
+
+      <p>To my surprise, when I read the current literature in safety it does not mention bayesian deep learning or uncertainty quantification at all (at least to the best of my knowledge). Instead it mostly focuses on the concept of alignment, control, cybersecurity, dangerous capabilities, deception, or misuse. And of course those are very important concepts when we discuss safety but what happen when an evaluation tool or runtime monitor can't detect when it lacks sufficient data to make a decision and thus any downstream verdict about safety is compromised?</p>
+
+      <p>I did see a few papers and workshops discussing calibration, conformal prediction, and eval robustness but they are very few compare to the growing interest about AI safety. Almost all of them discuss whether the <em>model</em> knows it's uncertain, not whether the <em>evaluator judging the model</em> knows it's uncertain. That second question is the one I can't find anyone asking directly. So what am I missing? How can we discuss safety when we don't even assess the reliability of our evaluation tools through proper and well calibrated uncertainty quantification?</p>
+
+      <p>I think there is actually two separate questions that are merged into one. The 1st is whether a model knows when <em>it</em> is uncertain, that's the Papamarkou example, and it's the problem most calibration and hallucination-detection work targets. The 2nd is whether an evaluation tool or runtime monitor knows when <em>its own verdict about the model</em> is unreliable, because it's operating outside its training distribution, undersampled, or simply miscalibrated in a region it was never trained on. It seems like everyone in the field is asking the first and no one is thinking about the second, even though every downstream safety claim, is this model aligned, is this behavior dangerous, is this output deceptive, depends on an <em>evaluator's confidence</em> being trustworthy.</p>
+
+      <div class="post-footer">Originally published on <a href="https://www.lesswrong.com/posts/pDzwRCAPkn8LAxGse/ai-safety-through-the-lens-of-uncertainty-quantification-uq">LessWrong</a>.</div>
+    </article>
+  </main>
+
+  <footer class="shell">© 2026 Mame Diarra Toure</footer>
+</body>
+</html>
