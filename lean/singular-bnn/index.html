@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Low-rank posterior geometry | Mame Diarra Toure</title>
+<meta name="description" content="Lean 4 proofs of constrained support, zero Lebesgue measure, and singularity for the factor posterior in Singular Bayesian Neural Networks.">
+<link rel="stylesheet" href="../style.css">
+<script>window.MathJax={tex:{inlineMath:[['$','$']],displayMath:[['$$','$$']]},svg:{fontCache:'global'}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+</head><body>
+<nav class="shell" aria-label="Main navigation"><a class="brand" href="/">Mame D. Toure</a><div class="navlinks"><a href="../">Lean</a><a href="/blog/">Blog</a></div></nav>
+<main class="shell">
+<header><div class="eyebrow">Singular Bayesian Neural Networks / Lean 4</div>
+<h1>The geometry of a low-rank posterior.</h1>
+<p class="intro">Three results that explain why a distribution over low-rank factors induces a singular distribution over weight matrices.</p>
+<div class="links"><a href="https://arxiv.org/abs/2602.00387">Paper</a><a href="./source.html">Lean source</a><a href="#verification">Reproduce the verification</a></div>
+<div class="toc"><a href="#support">1. Constrained support</a><a href="#null-set">2. Zero Lebesgue measure</a><a href="#singularity">3. Singularity</a></div>
+</header>
+<aside class="conditions"><p><strong>Setting.</strong> Let $A\in\mathbb R^{m\times r}$ and $B\in\mathbb R^{n\times r}$, let $q$ be any probability law on $(A,B)$, and let $q_W$ be its pushforward under $(A,B)\mapsto AB^\top$.</p><p>The factors need not be independent or Gaussian. Define $\mathcal R_r=\{W:\operatorname{rank}(W)\le r\}$; $\lambda$ denotes Lebesgue measure on $\mathbb R^{m\times n}$.</p></aside>
+<section class="theorem" id="support"><span class="number">01 / Paper: Constrained Support lemma</span>
+<h2>The induced posterior stays in the low-rank set.</h2>
+<div class="formula">$$\operatorname{rank}(AB^\top)\le r,\qquad q_W(\mathcal R_r)=1.$$</div>
+<p>This holds for every factor law, including dependent and discrete distributions.</p>
+<p class="proof"><strong>Proof.</strong> The rank of a product is at most the rank of its first factor, and $A$ has $r$ columns. Thus every factor pair maps into $\mathcal R_r$. Its pushforward assigns probability one to that set.</p>
+<a class="meta" href="./source.html#posterior_lowRank_mass_one">Inspect the Lean proof</a>
+</section>
+<section class="theorem" id="null-set"><span class="number">02 / Paper: Measure Zero of $\mathcal R_r$ lemma</span>
+<h2>The low-rank set has zero ambient volume.</h2>
+<div class="formula">$$r<\min(m,n)\quad\Longrightarrow\quad\lambda(\mathcal R_r)=0.$$</div>
+<p>The condition is essential: if $r\ge\min(m,n)$, every $m$-by-$n$ matrix already has rank at most $r$.</p>
+<p class="proof"><strong>Proof.</strong> Every $(r+1)$-by-$(r+1)$ minor vanishes on $\mathcal R_r$. Choose the leading minor: its determinant is a nonzero polynomial, as an identity block makes it equal to one. The formalization proves that a nonzero polynomial has a Lebesgue-null zero set by induction on its number of variables, using finite univariate root sets and Fubini's theorem. The low-rank set is contained in this null set.</p>
+<a class="meta" href="./source.html#lowRank_volume_zero">Inspect the Lean proof</a>
+</section>
+<section class="theorem" id="singularity"><span class="number">03 / Paper: Singularity of the Induced Posterior theorem</span>
+<h2>The induced posterior is singular to Lebesgue measure.</h2>
+<div class="formula">$$r<\min(m,n)\quad\Longrightarrow\quad q_W\perp\lambda.$$</div>
+<p>All posterior mass lies on a set that has zero Lebesgue measure in the full weight space.</p>
+<p class="proof"><strong>Proof.</strong> The zero set of the chosen minor is closed, hence measurable. Its Lebesgue measure is zero, while its complement has zero induced-posterior measure. These two sets witness mutual singularity. The Lean theorem actually establishes this for any measure on the factor space, without requiring total mass one.</p>
+<a class="meta" href="./source.html#inducedPosterior_mutuallySingular">Inspect the Lean proof</a>
+</section>
+<section class="verification" id="verification"><h2>Verification and source</h2>
+<p class="status">Build and axiom audit passed. All 39 project declarations use only Lean's standard axioms.</p>
+<p>The scope is these three statements and the helper lemmas used to prove them; the paper's other theorems and empirical claims are outside this formalization.</p>
+<table><tbody><tr><th>Lean</th><td><code>leanprover/lean4:v4.33.0-rc1</code></td></tr><tr><th>Mathlib</th><td><a href="https://github.com/leanprover-community/mathlib4/tree/9944fe2973b8dc0b86949101ed98232c07cd54a0"><code>9944fe2973b8dc0b86949101ed98232c07cd54a0</code></a></td></tr></tbody></table>
+<p><a href="./project/README.md">Build instructions and file list</a> / <a href="./source.html">Browse the complete proof</a> / <a href="./verification.json">Verification record</a></p>
+<details><summary>Download the project files</summary><ul><li><a href="./project/SingularBNN.lean" download>SingularBNN.lean</a></li><li><a href="./project/SingularBNN/Geometry.lean" download>SingularBNN/Geometry.lean</a></li><li><a href="./project/Audit.lean" download>Audit.lean</a></li><li><a href="./project/lakefile.toml" download>lakefile.toml</a></li><li><a href="./project/lake-manifest.json" download>lake-manifest.json</a></li><li><a href="./project/lean-toolchain" download>lean-toolchain</a></li><li><a href="./project/README.md" download>README.md</a></li></ul></details>
+<pre><code>lake exe cache get
+lake build
+lake env lean Audit.lean</code></pre>
+</section>
+</main><footer class="shell">Mame Diarra Toure / <a href="../">Formalized research</a></footer></body></html>

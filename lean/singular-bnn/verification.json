@@ -1,0 +1,339 @@
+{
+  "verified_at_utc": "2026-10-16T15:44:00.648064+00:00",
+  "lean_toolchain": "leanprover/lean4:v4.33.0-rc1",
+  "mathlib_commit": "9944fe2973b8dc0b86949101ed98232c07cd54a0",
+  "build": {
+    "command": "lake --no-cache build",
+    "exit_code": 0,
+    "jobs": 3257
+  },
+  "source_sha256": {
+    "SingularBNN.lean": "0054df7b60694ba00f91f20d2aa459317dabb20c2aa25cbd070e752ef20c349f",
+    "lean-toolchain": "62c2d9c0fc1ec4c67e151c11eff41ca004ef38e179cf9476c230406e6defedef",
+    "README.md": "6acfa7844db4a2dbdc30316862dab756d14c08225d003b0c74ffde760cb24d53",
+    "lake-manifest.json": "efe3be7a79f9c4f6e6d2d65341f43496adce9db5f155c3d8fedca85c9481ab95",
+    "Audit.lean": "01250a8a5dc42cc82ff49516fd4cf39eb1b1cc34216bcac5d54a9ff015dbe061",
+    ".gitignore": "b2cdfb9aa7a675f816b6af754747130baf9f0379a89639f5ce9f476793d6be33",
+    "lakefile.toml": "e7cdbb39cfad70877292a03761ecc77a5cfab96ac3e5f9d89ff0854a28e87a9c",
+    "SingularBNN/Geometry.lean": "b0d5037af1ff2e5aaf5ab44ccb1b3ebef305fbc7475be914f49319dbe4f4c5f3"
+  },
+  "local_configuration": "Local verification replaces Git dependencies with local paths at the same commits; Lean sources and toolchain are byte-identical.",
+  "axiom_audit": {
+    "command": "lake env lean Audit.lean",
+    "exit_code": 0,
+    "authored_declarations": 39,
+    "allowed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "exact_statements_checked": true,
+    "canonical_product_lebesgue_measure_checked": true,
+    "declarations": [
+      {
+        "name": "SingularBNN.weightMeasureSpace",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightSigmaFinite",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.matrix_polynomial_zero_volume",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.inducedPosterior",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.Factors",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.posterior_lowRank_mass_one._simp_1_3",
+        "axioms": [
+          "propext"
+        ]
+      },
+      {
+        "name": "SingularBNN.polynomial_zero_volume_fin._simp_1_3",
+        "axioms": [
+          "propext"
+        ]
+      },
+      {
+        "name": "SingularBNN.Weight",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightSigmaFinite._proof_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "Fin.insertNthEquiv.eq_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.lowRank_volume_zero",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.lowRank_minor_zero._proof_1_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.lowRank_minor_zero",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightMeasureSpace._aux_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.minorPolynomial",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightLocallyCompact._proof_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightLocallyCompact",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.factorMap",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightMeasureSpace._aux_3",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.inducedPosterior.eq_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.continuous_factorMap",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.posterior_lowRank_mass_one",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.polynomial_zero_volume_fin",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightSecondCountable._proof_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.LowRank.eq_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightBorelSpace._proof_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightHaar",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.polynomial_zero_volume_fin._simp_1_2",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.polynomial_zero_volume",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightSecondCountable",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.minorPolynomial_ne_zero._simp_1_1",
+        "axioms": [
+          "propext"
+        ]
+      },
+      {
+        "name": "SingularBNN.LowRank",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.minorPolynomial_ne_zero",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.inducedPosterior_mutuallySingular",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.eval_minorPolynomial",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.weightBorelSpace",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.rank_factorMap_le",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      },
+      {
+        "name": "SingularBNN.posterior_lowRank_mass_one._simp_1_1",
+        "axioms": [
+          "propext"
+        ]
+      },
+      {
+        "name": "SingularBNN.polynomial_zero_volume_fin._simp_1_1",
+        "axioms": [
+          "propext",
+          "Classical.choice",
+          "Quot.sound"
+        ]
+      }
+    ]
+  }
+}
