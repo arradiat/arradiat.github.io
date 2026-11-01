@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#faf0f6">
+  <title>Modular Bayesian Foundation Models | Mame Diarra Toure</title>
+  <meta name="description" content="Compact Bayesian time-series encoders whose epistemic uncertainty guides label-free expert selection. Project page for arXiv:2610.39043.">
+  <link rel="canonical" href="https://arradiat.github.io/projects/modular-bayesian-foundation-models/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Modular Bayesian Foundation Models">
+  <meta property="og:description" content="Bayesian time series encoders for OOD detection, routing and forecasting. Compact experts, label-free routing, and uncertainty through the forecasting pipeline.">
+  <meta property="og:url" content="https://arradiat.github.io/projects/modular-bayesian-foundation-models/">
+  <meta name="citation_title" content="Modular Bayesian Foundation Models: Bayesian time series encoders for OOD detection, routing and forecasting">
+  <meta name="citation_author" content="Mame Diarra Toure">
+  <meta name="citation_author" content="Quang Hung Pham">
+  <meta name="citation_author" content="Mohamed Ryad Zemouri">
+  <meta name="citation_author" content="David Stephens">
+  <meta name="citation_author" content="Luc Vouligny">
+  <meta name="citation_author" content="Martin Gagnon">
+  <meta name="citation_publication_date" content="2026/10/28">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2610.39043">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2RN01R28V"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S2RN01R28V');
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="navbar">
+    <a class="brand" href="/">Mame D. Toure</a>
+    <nav aria-label="Project sections">
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+      <a href="#selection">Expert selection</a>
+      <a href="#resources">Resources</a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="overview" aria-labelledby="paper-title">
+      <div class="inner hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> arXiv preprint · October 2026</p>
+          <h1 id="paper-title">Modular Bayesian<br><em>Foundation Models</em></h1>
+          <p class="subtitle">Bayesian time series encoders for OOD detection, routing and forecasting</p>
+          <p class="hero-thesis">Compact experts that carry their own signal for selection.</p>
+          <p class="hero-summary">An expanding collection of time-series encoders needs to be affordable to store and useful on new data. We use low-rank Bayesian encoders to address both: their weight posteriors compress the experts and their epistemic uncertainty guides label-free routing.</p>
+          <p class="authors"><strong>Mame Diarra Toure</strong>, Quang Hung Pham, Mohamed Ryad Zemouri,<br class="desktop-break"> David Stephens, Luc Vouligny and Martin Gagnon</p>
+          <p class="affiliations">McGill University · Hydro-Québec</p>
+          <div class="actions">
+            <a class="button primary" href="https://arxiv.org/pdf/2610.39043">Read the paper <span aria-hidden="true">↗</span></a>
+            <a class="button secondary" href="https://arxiv.org/abs/2610.39043">arXiv</a>
+            <a class="button secondary" href="#citation">Cite</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Conceptual overview: retain compact Bayesian experts, select them by uncertainty, and combine them for forecasting">
+          <p class="visual-label">A collection, a routing signal, a forecast.</p>
+          <div class="expert-grid" aria-hidden="true">
+            <div class="expert"><span>Acoustic</span><div class="wave wave-a"></div><small>Bayesian encoder</small></div>
+            <div class="expert"><span>HAR</span><div class="wave wave-b"></div><small>Bayesian encoder</small></div>
+            <div class="expert"><span>Torque45</span><div class="wave wave-c"></div><small>Bayesian encoder</small></div>
+            <div class="expert"><span>ETT</span><div class="wave wave-d"></div><small>Bayesian encoder</small></div>
+          </div>
+          <div class="visual-connector" aria-hidden="true">↓</div>
+          <div class="routing-box"><span class="visual-step">01 / ROUTE</span><strong>Compare uncertainty<br>with each expert’s source reference</strong><span>Incoming inputs · no target labels</span></div>
+          <div class="visual-connector" aria-hidden="true">↓</div>
+          <div class="forecast-box"><span class="visual-step">02 / REUSE</span><strong>Selected experts + Bayesian head</strong><span>Forecast mean and predictive uncertainty</span></div>
+          <p class="visual-note">Conceptual view · several encoders per source</p>
+        </div>
+      </div>
+      <div class="inner highlights" aria-label="Study highlights">
+        <div><strong>63.8<span>%</span></strong><p>less encoder storage<br><small>vs. full-rank deterministic counterparts</small></p></div>
+        <div><strong>17</strong><p>reusable encoders<br><small>from four source domains</small></p></div>
+        <div><strong>7</strong><p>incoming datasets<br><small>for downstream forecasting</small></p></div>
+      </div>
+    </section>
+
+    <section class="band" id="method" aria-labelledby="method-title">
+      <div class="inner">
+        <div class="section-heading"><p class="eyebrow">01 / Method</p><h2 id="method-title">Train once. Select on incoming inputs. Reuse.</h2></div>
+        <div class="three-grid">
+          <article class="card"><span class="card-number">1</span><h3>Compact Bayesian experts</h3><p>Source pretraining combines masked reconstruction and contrastive learning. Singular Bayesian Neural Networks place learned posteriors on low-rank factors, <span class="math">W = AB<sup>T</sup></span>. The encoder posteriors are then frozen.</p></article>
+          <article class="card"><span class="card-number">2</span><h3>Training-free routing</h3><p>Posterior weight draws reveal how much each encoder’s representation varies. We divide this uncertainty by its stored source reference, select the lowest ratios, and assign normalized inverse-ratio weights.</p></article>
+          <article class="card"><span class="card-number">3</span><h3>Uncertainty through the pipeline</h3><p>Selected representations are projected to 64 dimensions and combined. A forecasting head is trained on fixed encoder features. At prediction, joint encoder–head draws propagate epistemic uncertainty; the head also learns a conditional noise scale.</p></article>
+        </div>
+        <figure class="paper-figure pipeline-figure">
+          <a href="./assets/pipeline_bayesian_architecture.svg" aria-label="Open the full pipeline figure"><img src="./assets/pipeline_bayesian_architecture.svg" alt="Paper pipeline showing source pretraining, frozen Bayesian encoders, uncertainty-based routing, representation fusion, head training, and joint encoder–head sampling." loading="lazy" width="1600" height="660"></a>
+          <figcaption>The pipeline from the paper. Routing uses unlabeled inputs; fitting the forecasting head uses forecast targets. Frozen posteriors are sampled during prediction. <a href="./assets/pipeline_bayesian_architecture.svg">Open full-size ↗</a></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="band alternate" id="results" aria-labelledby="results-title">
+      <div class="inner">
+        <div class="section-heading"><p class="eyebrow">02 / Forecasting and storage</p><h2 id="results-title">Comparable forecasts, substantially smaller models.</h2><p>The main advantage is the storage–forecasting tradeoff. Final differences in forecasting accuracy and calibration are modest; the reduction in stored parameters is much larger.</p></div>
+        <figure class="paper-figure"><a href="./assets/family_forecasting_scatter_panels.svg" aria-label="Open the forecasting and storage comparison"><img src="./assets/family_forecasting_scatter_panels.svg" alt="Two paper scatter plots compare forecasting MSE against stored parameters and expected calibration error across the five model families." loading="lazy" width="1500" height="680"></a><figcaption>Seven-dataset means from the model-family comparison, using top-4 routing. Counts include the encoder collection and forecasting head. <a href="./assets/family_forecasting_scatter_panels.svg">Open full-size ↗</a></figcaption></figure>
+        <div class="table-scroll" role="region" aria-label="Model-family forecasting results" tabindex="0">
+          <table>
+            <caption>Model-family comparison · means over seven incoming datasets</caption>
+            <thead><tr><th scope="col">Family</th><th scope="col">Forecast MSE ↓</th><th scope="col"><abbr title="Expected calibration error">ECE</abbr> ↓</th><th scope="col">90% coverage</th><th scope="col">Stored parameters</th></tr></thead>
+            <tbody>
+              <tr class="ours"><th scope="row">SBNN <span>ours</span></th><td>0.3896</td><td>0.0687</td><td>90.47%</td><td>1.759M</td></tr>
+              <tr><th scope="row">Deterministic</th><td>0.4056</td><td>0.0816</td><td>82.60%</td><td>4.868M</td></tr>
+              <tr><th scope="row">MC Dropout</th><td>0.3894</td><td>0.0767</td><td>87.78%</td><td>4.868M</td></tr>
+              <tr><th scope="row">Full-rank BBB</th><td>0.4426</td><td>0.0877</td><td>92.29%</td><td>9.731M</td></tr>
+              <tr><th scope="row">Deep ensemble (5)</th><td>0.3965</td><td>0.0734</td><td>84.55%</td><td>24.342M</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note">Coverage is assessed against the nominal 90% level and varies across datasets. Each uncertainty family selects its own four experts; the deterministic pipeline reuses SBNN selections and weights. The paper reports seed variability, negative log-likelihood and interval widths.</p>
+        <div class="finding"><p class="eyebrow">Storage at the selected ranks</p><p>The encoder collection uses <strong>63.8% less storage</strong> than its full-rank deterministic counterpart. Including the head, SBNN uses <strong>63.9% fewer parameters than MC Dropout</strong>, <strong>81.9% fewer than full-rank BBB</strong>, and <strong>92.8% fewer than the ensemble</strong>. These are model-parameter comparisons, not measurements of runtime memory or latency.</p></div>
+      </div>
+    </section>
+
+    <section class="band" id="routing" aria-labelledby="routing-title">
+      <div class="inner">
+        <div class="section-heading"><p class="eyebrow">03 / Label-free selection</p><h2 id="routing-title">How does uncertainty routing compare with distance?</h2><p>We compare two complete routing policies, each selecting three SBNN encoders: one ranks source-normalized epistemic uncertainty, and the other ranks statistical distance to the source datasets.</p></div>
+        <div class="routing-results">
+          <div class="result-card"><span class="metric-name">Forecast MSE ↓</span><strong>0.4062 <span>→</span> 0.3976</strong><small>Distance → uncertainty</small></div>
+          <div class="result-card"><span class="metric-name">Calibration error ↓</span><strong>0.0857 <span>→</span> 0.0721</strong><small>Distance → uncertainty</small></div>
+          <div class="result-card"><span class="metric-name">90% interval coverage</span><strong>82.28% <span>→</span> 89.03%</strong><small>Nominal target: 90%</small></div>
+        </div>
+        <figure class="paper-figure"><a href="./assets/routing_distance_uncertainty_calibration.svg" aria-label="Open the routing calibration comparison"><img src="./assets/routing_distance_uncertainty_calibration.svg" alt="Per-dataset bars compare expected calibration error and 90 percent interval coverage under top-3 distance routing and top-3 uncertainty routing." loading="lazy" width="1500" height="560"></a><figcaption>Matched top-3 routing across seven incoming datasets. Bars average three seeds per dataset; the dashed line marks nominal 90% coverage. <a href="./assets/routing_distance_uncertainty_calibration.svg">Open full-size ↗</a></figcaption></figure>
+        <p class="body-note">The model-family study above uses top-4 selection; this routing comparison uses top-3 for both policies. Neither routing policy sees forecast targets or updates encoder weights.</p>
+      </div>
+    </section>
+
+    <section class="band selection-band" id="selection" aria-labelledby="selection-title">
+      <div class="inner selection-grid">
+        <div><p class="eyebrow">04 / What the ranking tells us</p><h2 id="selection-title">A useful shortlist.<br>An open ranking question.</h2><p>Lower reconstruction error does not consistently identify the best forecasting combination. Uncertainty helps narrow the search to useful experts; the downstream head can benefit from different combinations within that set.</p><p>Random and bottom-ranked selections within the low-uncertainty shortlist perform similarly to, and sometimes better than, the most confident experts in forecasting. Source-diverse selections also perform well. Full-pool random and high-uncertainty controls generally fare worse.</p><p class="body-note">These comparisons change composition and, for some policies, aggregation weights. They establish a policy-level finding rather than isolating one cause of the ranking reversal.</p></div>
+        <div class="shortlist-visual">
+          <p class="visual-step">Forecast MSE · lower is better</p>
+          <div class="policy-row"><span>Top-4 uncertainty</span><strong>0.3896</strong></div>
+          <div class="policy-row"><span>Random-4 of top-8</span><strong>0.3787</strong></div>
+          <div class="policy-row"><span>Bottom-4 of top-8</span><strong>0.3791</strong></div>
+          <div class="policy-row diverse"><span>Source-diverse top-4</span><strong>0.3760</strong></div>
+          <div class="policy-row control"><span>Random-4, full pool</span><strong>0.5085</strong></div>
+          <p>Mean results across seven incoming datasets. See the paper’s policy tables for calibration, coverage and all nine policies.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="scope" aria-labelledby="scope-title">
+      <div class="inner narrow"><p class="eyebrow">Scope and next steps</p><h2 id="scope-title">When does pretext learning support downstream reuse?</h2><p>Compression depends on the chosen rank and regularization settings. Uncertainty responses can saturate under large shifts, and source-normalized ratios can be below one on unfamiliar inputs. The fixed 64-dimensional fusion and the fixed-feature head-training approximation are additional design choices whose effects deserve further study.</p><p>The policy results motivate a broader question: under what conditions does learning a pretext task bound downstream risk? Reconstruction and forecasting offer one setting for studying that relationship; the same question extends to other pretext and downstream tasks.</p><p>This work builds on <a href="/projects/singular-bnn/">Singular Bayesian Neural Networks</a>, adapting compact Bayesian representations to modular time-series reuse.</p></div>
+    </section>
+
+    <section class="band alternate" id="resources" aria-labelledby="resources-title">
+      <div class="inner"><p class="eyebrow">Resources</p><h2 id="resources-title">Paper and citation</h2><div class="resources-grid"><a href="https://arxiv.org/pdf/2610.39043"><strong>Paper PDF <span aria-hidden="true">↗</span></strong><span>Full method, experiments and appendices</span></a><a href="https://arxiv.org/abs/2610.39043"><strong>arXiv:2610.39043 <span aria-hidden="true">↗</span></strong><span>Preprint record and version history</span></a><a href="/projects/singular-bnn/"><strong>The SBNN framework <span aria-hidden="true">↗</span></strong><span>Low-rank Bayesian parameterization</span></a></div>
+        <div class="citation" id="citation"><div class="citation-heading"><h3>BibTeX</h3><button type="button" id="copy-bibtex">Copy citation</button></div><pre><code id="bibtex">@misc{toure2026modularbayesian,
+  title={Modular Bayesian Foundation Models: Bayesian time series encoders for OOD detection, routing and forecasting},
+  author={Mame Diarra Toure and Quang Hung Pham and Mohamed Ryad Zemouri and David Stephens and Luc Vouligny and Martin Gagnon},
+  year={2026},
+  eprint={2610.39043},
+  archivePrefix={arXiv},
+  primaryClass={stat.ML},
+  doi={10.48550/arXiv.2610.39043},
+  url={https://arxiv.org/abs/2610.39043}
+}</code></pre><p id="copy-status" role="status" aria-live="polite"></p></div>
+      </div>
+    </section>
+  </main>
+  <footer class="inner"><span>© 2026 Mame Diarra Toure · Figures from the <a href="https://arxiv.org/abs/2610.39043">paper</a> (<a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>)</span><a href="/">Back to homepage ↗</a></footer>
+  <script src="./script.js"></script>
+</body>
+</html>
